@@ -1,0 +1,19 @@
+.singleContainer{
+    /*background-color: rgba(119, 208, 208, 0.467);*/
+    margin-top: 22vh;
+    width: 96vw ;
+    margin-left: 2vw;
+    margin-bottom: 15vh;
+}
+.productDisplay {
+    justify-content: space-around;
+}
+
+.flex-r-wrap{
+  display: flex;
+ flex-direction: row;
+ flex-wrap: wrap;
+}
+
+
+

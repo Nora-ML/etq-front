@@ -1,0 +1,231 @@
+/*----------------------------------------Filter section*/
+/*this blocks scrolling*/
+
+/* .filter_page-container{
+    background-color: rgba(0, 0, 255, 0.295);    
+    opacity: 0.2;
+    z-index: 50;
+    position: fixed;
+    width: 85vw;
+    left :7.5vw;
+    max-height: 85vh;
+    height: 80vh;
+    z-index: 50;
+    top: 10vh;
+    /* overflow: hidden; 
+} */
+.filter_page {
+    position: fixed;
+    width: 85vw;
+    left :7.5vw;
+    max-height: 85vh;
+    height: 80vh;
+    z-index: 50;
+    top: 10vh;
+    visibility: visible;
+    /* width: 100%; */
+    /* height: 100%; */
+    display: grid;
+    padding: 2vh 2vw;
+    background-color: rgba(255, 255, 255, 0.959);
+    grid-template-columns: repeat(3,minmax(25vw,1fr));
+    grid-template-rows: repeat(5,minmax(15vh,1fr));
+    grid-template-areas: 'a b f' 'a b f' 'a c d' 'a c d ' 'a c e ';
+    animation-name: slide;
+    animation-duration: 0.30s; 
+}
+.filter_page.hidden{
+    background-color: rgba(216, 13, 13, 0.959);
+    left: -90%;
+    animation-name: slide2;
+    animation-duration: 0.25s;
+}
+@keyframes slide {
+    from{left:-2vw ;background-color: rgba(255, 255, 255, 0.959);}
+    to{left: 7.5vw;background-color: rgba(255, 255, 255, 0.959);}
+}
+@keyframes slide2 {
+    from{left:7.5vw ;  background-color: rgba(255, 255, 255, 0.959);}
+    to{left:-90% ;background-color: rgba(255, 255, 255, 0.959);}
+}
+ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+}
+.filter_page li{
+    display: block;
+    border: rgba(227, 227, 223, 0.837) 2px solid;
+    border-radius: 3px;
+    color: rgba(0, 0, 0, 0.703);
+    margin: 5px 3px;
+    padding: 5px 4px;
+    align-self: flex-start;
+    text-align: center;
+    cursor: pointer;
+    font-variant-caps: all-petite-caps;
+}
+li.selected{
+border: rgba(0, 128, 0, 0.534) 0.01px solid !important;
+background-color: rgba(216, 243, 216, 0.703);
+}
+li.fadedOption{
+    color: rgba(195, 195, 192, 0.945);
+    border: rgba(227, 227, 223, 0.837) 2px thin;
+background-color: rgba(227, 227, 223, 0.683);
+pointer-events: none;
+}
+/*---------------------------brand Section*/
+.brand {
+    grid-area: a;
+    margin-right: 2vw;
+    max-height: 100%;
+   /*  border: 1px solid tan; */  
+}
+
+.brand-img {
+    width: 100%;
+    overflow-y: auto;
+    height: 90%;
+    justify-content: flex-start;
+}
+/*---------------------------Size Section*/
+.size {
+    grid-area: b;
+    padding-left: 1vw;
+   /*  border: 1px solid rgba(221, 82, 39, 0.95);*/
+} 
+
+.size .header {
+    justify-content: space-between;
+    padding: 0 3vw 0 0;
+}
+
+.size-list {
+    /*  background-color: blue; */
+    height: max-content;
+}
+
+.size-list li {
+    width: 3.5vw; 
+}
+
+/*---------------------------color Section*/
+.color {
+    padding-left: 1vw;
+    grid-area:c;
+    /* background-color: rgb(227, 255, 71); */
+}
+
+.color .header {
+    justify-content: space-between;
+}
+
+.color-list {
+    /*  background-color: blue; */
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.color-list li {
+    min-width: 3.5vw;
+    max-width: fit-content;
+    text-align: center;
+    /* background-color: blueviolet; */
+}
+
+/*---------------------------count Section*/
+
+.count{
+    text-align: center;
+}
+/*---------------------------reset Section*/
+
+.reset{
+    text-align: center;
+    cursor: pointer;
+}
+
+/******   SUbmit Button *******/
+
+.submit-button.filter-button{
+grid-area: e;
+
+}
+.submit-button.filter-button input{
+cursor: pointer;
+}
+
+
+/*******************************************************************************/
+/*---------------------------Leather Section*/
+.leather {
+    /*  background-color: tomato; */
+    margin-top: 7vh;
+    height: 45vh;
+}
+
+.leather .header {
+    justify-content: space-between;
+}
+
+.leather-type {
+    /*  background-color: blue; */
+    height: 90%;
+}
+
+.leather-type li {
+    border: 0.5px rgb(202, 200, 200) solid;
+    width: 50%;
+    height: 50%;
+    /* background-color: blueviolet; */
+}
+
+.leather-type li>a {
+    display: block;
+    /*  background-color: rgb(43, 226, 83); */
+    padding: 12px 12px;
+    text-align: center;
+}
+
+/*---------------------------Vegan Section*/
+.vegan {
+    background-color: rgb(255, 71, 246);
+    margin-top: 7vh;
+    height: 45vh;
+}
+
+.vegan .header {
+    justify-content: space-between;
+}
+
+.vegan-materials {
+    /*  background-color: blue; */
+    height: 90%;
+}
+
+.vegan-materials li {
+    border: 0.5px rgb(202, 200, 200) solid;
+    width: 50%;
+    height: 50%;
+    /* background-color: blueviolet; */
+}
+
+.vegan-materials li>a {
+    display: block;
+    /* background-color: rgb(43, 226, 83); */
+    padding: 12px 12px;
+    text-align: center;
+}
+
+.vegan-materials li>a>h4 {
+    /*  background-color: rgb(226, 43, 113); */
+    padding: 5px 5px;
+    text-align: center;
+}
+
+.vegan-materials li>a>p {
+    /*   background-color: rgb(226, 43, 113); */
+    padding: 10px 1px;
+    text-align: center;
+}

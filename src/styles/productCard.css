@@ -1,0 +1,350 @@
+/*Revised and matched on 17 MAY 2022*/
+
+/*****************************************       prodBlock_wrapper  ********************************/
+.prodBlock{
+position: relative;
+overflow: hidden;
+}
+
+/*The smallish cards  --Shop/Category page*/
+.prodBlock_wrapper--medium {
+/*   border: red 2px solid; */
+  background-color: rgba(235, 232, 232, 0.391) ;
+  border-radius: 5px;
+  width: 21vw;
+  margin: 5vh 0;
+  height: 65vh;
+}
+
+/*The larger cards   --Shop/Category page*/
+.prodBlock_wrapper--Big {
+  border: rgba(0, 128, 0, 0.112) 2px solid;
+  width: 30vw;
+  height: 70vh;
+  margin: 5vh 0;
+}
+
+/***  featured  **/
+.prodBlock__featured--wrapper{
+ /*  border: rgba(20, 19, 19, 0.963) 3px solid; */
+  width: 29vw;
+  height: 80vh;
+  margin: 0 2.5vw 0 0;  
+}
+.prodBlock__featured--wrapper:first-child{
+ /*  border: rgba(20, 19, 19, 0.963) 3px solid; */
+  margin-left: 2.5vw;  
+}
+.prod-hidden{
+  display: none;
+}
+.prod-hide,.prod-active
+,.prod-active1
+,.prod-active2
+,.prod-active3{
+  left: 0;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+.prod-hide{
+  animation-name: featuredHide;
+}
+.prod-active{
+  animation-name: featuredActive;
+}
+.prod-active1{
+  animation-name: featuredActive1;
+}
+.prod-active2{
+  animation-name: featuredActive2;
+}
+.prod-active3{
+  animation-name: featuredActive3;
+}
+.prodBlock__featured--wrapper.minus{
+animation-direction: reverse;
+}
+@keyframes featuredHide {
+  from{transform: translateX(0)}
+  to{transform: translateX(-29vw)}
+}
+@keyframes featuredActive {
+  from{transform: translateX(0)}
+  to{transform: translateX(-29vw)}
+}
+@keyframes featuredActive1 {
+  from{transform: translateX(0)}
+  to{transform: translateX(-29vw)}
+}
+@keyframes featuredActive2 {
+  from{transform: translateX(0)}
+  to{transform: translateX(-29vw)}
+}
+@keyframes featuredActive3 {
+  from{transform: translateX(0)}
+  to{transform: translateX(-29vw)}
+}
+
+
+/** onHover **/
+
+.prodBlock:hover .arrow-wrap{
+  opacity: 0.4;
+  transition: opacity 0.5s ease-in;
+}
+.prodBlock:hover .arrow-wrap-right {
+  transform: translateX(-7%);
+  transition: transform 0.5s ease-in-out;
+}
+.prodBlock:hover .arrow-wrap-left {
+  transform: translateX(7%);
+  transition: transform 0.5s ease-in-out;
+}
+.prodBlock:hover .arrow-wrap:hover {
+  opacity: 1;
+}
+
+
+
+ 
+
+/****************************************         Product Image *************************/
+
+/*------  wrapper ------*/
+
+
+/*Shop-Category page*/
+.prodBlock__anchor-img--taller {
+  /* border: red 1px solid;*/
+  width: 100%;
+  /*min-heght is key 
+  in standardizing the height*/
+  min-height: 70%;
+  height: 75%;
+}
+/*Featured*/
+.prodBlock__featured--imgContainer{
+ /*border: rgb(128, 0, 73) 2px solid; */
+  width: 100%;
+  min-height: 85%;
+  height: 90%;
+}
+
+/*--------  The Image ------*/
+
+.prodBlock__img {
+  /* border: green 1px solid;*/
+  width: 100%;
+  height: 100%;
+}
+.prodBlock__img--DELETE-LATER {
+  border: green 1px solid;
+  width: 100%;
+  height: 100%;
+}
+.prodBlock__featured--img{
+  /*border: rgb(16, 202, 215) 1px dashed; */
+  width: 100%;
+  height: 100%;
+}
+
+
+
+/***      Arrow Icons          ***/
+/**/
+/**/
+/**.prodBlock__icons == first wrapper 
+/** arrow-wrap == second wrapper 
+/** arrow-wrap__icon == The icon
+/**/
+/*Arrow positioning for smallish ... */
+.prodBlock__icons--hide{
+  display: none;
+}
+.prodBlock_wrapper--medium .prodBlock__icons {
+  position: relative;
+  bottom: 26vh;
+}
+/*.... and BIG productCard* */
+.prodBlock_wrapper--Big .prodBlock__icons {
+  position: relative;
+  bottom: 35vh;
+}
+/*Positioning applied to both*/
+.arrow-wrap-right {
+  left: 85%;
+}
+.arrow-wrap-left {
+  right: 85%;
+}
+/*ArroW Icon general look and animation */
+.arrow-wrap {
+  background-color: white;
+  opacity:0;
+  transition: opacity 0.5s ease-out;
+}
+
+
+/****************************************         Product Description  *************************/
+.prodBlock__description {
+  margin-top: 10px;
+  line-height: 2px;
+}
+/***/
+
+.prodBlock__description .green {
+  color: rgb(45, 170, 101);
+  font-weight: 600;
+}
+/*****************************************       ADMIN commands  ********************************/
+.prodBlock__adminCommand{
+  /* background-color:rgba(39, 5, 5, 0.377) ; */
+  display: flex;
+  flex-direction: row;
+  margin-top: -2vh;
+  width: 14vw;
+  align-self: end;
+  height: 5vh;
+  justify-content: space-between;
+}
+/***/
+
+.prodBlock__adminCommand button{
+  background-color: rgb(253, 252, 248);
+  width: 6vw;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+.prodBlock__adminCommand--delete{
+ color: rgba(240, 10, 10, 0.547);
+  border: 1px solid rgba(240, 10, 10, 0.547) ;
+}
+.prodBlock__adminCommand--edit{
+  color: rgba(60, 60, 240, 0.742);
+  border:1px solid rgba(60, 60, 240, 0.742);
+}
+
+
+/*****************************************       USER  commands  ********************************/
+
+.prodBlock_userCommand{
+  position: absolute;
+ /*  background-color: aqua; */
+  opacity:0;
+  display: flex;
+  width: 20%;
+  height: 10%;
+  right: 0;
+  top: 0;
+  justify-content: flex-end;
+}
+.prodBlock_userCommand .favourites{
+  transform: translateY(-30%);
+border: 0;
+padding-top: 0;
+background-color: transparent;
+}
+.prodBlock_userCommand img{
+ margin-top: -6px;
+}
+.prodBlock:hover .prodBlock_userCommand{
+  opacity: 0.8;
+  transition: opacity 0.5s ease;
+}
+.prodBlock:hover .prodBlock_userCommand .favourites {
+  transform: translateY(-10%);
+  transition: transform 0.60s ease;
+}
+.prodBlock:hover .prodBlock_userCommand .favourites:hover{
+  transform: translateY(-1%);
+  cursor: pointer;
+  transition: transform 0.60s ease;
+  opacity: 1;
+}
+
+
+
+
+/******UNUSED : Customer Feedback - like and dislike********************/
+
+.customer-feedback {
+  background-color: rgba(197, 8, 8, 0.679);
+  opacity:0;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: -0.5vh;
+  border-radius: 5px;
+  width: 60%;
+  right: 0;
+  transition: opacity 0.5s ease-out;
+}
+/*Positioning applied to both*/
+.like {
+  border-radius: 5px;
+}
+.dislike {
+  border-radius: 5px;
+}
+/* effect of like dislike on hover*/
+/*prodBlock_wrapper = A shared className for both big and small product card*/
+.prodBlock_wrapper:hover .customer-feedback{
+  opacity: 0.4;
+  transition: opacity 0.5s ease-in;
+}
+
+.prodBlock_wrapper:hover .customer-feedback .like {
+  transform: translateX(-7%);
+  transition: transform 0.5s ease-in-out;
+}
+.prodBlock_wrapper:hover .customer-feedback .dislike {
+  transform: translateX(7%);
+  transition: transform 0.5s ease-in-out;
+}
+.prodBlock_wrapper:hover .customer-feedback:hover {
+  opacity: 1;
+}
+
+
+
+
+
+
+/**********************************************************************************/
+/*Thumbnail sized view  ---No YEt utilized seriously */
+/**/
+/**/
+.prodBlock--shop__Small {
+  /* border: yellow 2px solid; */
+   width: 10vw;
+   height: 10vh;
+   margin: 3vh 0;
+}
+.prodBlock--shop__Small .prodBlock__description {
+ font-size: 12px;
+ margin-top: 10px;
+ line-height: 2px;
+}
+.prodBlock--shop__Small  .prodBlock__description .green {
+ font-size: 12px;
+ color: #2daa65;
+ font-weight: 400;
+ height: max-content;
+}
+.prodBlock__icons--small {
+  bottom: 33vh;
+}
+
+
+
+/* Method i previously used to set a pattern to display a couple
+/* of rows with smallish product cards followed by a few of the 
+/* larger ones in the ---shop/category page
+/* replaced by function in "Category1.js" (shop page)
+.prodBlock--shop:nth-child(14n+9),.prodBlock--shop:nth-child(14n+10),.prodBlock--shop:nth-child(14n+11),.prodBlock--shop:nth-child(14n+12),.prodBlock--shop:nth-child(14n+13),.prodBlock--shop:nth-child(14n+14){
+  width: 30vw;
+  height: 70vh;
+  margin: 3vh 0;
+  /* border: rgb(230, 227, 50) 4px double; 
+} */

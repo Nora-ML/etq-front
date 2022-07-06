@@ -1,0 +1,223 @@
+/*----------------Main Grid*/
+.main-grid {
+    display: grid;
+    min-width: 100vw;
+    grid-template-rows: repeat(7, 50vh) ;
+    align-self: flex-end;
+    grid-template-columns: 100vw;
+    grid-template-areas: 'sec-1''sec-1''sec-2''sec-3''sec-3''sec-4''sec-4';
+    /* border: 3px blue solid;
+     background-color: cadetblue; */
+  }
+  
+  /*----------------------------------  section 1 -header ---------------*/
+  .sec-1 {
+    grid-area: sec-1;
+    /* background-color: burlywood; */
+    align-items: center;
+  }
+  
+  .head-img {
+    position: relative;
+    width: 72%;
+    height: 100vh;
+    object-fit: cover;
+    left: 0%;
+    opacity: 1;
+    animation-name: coverImg;
+    animation-duration: 1s;
+  }
+  
+  .head-intro {
+    /* border: red solid 1px; */
+    width: 28%;
+    height: 50vh;
+    padding: 5vh 5vw 0 2.5vw;
+  }
+  
+  .head-preHeader {
+    position: relative;
+    /* border: rgb(0, 0, 255) solid 1px; */
+    letter-spacing: 1px;
+    margin-bottom: -5px;
+    bottom: 0%;
+    animation-name: headers;
+    animation-duration: 1.2s;
+  }
+
+  .head-header{
+    position: relative;
+    /* border: rgb(0, 0, 255) solid 1px; */
+    letter-spacing: 1px;
+    line-height: 2.2rem;
+    animation-name: headers;
+    animation-duration: 1.5s;
+  }
+  
+  .head-details {
+    position: relative;
+    /* border: rgb(0, 0, 255) solid 1px; */
+    color: rgb(70, 70, 70);
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 1.3rem;
+    animation-name: headers;
+    animation-duration: 1.8s;
+  }
+  
+  @keyframes coverImg {
+      from{opacity:0;left: -5%;}
+      to{left: 0%;opacity:1;}
+  }
+  @keyframes headers {
+    from{opacity:0;bottom: -15%;}
+    50%{opacity:0;bottom: -5%;}
+    to{bottom: 0%;opacity:1;}
+  }
+
+.notDisplayed{
+    display: none;
+}
+  
+  /*----------------section 2 */
+  .sec-2 {
+    grid-area: sec-2;
+    position: relative;
+    /* background-color: cadetblue; */
+    padding: 11vh 6vh 5vh 6vh;
+    justify-content: space-around;
+    animation-name: sect2;
+    animation-duration: 2s;
+  }
+  
+  .sec-2_unit {
+    width: 30vw;
+    height: 100%;
+    min-height: 40%;
+     /* border: crimson 2px solid; */
+    align-items: center;
+  }
+  
+  .sec-2_img {
+    width: 43%;
+    height: 100%;
+    flex-shrink: 2;
+  }
+  
+  .sec-2_img--det {
+    /* background-color: rgb(176, 235, 145); */
+    padding: 0 1vw 0 2vw;
+  }
+
+  .sec-2_img--det-header{
+    margin-block-start:0;
+    margin-block-end:0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .sec-2_img--det-details{
+    color: rgb(35, 33, 33);
+    font-size: 15px;
+    letter-spacing: 1px;
+    line-height: 1.3rem;
+  }
+  
+  .sec-2_img--det-link{
+    color: rgb(35, 33, 33);
+    font-size: 14px;
+  }
+
+  @keyframes sect2{
+    from{opacity:0;bottom: -10%;}
+    40%{opacity:1;}
+    to{bottom: 0%;opacity:1;}
+  }
+
+  /*---------------------------------------section 3 */
+  .sec-3 {
+    position: relative;
+    grid-area: sec-3;
+    /* background-color: burlywood; */
+    padding: 5vh 10px;
+    animation-name: sect3;
+    animation-duration: 2s;
+    overflow: hidden;
+    width: 100%;
+  }
+  /* Header */
+  .sec-3_header{
+    /* background-color: burlywood; */
+    position: relative;
+    width: 93vw;
+    margin: 3vh 10px 1.25vh 2.5vw;
+  }
+  .sec-3_header--title{
+    font-weight: lighter;
+  }
+  
+   /* Header arrows */
+  .arrow-wrap-right--header {
+    left: 89.5vw !important;
+    opacity: 1 !important;
+  }
+  
+  .arrow-wrap-left--header{
+    left: 86vw !important;
+    opacity: 1 !important;
+  }
+
+  /*faded arrows*/
+  .arrow-wrap-left--header.arrow-faded,.arrow-wrap-right--header.arrow-faded{
+    background-color: rgba(0, 0, 0, 0.07);
+    cursor: default;
+    opacity: 0.8 !important;
+  }
+  .arrow-faded .arrow-wrap__icon , .arrow-wrap__icon:hover {
+    color: rgba(20, 19, 19, 0.479)!important;
+    transition:none !important;
+  }
+.arrow-faded .arrow-wrap__icon:after{
+  display: none;
+}
+
+ /*Featured products*/
+  .productDisplay__featured {
+    /* background-color: aquamarine; */
+    position: relative;
+    width: 200vw;
+  }
+  
+  /*---------------------------------------section 4 */
+  .sec-4 {
+      position: relative;
+    grid-area: sec-4;
+  /*   background-color: cadetblue; */
+    justify-content: space-between;
+    padding: 15vh 2vw;
+    animation-name: sect3;
+    animation-duration: 2s;
+    margin: 0 1vw;
+  }
+  
+  
+  .sec-4-unit {
+    width: 45vw;
+    height: 75vh;
+    /* border: crimson 2px solid; */
+  }
+  
+  .sec-4-unit img {
+    height: 55vh;
+  }
+  
+  .sec-4-img-det {
+    margin-top: 12px;
+    line-height: 10px;
+  }
+
+  @keyframes sect3{
+    from{opacity:0;bottom: -15%;}
+
+    to{opacity:1;bottom: 0%;}
+  }
+  

@@ -1,0 +1,117 @@
+.main-3col-grid {
+    overflow: hidden;
+    display: grid;
+    position: relative;
+    max-width: 98vw;
+    min-height: 80vh;/*recent*/
+    margin-top: 18vh;
+    grid-template-rows: 100%;
+    /* border: black 2px double; */
+  }
+  
+  .main-3col-grid--admin {
+      grid-template-columns: minmax(max-content,0.25fr) minmax(max-content,0.30fr) minmax(60vw,1fr);
+      grid-template-areas: 'nav nav2 content';
+      margin-bottom: 15vh;
+    /*   border: green 2px double; */
+  }
+  .main-3col-grid--admin h3{
+      margin-bottom: 5vh;
+  }
+  .main-3col-grid--admin_nav {
+    grid-area: nav;
+    margin-left: 3vw;
+    height: max-content;
+    padding: 5px 10px;
+    /* border: rgb(200, 191, 189) 1px solid; */
+  }
+  .main-3col-grid--admin_nav2 {
+    grid-area: nav2;
+    margin-left: 1vw;
+    padding: 5px 10px;
+   /*  border: rgb(240, 228, 224) 1px solid; */
+    border-radius: 10px;
+  }
+  .main-3col-grid--admin_content {
+    grid-area: content;
+    margin-left: 2vw;
+    padding: 5px 10px;
+    /* border: rgb(240, 228, 224) 1px solid; */
+  }
+  
+/*   .greenAlarm{
+    background-color: rgba(83, 236, 177, 0.664);
+    border: solid 1px  rgb(45, 170, 101);
+    border-radius: 3px;
+    padding: 5px 5vw;
+    width: max-content;
+  }
+  .redAlarm{
+    background-color: rgb(250, 101, 101);
+    border: solid 1px  rgb(185, 24, 18);
+    border-radius: 2px;
+    padding: 5px 10px;
+  }
+ */
+
+  /************************   unused yet   ****************/
+  .signup-form{
+    height: 70vh;
+    margin-top: 5vh;
+    justify-content: space-between;
+    /* background-color: blueviolet; */
+  }
+  .form-item{
+    height: max-content;
+    /* background-color:aquamarine;  */
+   width: 40%;
+   margin-bottom: 10px;
+   margin-right: 4vw;
+  }
+  .form-item>label{
+   padding: 10px;
+  }
+  .form-item div label{
+    font-size: 14px;
+  }
+  .form-item .gender{
+    /* background-color:rgb(127, 255, 138);  */
+    margin-top: 10px;
+  }
+
+  .form-item input{
+ /* background-color: black;  */
+   padding: 10px;
+   border-radius: 5px;
+   border: 1px rgb(206, 204, 204) solid;
+  }
+.black-btn-signUp{
+  margin-top: 5vh;
+  background-color: black;
+  width: 105%;
+  height: 8vh;
+  justify-self: flex-end;
+  color: white;
+}
+.black-btn-signIN{
+  margin-top: 8vh;
+  background-color: black;
+  width: 100%;
+  height: 8vh;
+  justify-self: flex-end;
+  color: white;
+}
+.button-line{
+  margin-top: 5vh;
+  border-top: rgb(206, 204, 204) 0.5px solid;
+  width: 65vw;
+}
+  /*----------------------------------------Filter section*/
+
+  
+  .filter--product {
+    /*     top: 10vh; */
+    margin-top: 10vh;
+    padding: 5px 20px;
+    /*  border: green 1px solid; */
+  }

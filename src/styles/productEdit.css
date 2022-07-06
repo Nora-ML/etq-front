@@ -1,0 +1,92 @@
+/**** Edit Form Slide animation   ***/
+.product-form__Shop{
+    width: 94vw;
+    z-index: 6;
+    height:70vh;
+    bottom: 10vh;
+    left: 3vw;
+    border-radius: 5px;
+    background-color:rgb(253, 252, 248);
+    position: fixed;
+    transform-origin: bottom;
+}
+.product-form__Shop.active{
+    opacity:1;
+    visibility: visible;
+    animation: slideUp;
+    animation-duration: 0.7s;
+}
+.product-form__Shop.hide{
+    visibility: hidden;
+    animation: slideDown;
+    animation-duration: 0.6s;
+}
+@keyframes slideUp {
+    from{transform: scaleY(0);visibility: hidden;}
+    30%{transform: scaleY(0);visibility: hidden;}
+    60%{transform: scaleY(0);visibility: hidden;}
+    to{transform: scaleY(1);visibility: visible}
+}
+@keyframes slideDown {
+    from{transform: scaleY(1);visibility: visible;}
+    to{visibility: hidden;transform: scaleY(0);}
+}
+/**** Edit Form unique adjustment to ProductForm   ***/
+
+.form-container.edit{
+ /*  border: red 1px solid; */
+ grid-template-columns: repeat(6,minmax(11vw,1fr));
+ grid-template-rows: repeat(6,minmax(11vh,1fr));
+  padding: 3vh 3vw 4vh 6vw;
+  max-height: 100%;
+  max-width: 100%;
+  justify-content: space-between;
+}
+.form-item--addproduct.edit{
+ /*  background-color: tan; */
+  width:80%;
+  color: black;
+justify-self: stretch;
+}
+.form-item--addproduct.edit input ,.form-item--addproduct.edit select,.form-item--addproduct.edit textarea{
+  color: rgb(93, 18, 18);
+  font-style: italic;
+  background-color: rgb(253, 252, 248);
+  padding: 7px;
+  border-radius: 5px;
+  border: none;
+  border-top: 0.5px solid  rgb(76, 85, 107);
+  border-left: 0.25px solid  rgb(76, 85, 107);
+  /* border: 0.5px solid  rgb(76, 85, 107); */
+  margin-top: 7px;
+  width:100%;
+  outline: none;
+}
+.form-item--addproduct.edit input:focus,.form-item--addproduct.edit select:focus,.form-item--addproduct.edit textarea:focus{
+  color: rgb(93, 18, 18);
+ /*  background-color: rgba(164, 164, 164, 0.22); */
+  /* border: 0.5px solid  rgb(242, 147, 80); */
+    border-bottom: 0.5px solid  rgb(111, 71, 71);
+    border-right: 0.25px solid  rgb(111, 71, 71);
+}
+.form-item--addproduct.edit textarea{
+  height: 90%;
+}
+
+.form-item--addproduct.edit.name {grid-area:1/1/2/3 ;}
+.form-item--addproduct.edit.brand{grid-area:2/1/3/3 ;}
+.form-item--addproduct.edit.price{grid-area:6/1/7/2 ;}
+.form-item--addproduct.edit.category{grid-area: 3/1/4/3;}
+.form-item--addproduct.edit.promotion{grid-area:1/3/2/5 ;}
+.form-item--addproduct.edit.quantity{grid-area: 6/3/7/4;}
+.form-item--addproduct.edit.colors{grid-area:4/1/5/3 ;}
+.form-item--addproduct.edit.product_type {grid-area:5/3/6/5 ;}
+.form-item--addproduct.edit.featured {grid-area:6/2/7/3 ;}
+.form-item--addproduct.edit.sizes{grid-area: 5/1/6/3;}
+.form-item--addproduct.edit.description{grid-area: 2/3/5/5;}
+.form-item--addproduct.edit.image{grid-area:1/5/2/7 ;}
+.form-item--addproduct.edit.default_image{grid-area:2/5/3/7 ;}
+.form-item--addproduct.edit.featured_image{grid-area: 3/5/4/7;}
+.form-item--addproduct.edit.sold {grid-area:6/4/7/5 ;}
+.submit-button.edit{grid-area:6/5/7/7 ;justify-self: center;}
+.submit-button.edit input{margin-top: 0px !important;}

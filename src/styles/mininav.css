@@ -1,0 +1,63 @@
+/***   mini nav    ****/
+
+.mini-nav {
+    position: fixed;
+    bottom: 3vh;
+    width: 140px;
+    --width: 140px;
+    --leftA: calc(var(--width) / 2);
+    left: calc(50vw - var(--leftA));
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(165, 158, 158, 0.815);
+    justify-content: space-around;
+    align-items: center;
+    z-index: 6;
+}
+.mini-nav.hide {
+    opacity: 0;
+}
+.nav-bar-item {
+    text-align: center;
+    color: black;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 9px 15px;
+    font-weight:lighter;  
+}
+
+.current{
+    position: relative;
+    color: antiquewhite;  
+}
+
+.shopz.current::after{
+    left:0;
+    animation-name: slideR;
+    animation-duration: 0.25s;
+}
+.filterz.current::after{
+    left: 0;
+    animation-name: slideL;
+    animation-duration: 0.25s;
+}
+.current::after{
+    content: "";
+    background-color: rgb(2, 2, 2);
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    color: antiquewhite;
+    top: 0;
+    border-radius: 20px;
+}
+
+@keyframes slideR {
+    0%{left: 100%;}
+    100%{left: 0; }
+}
+@keyframes slideL {
+    from{left:-100% ;}
+    to{left:0;}
+}

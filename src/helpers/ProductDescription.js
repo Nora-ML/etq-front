@@ -5,9 +5,9 @@ const ProductDescription = ({ product }) => {
 
 	return (
 		<div className="prodBlock__description">
-			<p className="green">{product.name}</p>
-			<h5>{product.brand}</h5>
-			<h5>$ {product.price}</h5>
+			<p className="prodBlock__description--green">{product.name}</p>
+			<h5 className="prodBlock__description--brand">{product.brand}</h5>
+			<h5 className="prodBlock__description--price">$ {product.price}</h5>
 		</div>
 	);
 };

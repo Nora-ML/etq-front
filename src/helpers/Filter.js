@@ -1,21 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { itemsInCategory, filter } from "../requests";
+import {
+	itemsInCategory,
+	filter,
+	savelocally,
+	retrieveLocal,
+	removeLocal,
+} from "../requests";
 import "../styles/filter.css";
 
-const Filter = ({ filteredProducts, classN }) => {
+const Filter = ({ filteredProducts, classN, filterSet }) => {
 	console.log("Filter.js ----- rendered");
+	const filters = ["brand", "colors", "sizes", "product_type"];
 	const { categoryName } = useParams();
+	const [trail, setTrail] = useState();
+	const [command, setCommand] = useState();
 	const [list, setList] = useState({
 		sizes_list: "",
+		product_type_list: "",
 		colors_list: "",
-		brands_list: "",
+		brand_list: "",
 	});
 	const [diff, setDiff] = useState({
-		phase: "",
 		sizes_diff: "",
+		product_type_diff: "",
 		colors_diff: "",
-		brands_diff: "",
+		brand_diff: "",
 	});
 	const [count, setCount] = useState(0);
 	const [origincount, setOriginCount] = useState("");
@@ -23,13 +33,13 @@ const Filter = ({ filteredProducts, classN }) => {
 		brand: [],
 		sizes: [],
 		colors: [],
-
+		product_type: [],
 		submit: true,
 	});
 
-	const { sizes_list, colors_list, brands_list } = list;
-	const { sizes_diff, colors_diff, brands_diff, phase } = diff;
-	const { sizes, colors, brand, submit } = selected;
+	const { sizes_list, colors_list, brand_list, product_type_list } = list;
+	const { sizes_diff, colors_diff, brand_diff, product_type_diff } = diff;
+	const { sizes, colors, brand, product_type } = selected;
 
 	const fetchFilteredProducts = (cat, limit) => {
 		console.log("Filter.js ----- fetchFilteredProducts () ..");
@@ -49,256 +59,264 @@ const Filter = ({ filteredProducts, classN }) => {
 	};
 	const clearOut = () => {
 		console.log("Filter.js ----- clearOut() ");
-		setDiff({ sizes_diff: "", colors_diff: "", brands_diff: "" });
-		setSelected({ brand: [], sizes: [], colors: [], submit: true });
+		let result = retrieveLocal("filter" + categoryName);
+		console.log("Filter.js --- clearOut() --- result:", result);
+		if (result.states) {
+			console.log("Filter.js --- clearOut() --- clearing local-filter");
+			removeLocal("filter" + categoryName);
+			filterSet(true);
+		}
+		setDiff({
+			sizes_diff: "",
+			colors_diff: "",
+			brand_diff: "",
+			product_type_diff: "",
+		});
+		setSelected({
+			brand: [],
+			sizes: [],
+			colors: [],
+			product_type: [],
+			submit: true,
+		});
 	};
-
-	useEffect(() => {
-		console.log("Filter.js ----- useEffect ..");
-		fetchFilteredProducts(categoryName, 1000);
-	}, [useParams()]);
-
 	const searchArray = (e, name) => {
 		console.log("Filter.js ----- searchArray()...");
 		const item = e.target.innerText;
 		const numerify = Math.floor(item);
+		//iterate through "selected" object
 		Object.entries(selected).forEach(([key, value]) => {
-			console.log("Filter.js -----searchArray()=> mapping");
+			// console.log("Filter.js- searchArray() - mapping.. Key:",	key,"name:",name);
 			if (key === name) {
 				const index =
 					key === "sizes"
 						? selected[key].indexOf(numerify)
 						: selected[key].indexOf(item);
+				//general first choice function
+				const action = () => {
+					console.log("Filter.js ----- searchArray() action");
+					if (!trail) {
+						setTrail([key.toString()]);
+					} else if (trail && !trail.includes(key)) {
+						setTrail((prevState) => prevState.concat(key.toString()));
+					}
+					setSelected({
+						...selected,
+						[key]: [...value, key === "sizes" ? numerify : item],
+					});
+				};
+				const resetTrail = (x) => {
+					let theIndex = trail.indexOf(key) + 1;
+					let newTrail = trail.slice(0, theIndex);
+					let newSelection = {};
+					filters.forEach((i) => {
+						if (!newTrail.includes(i)) {
+							newSelection[i] = [];
+						} else if (newTrail.includes(i) && i === key) {
+							if (x === "remove") {
+								console.log("Filter.js - resetTrail - remove -reverse Selec");
+								let newArray = value.filter((v) =>
+									key === "sizes" ? v !== numerify : v !== item
+								);
+								if (newArray.length < 1) {
+									console.log("Filter.js - resetTrail - remove - pop");
+									newTrail.pop();
+									newSelection[i] = [];
+								} else {
+									console.log(
+										"Filter.js - resetTrail - remove - newArray",
+										newArray
+									);
+									newSelection[i] = newArray;
+								}
+							} else {
+								console.log("Filter.js - resetTrail - add -reverse Selec");
+								newSelection[i] = [...value, key === "sizes" ? numerify : item];
+							}
+						} else {
+							newSelection[i] = selected[i];
+						}
+					});
+					setTrail(newTrail);
+					setSelected(newSelection);
+				};
 				//if item has not already been added , add it and class "selected"
 				if (index === -1) {
-					console.log(
-						"Filter.js ----- searchArray() 1=> item was NOT prev added"
-					);
-
-					if (key === "sizes") {
-						if (
-							key === "sizes" &&
-							(phase === "sizes-brands" || phase === "sizes-colors")
-						) {
-							setSelected({
-								...selected,
-								[key]: [...value, numerify],
-								brand: [],
-								colors: [],
-							});
-							setDiff({ ...diff, colors_diff: "", brands_diff: "" });
-						} else {
-							setSelected({
-								...selected,
-								[key]: [...value, numerify],
-							});
-						}
-					} else if (key === "colors") {
-						console.log("Filter.js -----searchArray()=> selecting COLORS");
-						if (key === "colors" && phase === "colors-sizes") {
-							console.log("Filter.js -----searchArray()=> selecting COLORS--A");
-							setSelected({ ...selected, [key]: [...value, item], sizes: [] });
-						} else if (key === "colors" && phase === "colors-brands") {
-							console.log("Filter.js -----searchArray()=> selecting COLORS--B");
-							setSelected({ ...selected, [key]: [...value, item], brand: [] });
-						} else {
-							console.log("Filter.js -----searchArray()=> selecting COLORS--C");
-							setSelected({
-								...selected,
-								[key]: [...value, item],
-							});
-						}
-					} else if (key === "brand") {
-						console.log("Filter.js -----searchArray()=> selecting BRAND");
-						if (key === "brand" && phase === "brands-colors") {
-							setSelected({ ...selected, [key]: [...value, item], colors: [] });
-						} else if (key === "brand" && phase === "brands-sizes") {
-							setSelected({ ...selected, [key]: [...value, item], sizes: [] });
-						} else {
-							setSelected({
-								...selected,
-								[key]: [...value, item],
-							});
-						}
+					console.log("Filter.js -- searchArray() - NEW");
+					//first selection || repeat selection || new selection
+					if (
+						!trail ||
+						trail[trail.length - 1] === key ||
+						!trail.includes(key)
+					) {
+						console.log("Filter.js - searchArray - NEW  -first Selec");
+						action();
 					} else {
-						console.log("Filter.js -----searchArray()=> LAST OPTION ");
-						setSelected({ ...selected, [key]: [...value, item] });
+						console.log("Filter.js - searchArray - NEW -reverse Selec");
+						resetTrail();
 					}
-				} else {
 					//if item has already been added , remove it from array and remove class "selected"
-					console.log("Filter.js ----- searchArray() 1=> item WAS prev added");
-					if (key === "sizes") {
-						let newArray = value.filter((v) => v !== numerify);
-						console.log(
-							"Filter.js ----- searchArray() 1=> item WAS prev added -- 1"
-						);
-						setSelected({ brand: [], colors: [], [key]: newArray });
-					} else {
-						let newArray = value.filter((v) => v !== item);
-						console.log(
-							"Filter.js ----- searchArray() 1=> item WAS prev added -- 2"
-						);
-
-						setSelected({ ...selected, [key]: newArray });
-					}
+				} else {
+					console.log("Filter.js - searchArray() - old ");
+					resetTrail("remove");
 				}
 			}
 		});
 	};
 
 	useEffect(() => {
-		console.log("Filter.js ----- useEffect.. => selected :\n", selected);
-		if (
-			selected.brand.length < 1 &&
-			selected.colors.length < 1 &&
-			selected.sizes.length < 1
+		console.log("Filter.js --- useEffect --- fetchingList");
+		let result = retrieveLocal("filter" + categoryName);
+		console.log("Filter.js --- useEffect --- fetchingList result:", result);
+		if (result.states) {
+			console.log(
+				"Filter.js --- useEffect --- fetching Locally result.states:",
+				result.states
+			);
+			setCommand("resultinfilter");
+		} else {
+			fetchFilteredProducts(categoryName, 1000);
+		}
+	}, [useParams()]);
+
+	useEffect(() => {
+		console.log(
+			"Filter.js ----- useEffect -- realtime list:",
+			list,
+			"diff:",
+			diff,
+			"selected:",
+			selected
+		);
+		console.log("brand.length :", brand.length);
+		let result = retrieveLocal("filter" + categoryName);
+		console.log("Filter.js --- useEffect --- fetchingList result:", result);
+		if (command === "resultinfilter") {
+			console.log(
+				"Filter.js --- useEffect --- fetching Locally result.states:",
+				result.states
+			);
+			setSelected(result.states.selected);
+			setList(result.states.list);
+			setDiff(result.states.diff);
+			setCount(result.states.count);
+		} else if (
+			!command &&
+			brand.length === 0 &&
+			colors.length === 0 &&
+			product_type.length === 0 &&
+			sizes.length === 0
 		) {
-			setDiff({ colors_diff: "", brands_diff: "", sizes_diff: "", phase: "" });
+			console.log("Filter.js ----- useEffect -- clearing");
+			setDiff({
+				colors_diff: "",
+				brand_diff: "",
+				sizes_diff: "",
+				product_type_diff: "",
+			});
+			setTrail();
 			setCount(origincount);
 		} else {
-			filter({ categoryName, brand, colors, sizes }).then((data, error) => {
-				console.log("realTimeFilter() data : ", data);
-				setCount(data.count);
-				if (
-					selected.brand.length > 0 &&
-					(phase === "" ||
-						phase === "brands" ||
-						phase === "brands-colors" ||
-						phase === "brands-sizes")
-				) {
-					console.log("Filter.js ----- useEffect.. => BRAAANDS");
-					setDiff({
-						phase: "brands",
-						colors_diff: data.list.colors_list,
-						sizes_diff: data.list.sizes_list,
-					});
-					if (selected.colors.length > 0) {
-						console.log("Filter.js ----- useEffect.. => BRAAANDS + Color");
-						setDiff({
-							...diff,
-							phase: "brands-colors",
-							sizes_diff: data.list.sizes_list,
-						});
-					}
-					if (selected.sizes.length > 0) {
-						console.log("Filter.js ----- useEffect.. => BRAAANDS + sizes");
-						setDiff({
-							...diff,
-							phase: "brands-sizes",
-							colors_diff: data.list.colors_list,
-						});
-					}
-				} else if (
-					selected.colors.length > 0 &&
-					(phase === "" ||
-						phase === "colors" ||
-						phase === "colors-brands" ||
-						phase === "colors-sizes")
-				) {
-					console.log("Filter.js ----- useEffect.. => COLORSS");
-					setDiff({
-						phase: "colors",
-						brands_diff: data.list.brands_list,
-						sizes_diff: data.list.sizes_list,
-					});
-					if (selected.brand.length > 0) {
-						console.log("Filter.js ----- useEffect.. => Colors Then Brands");
-						setDiff({
-							...diff,
-							phase: "colors-brands",
-							sizes_diff: data.list.sizes_list,
-						});
-					}
-					if (selected.sizes.length > 0) {
-						console.log("Filter.js ----- useEffect.. => Colors Then Sizes");
-						setDiff({
-							...diff,
-							phase: "colors-sizes",
-							brands_diff: data.list.brands_list,
-						});
-					}
-				} else if (
-					selected.sizes.length > 0 &&
-					(phase === "" ||
-						phase === "sizes" ||
-						phase === "sizes-colors" ||
-						phase === "sizes-brands")
-				) {
-					console.log("Filter.js ----- useEffect.. =>SIZES");
-					setDiff({
-						phase: "sizes",
-						brands_diff: data.list.brands_list,
-						colors_diff: data.list.colors_list,
-					});
-					if (selected.colors.length > 0) {
-						console.log("Filter.js ----- useEffect.. => SIZES + Color");
-						if (phase === "sizes-brands") {
-							setDiff({
-								...diff,
-								phase: "sizes-brands",
-							});
+			filter({ categoryName, brand, colors, sizes, product_type, trail }).then(
+				(data, error) => {
+					console.log("realTimeFilter() data : ", data);
+					setCount(data.count);
+					let set = {};
+					for (let i = 0; i < filters.length; i++) {
+						console.log("Filter.js ----- useEffect..--inlOOP -1");
+						let diffCon = filters[i] + "_diff";
+						let listCon = filters[i] + "_list";
+
+						if (trail && trail[0] === filters[i]) {
+							console.log("Filter.js -- useEffect - first included");
+							set[diffCon] = "";
+						} else if (trail && trail.includes(filters[i])) {
+							console.log("Filter.js -- useEffect -included");
+							set[diffCon] = diff[diffCon];
 						} else {
-							setDiff({
-								...diff,
-								phase: "sizes-colors",
-								brands_diff: data.list.brands_list,
-							});
+							console.log("Filter.js -- useEffect -excluded");
+							set[diffCon] = data.list[listCon];
 						}
-					} else if (selected.brand.length > 0) {
-						console.log("Filter.js ----- useEffect.. => SIZES + brands");
-						setDiff({
-							...diff,
-							phase: "sizes-brands",
-							colors_diff: data.list.colors_list,
-						});
 					}
+					console.log("Filter.js -- useEffect -set", set);
+					setDiff(set);
+					setCommand();
 				}
-			});
+			);
 		}
-	}, [brand, brands_list, colors, selected, sizes, categoryName]);
+	}, [brand, colors, sizes, product_type, categoryName]);
 
 	const submitForm = (e) => {
 		console.log("Filter.js ----- submitForm()...");
-		filter({ categoryName, brand, colors, sizes, submit: true }).then(
-			(data, error) => {
-				if (data) {
-					console.log("Filter.js ----- submitForm()> data: ", data);
-					filteredProducts(data);
-				} else {
-					console.log("Filter.js ----- submitForm()> error: ", error);
-				}
+		filter({
+			categoryName,
+			brand,
+			colors,
+			sizes,
+			product_type,
+			submit: true,
+		}).then((data, error) => {
+			if (data) {
+				console.log("Filter.js ----- submitForm()> data: ", data);
+				filteredProducts({ data: data, filterCount: data.length });
+				savelocally({
+					name: "filter" + categoryName,
+					states: { selected, diff, list, trail, count },
+					data: data,
+					filterCount: data.length,
+				});
+			} else {
+				console.log("Filter.js ----- submitForm()> error: ", error);
 			}
-		);
+		});
 	};
-	console.log("Filter.js ----- diff", diff);
-	console.log("Filter.js ----- selected", selected);
-	console.log("Filter.js ----- list", list);
-
-	console.log(
-		"Filter.js ----- SIZE selected",
-		selected.sizes[0],
-		typeof sizes[0]
-	);
-	console.log("Filter.js ----- SIZE list", sizes_list[0], typeof sizes_list[0]);
+	//console.log("Filter.js ----- diff", diff);
+	//console.log("Filter.js ----- selected", selected);
+	//console.log("Filter.js ----- list", list);
+	//console.log("Filter.js ----- trail", trail);
 
 	return (
 		<>
 			<div
 				className={classN === "hidden" ? "filter_page hidden" : "filter_page"}
 			>
+				<div className="proType">
+					<div className="header">
+						<h4>Category</h4>
+					</div>
+
+					<ul className="proType-img flex-r flex-r--wrap">
+						{product_type_list &&
+							product_type_list.map((s) => (
+								<li
+									key={s}
+									onClick={(e) => searchArray(e, "product_type")}
+									className={
+										product_type_diff && !product_type_diff.includes(s)
+											? "fadedOption"
+											: product_type && product_type.includes(s)
+											? "selected"
+											: ""
+									}
+								>
+									{s}
+								</li>
+							))}
+					</ul>
+				</div>
 				<div className="brand">
 					<div className="header">
 						<h4>Brands</h4>
 					</div>
 
 					<ul className="brand-img flex-r flex-r--wrap">
-						{brands_list &&
-							brands_list.map((s) => (
+						{brand_list &&
+							brand_list.map((s) => (
 								<li
 									key={s}
 									onClick={(e) => searchArray(e, "brand")}
 									className={
-										brands_diff && !brands_diff.includes(s)
+										brand_diff && !brand_diff.includes(s)
 											? "fadedOption"
 											: brand.includes(s)
 											? "selected"
@@ -313,9 +331,6 @@ const Filter = ({ filteredProducts, classN }) => {
 				<div className="size">
 					<div className="header flex-r flex-r--wrap">
 						<h4>Size-EU</h4>
-						<h4>
-							<Link to="/">Size Guide</Link>
-						</h4>
 					</div>
 
 					<ul className="size-list flex-r flex-r--wrap">
@@ -342,9 +357,6 @@ const Filter = ({ filteredProducts, classN }) => {
 				<div className="color">
 					<div className="header flex-r">
 						<h4>Color</h4>
-						<h4>
-							<Link to="/">Color Name</Link>
-						</h4>
 					</div>
 					<ul className="color-list flex-r flex-r--wrap">
 						{colors_list &&

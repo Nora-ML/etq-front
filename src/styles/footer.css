@@ -1,11 +1,11 @@
 .footer {
     width: 100%;
-    height: 50vh;
+    height: 40vh;
     padding: 0 3.2vw;
     display: grid;
     /* background-color: burlywood; */
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 60% 40%;
+    grid-template-rows: 70% 30%;
     grid-template-areas: 'a a b c d e' 'f f g h h i';
   }
   

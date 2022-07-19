@@ -41,6 +41,27 @@ export const saveToken = (user) => {
 		localStorage.setItem("jwt", JSON.stringify(user));
 	}
 };
+export const savelocally = (info) => {
+	const { name } = info;
+	console.log("Index.js ---- savelocally() info:", info);
+	if (typeof window !== "undefined") {
+		console.log("Index.js ---- retrieveLocal() adding to local");
+		localStorage.setItem(name, JSON.stringify(info));
+	}
+};
+export const retrieveLocal = (name) => {
+	console.log("Index.js ---- retrieveLocal() name:", name);
+	if (localStorage.getItem(name)) {
+		console.log("Index.js ---- retrieveLocal() exist");
+		return JSON.parse(localStorage.getItem(name));
+	} else {
+		return { name: false };
+	}
+};
+export const removeLocal = (name) => {
+	console.log("Index.js ---- removeLocal() name:", name);
+	localStorage.removeItem(name);
+};
 
 export const signOut = async () => {
 	console.log("Index.js ---- signOut()");
@@ -192,12 +213,41 @@ export const itemsInCategory = async (categoryName, limit, skip) => {
 		console.log("Index.js ---- itemsInCategory() => error :", error);
 	}
 };
+export const itemsCount = async (cat) => {
+	console.log("Index.js ---- itemsCount()");
+	try {
+		const response = await fetch(`${API}//shop/count/${cat}`, {
+			method: "GET",
+		});
+		return await response.json();
+	} catch (error) {
+		console.log("Index.js ---- itemsCount() => error :", error);
+	}
+};
+
+export const editCategory = async (v) => {
+	console.log("Index.js ---- editCategory() v:", v);
+	const { oldN, newN } = v;
+	try {
+		const response = await fetch(`${API}/shop/${oldN}`, {
+			method: "PUT",
+			headers: {
+				"content-type": "application/json",
+				Accept: "application/json",
+			},
+			body: JSON.stringify({ newN }),
+		});
+		return await response.json();
+	} catch (error) {
+		console.log("Index.js ---- editCategory() error:", error);
+	}
+};
 
 export const capitalizeFirst = (word) => {
 	console.log("Index.js ---- Capitalizedfirst()");
 	let capitalized;
 	if (word) {
-		capitalized = word.slice(0, 1).toUpperCase() + word.slice(1);
+		capitalized = word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase();
 	} else {
 		capitalized = "";
 	}

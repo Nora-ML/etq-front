@@ -5,20 +5,20 @@ import { addProduct, list, updateProduct } from "../requests";
 const AddProductForm = ({ product, className }) => {
 	console.log("## FE => ProductForm() => rendered");
 	const [state, setState] = useState({
-		name: " ",
-		product_type: " ",
+		name: "",
+		product_type: "",
 		//the category i selected
-		category: " ",
-		promotion: " ",
-		description: " ",
+		category: "",
+		promotion: "",
+		description: "",
 		featured: false,
-		brand: " ",
+		brand: "",
 		price: 0,
 		quantity: 0,
 		sold: 0,
-		image: { images: "", default_image: " ", featured_image: " " },
-		colors: " ",
-		sizes: " ",
+		image: { images: "", default_image: "", featured_image: "" },
+		colors: "",
+		sizes: "",
 		available: false,
 		success: false,
 		error: false,
@@ -79,7 +79,6 @@ const AddProductForm = ({ product, className }) => {
 					state[key] = false;
 				} else if (key === "image") {
 					state[key]["images"] = product[key];
-				
 				} else if (key === "category") {
 					state[key] = product[key]._id;
 				} else {
@@ -113,18 +112,19 @@ const AddProductForm = ({ product, className }) => {
 			} else {
 				console.log("## FE => ProductForm()=> submitForm() => succes");
 				setState({
-					name: " ",
-					class: " ",
-					category: " ",
-					promotions: " ",
-					description: " ",
-					brand: " ",
+					name: "",
+					class: "",
+					category: "",
+					promotions: "",
+					description: "",
+					product_type: "",
+					brand: "",
 					price: 0,
 					quantity: 0,
 					sold: 0,
-					image: { images: "", default_image: " ", featured_image: " " },
-					colors: " ",
-					sizes: " ",
+					image: { images: "", default_image: "", featured_image: "" },
+					colors: "",
+					sizes: "",
 					available: false,
 					error: false,
 					formData: new FormData(),
@@ -264,12 +264,21 @@ const AddProductForm = ({ product, className }) => {
 				</div>
 				<div className={"form-item--addproduct product_type " + className}>
 					<label name="product_type">Product Type :</label>
-					<input
-						type="text"
+					<select
 						onChange={changeHandler("product_type")}
 						name="product_type"
 						value={product_type}
-					/>
+					>
+						<option>Choose prod type:</option>
+						<option>Shirt</option>
+						<option>Jacket</option>
+						<option>Coats</option>
+						<option>SweatShirt</option>
+						<option>Short</option>
+						<option>Pants</option>
+						<option>Shoes</option>
+						<option>Accessories</option>
+					</select>
 				</div>
 				<div className={"form-item--addproduct featured " + className}>
 					<input

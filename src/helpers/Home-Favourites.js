@@ -7,6 +7,7 @@ const HomeFavs = ({ classN }) => {
 	console.log("HomeFavs.js --- rendered", classN);
 	const [products, setProducts] = useState();
 	const [count, setCount] = useState(0);
+	const [num, setNum] = useState(0);
 
 	const getFeaturedProd = () => {
 		console.log("HomeFavs.js --- fetFeaturedProd() ");
@@ -14,20 +15,20 @@ const HomeFavs = ({ classN }) => {
 			if (error || !data) {
 				console.log("HomeFavs.js --- fetFeaturedProd() error", error);
 			} else {
-				console.log("HomeFavs.js --- fetFeaturedProd() data:", data);
 				data.map((p, index) =>
 					index < 4
 						? (p.classP = "prodBlock__featured--wrapper")
 						: (p.classP = "prodBlock__featured--wrapper prod-hidden")
 				);
 				setProducts(data);
+				setNum(data.length);
 			}
 		});
 	};
 
 	const slide = (direction) => {
 		console.log("HomeFavs.js --- slide(),direction: ", direction);
-		if (direction === "plus" && count < 6) {
+		if (direction === "plus" && count < num - 3) {
 			console.log("HomeFavs.js --- slide(),plus");
 			const newProduct = products.map((p, index) =>
 				index === count

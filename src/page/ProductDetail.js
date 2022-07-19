@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Layout from "../core/Layout";
+import { HashLink as Link } from "react-router-hash-link";
 import {
 	capitalizeFirst,
 	addToCart,
@@ -27,11 +28,10 @@ const ProductDetail = () => {
 		image_count: "",
 	});
 	const [value, setValue] = useState({ size: "", color: "" });
-	const [allImages, setAllImages] = useState();
 	const [allOptions, setAllOptions] = useState({ colors: [], sizes: [] });
 	const [filterFix, setFilter] = useState("");
 	const [cart, setCart] = useState(0);
-	const [zoom, setZoom] = useState(false);
+	const [active, setActive] = useState();
 	const { sizes, colors } = allOptions;
 
 	const { size, color } = value;
@@ -40,18 +40,13 @@ const ProductDetail = () => {
 	const getProduct = (ID) => {
 		console.log("productDetail.js---product() ...");
 		viewProduct(ID).then((response, error) => {
-			console.log(response[0]);
+			console.log("productDetail.js---product()", response[0]);
 			console.log(error);
 			if (error || !response) {
 				console.log("productDetail.js---product()=>error");
 			} else {
 				const data = response;
 				console.log("productDetail.js---product()=>success data:", data);
-				/* const imagesArray = [];
-				data.image.images.forEach((img) => {
-					var b64 = Buffer.from(img.data).toString("base64");
-					imagesArray.push("data:" + img.contentType + ";base64," + b64);
-				}); */
 				setAllOptions({
 					colors: data.colors,
 					sizes: data.sizes,
@@ -75,6 +70,19 @@ const ProductDetail = () => {
 		top: filterFix,
 	};
 
+	const activate = (x) => {
+		console.log("productDetail.js--- activate() ");
+		if (x === active) {
+			setActive();
+		} else {
+			setActive(x);
+		}
+	};
+	const choiceB = (e, x) => {
+		console.log("productDetail.js--- choiceB() e:", e);
+		console.log("productDetail.js--- choiceB() x:", x);
+		setValue({ ...value, [x]: e.target.innerText });
+	};
 	const choice = (x) => (e) => {
 		console.log("productDetail.js--- choice()");
 		setValue({ ...value, [x]: e.target.value });
@@ -150,7 +158,7 @@ const ProductDetail = () => {
 			}
 			if (
 				scroll >= container_height - quart &&
-				scroll <= scrollHeight - innerHeight - halved
+				scroll <= scrollHeight - innerHeight - quart
 			) {
 				setNavState("visible");
 			} else {
@@ -163,10 +171,12 @@ const ProductDetail = () => {
 		};
 	}, []);
 
-	const zoomIn = (e) => {
+	/* const zoomIn = (e) => {
 		console.log("zooooom ", e);
 		e.target.classList.toggle("zoomIn");
-	};
+	}; */
+
+	console.log("productDetail.js--- color :", color);
 
 	const format = () => {
 		return (
@@ -182,7 +192,7 @@ const ProductDetail = () => {
 									key={i}
 									className="product-content__anchor-img"
 									to=""
-									onClick={(e) => zoomIn(e)}
+									/* onClick={(e) => zoomIn(e)} */
 								>
 									<img
 										className="product-content__img"
@@ -198,46 +208,53 @@ const ProductDetail = () => {
 						style={stylez}
 						ref={filterRef}
 					>
-						<h2>{capitalizeFirst(product.name)}</h2>
-						<h3>{capitalizeFirst(colors[0])}</h3>
+						<h2>{product.name}</h2>
+						<h3>{colors[0]}</h3>
 						<h4>$ {product.price}</h4>
 						<p>
 							Everything we do is meant to last. Our designs last. Our products
 							last. This collection of wardrobe essentials comes in six tim...
 						</p>
-						<Link to="">More information</Link>
-						<div className="dropdown">
-							<select
-								className="dropbtn"
-								name="color"
-								value={color}
-								onChange={choice("color")}
+						<Link to="#info">More information</Link>
+						<div className="dropdown" onClick={() => activate("color")}>
+							<p>{color !== "" ? color : colors[0]}</p>
+							<div
+								className={
+									active === "color" && colors.length > 1
+										? "dropdown-content active"
+										: "dropdown-content"
+								}
 							>
 								{colors &&
-									colors.map((col) => (
-										<option className="dropdown-content active">{col}</option>
+									colors.map((col, index) => (
+										<div key={index} className="dropDown-item">
+											<p onClick={(e) => choiceB(e, "color")}>{col}</p>
+										</div>
 									))}
-							</select>
+							</div>
 						</div>
-						<div className="dropdown">
-							<select
-								className="dropbtn"
-								name="size"
-								value={size}
-								onChange={choice("size")}
+						<div className="dropdown" onClick={() => activate("size")}>
+							<p>{size !== "" ? size : sizes[0]}</p>
+							<div
+								className={
+									active === "size" && sizes.length > 1
+										? "dropdown-content active"
+										: "dropdown-content"
+								}
 							>
 								{sizes &&
-									sizes.map((siz) => (
-										<option className="dropdown-content active">{siz}</option>
+									sizes.length > 1 &&
+									sizes.map((col, index) => (
+										<div key={index} className="dropDown-item">
+											<p onClick={(e) => choiceB(e, "size")}>{col}</p>
+										</div>
 									))}
-							</select>
+							</div>
 						</div>
 						<button className="black-btn" type="submit" onClick={submit}>
 							Add to Bag
 						</button>
-						<Link className="size-guide line" to="">
-							Size guide
-						</Link>
+
 						<ul className="check-list">
 							<li>
 								Pay with iDeal, Apple Pay, Mastercard, Visa, PayPal, Klarna
@@ -251,7 +268,7 @@ const ProductDetail = () => {
 						</ul>
 					</div>
 				</div>
-				<div className="even-container">
+				<div className="even-container" id="info">
 					<div className="prod-description">
 						<h3>Description</h3>
 						<p>
@@ -319,36 +336,40 @@ const ProductDetail = () => {
 					<ul className="product-nav-both product-nav-1"></ul>
 					<ul className="product-nav-both product-nav-2">
 						<h4>{product.name + " " + color + "   $" + product.price}</h4>
-						<div className="dropdown nav">
-							<select
-								className="dropbtn"
-								name="color"
-								value={color}
-								onChange={choice("color")}
+						<div className="dropdown nav" onClick={() => activate("colorNav")}>
+							<p>{color !== "" ? color : colors[0]}</p>
+							<div
+								className={
+									active === "colorNav" && colors.length > 1
+										? "dropdown-content--nav active"
+										: "dropdown-content--nav"
+								}
 							>
 								{colors &&
-									colors.map((col) => (
-										<option className="dropdown-content--nav active">
-											{col}
-										</option>
+									colors.map((col, index) => (
+										<div key={index} className="dropDown-item">
+											<p onClick={(e) => choiceB(e, "color")}>{col}</p>
+										</div>
 									))}
-							</select>
+							</div>
 						</div>
 
-						<div className="dropdown nav">
-							<select
-								className="dropbtn"
-								name="size"
-								value={size}
-								onChange={choice("size")}
+						<div className="dropdown nav" onClick={() => activate("sizeNav")}>
+							<p>{size !== "" ? size : sizes[0]}</p>
+							<div
+								className={
+									active === "sizeNav" && sizes.length > 1
+										? "dropdown-content--nav active"
+										: "dropdown-content--nav"
+								}
 							>
 								{sizes &&
-									sizes.map((siz) => (
-										<option className="dropdown-content--nav active">
-											{siz}
-										</option>
+									sizes.map((col, index) => (
+										<div key={index} className="dropDown-item">
+											<p onClick={(e) => choiceB(e, "size")}>{col}</p>
+										</div>
 									))}
-							</select>
+							</div>
 						</div>
 
 						<button className="black-btn nav" type="submit" onClick={submit}>

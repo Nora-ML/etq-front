@@ -8,7 +8,7 @@ import { loggedIn } from "../requests";
 const ProductWrapper = ({ products, classN }) => {
 	console.log("ProductWrapper.js  => rendered ..,products: ", products);
 	const [userz, setUser] = useState("");
-	const [location, setLocation] = useState("");
+	//const [location, setLocation] = useState("");
 	const [images, setImages] = useState(false);
 
 	// Setting a pattern for product Card sizes and passing className accordingly
@@ -44,9 +44,9 @@ const ProductWrapper = ({ products, classN }) => {
 			console.log("ProductWrapper.js --- useEffect => loggedIn():", userz);
 			const { user } = loggedIn();
 			setUser(user);
-			setLocation(
+			/* setLocation(
 				window.location.href.slice(window.location.href.lastIndexOf("/"))
-			);
+			); */
 			setTimeout(() => {
 				setImages(true);
 			}, 400);
@@ -74,8 +74,11 @@ const ProductWrapper = ({ products, classN }) => {
 				/>
 			)}
 			<ProductDescription product={product} />
-			{userz && userz.role !== 1 && location.includes("pillow") && (
-				<UserCommands product={product} user={userz} />
+			{userz && userz.role !== 1 && (
+				/* location.includes("pillow") && */ <UserCommands
+					product={product}
+					user={userz}
+				/>
 			)}
 			{userz && userz.role === 1 && !classN && (
 				<AdminCommands product={product} />

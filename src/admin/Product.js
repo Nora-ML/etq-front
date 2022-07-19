@@ -130,15 +130,6 @@ const ProductCommands = () => {
 						Add a Product
 					</Link>
 				</p>
-
-				<p>
-					<Link to="">Edit a Product</Link>
-				</p>
-				<p>
-					<Link to="" onClick={viewAll}>
-						Bulk Edits
-					</Link>
-				</p>
 				<p>
 					<Link to="" onClick={deleteAll}>
 						Delete all Products

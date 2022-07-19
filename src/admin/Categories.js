@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { deleteAll, list, capitalizeFirst } from "../requests";
+import { deleteAll, list, capitalizeFirst, editCategory } from "../requests";
 import AddCategoryForm from "../helpers/CategoryForm";
 import AddPromotionForm from "../helpers/PromotionForm";
 
@@ -13,8 +13,13 @@ const CategoryCommands = () => {
 	});
 	const [display, setDisplay] = useState(false);
 	const [category, setCategories] = useState([]);
+	const [catName, setNewName] = useState({
+		oldN: "NONE",
+		newN: "",
+	});
 
 	const { success, error, message } = status;
+	const { oldN, newN } = catName;
 
 	const deleteAllCateg = () => {
 		console.log("## FE => CategoryCommands Component  => deleteAll() ");
@@ -71,6 +76,38 @@ const CategoryCommands = () => {
 				}
 			}
 		});
+	};
+	const changeHandler = (e, n) => {
+		console.log("Admin CategoryCommands=> changeHandler --e ", e);
+		setNewName({ ...catName, newN: e.target.value });
+	};
+
+	const reqEdit = () => {
+		console.log("Admin CategoryCommands=> reqEdit ");
+		editCategory(catName).then((response, error) => {
+			if (error || !response) {
+				console.log("Admin CategoryCommands=> editCat -- error", error);
+			} else {
+				console.log("Admin CategoryCommands=> editCat -- response", response);
+				window.location.reload();
+			}
+		});
+	};
+	const editCat = () => {
+		console.log("Admin CategoryCommands=> editCat() ");
+		return (
+			<div className="flex-r">
+				<label name="name">Category name :</label>
+				<input
+					type="text"
+					onChange={(e) => changeHandler(e)}
+					name="name"
+					placeholder={oldN}
+					value={newN}
+				/>
+				<p onClick={() => reqEdit()}>Submit</p>
+			</div>
+		);
 	};
 
 	const add = (what) => {
@@ -131,8 +168,17 @@ const CategoryCommands = () => {
 				<>
 					<h3>{message}</h3>
 					{category.map((cat) => (
-						<h5 key={cat._id}>{capitalizeFirst(cat.name)}</h5>
+						<div className="flex-r">
+							<h5 key={cat._id}>{capitalizeFirst(cat.name)}</h5>
+							<p
+								style={{ marginLeft: "10px", fontSize: "10px", color: "blue" }}
+								onClick={() => setNewName({ newN: "", oldN: cat.name })}
+							>
+								Edit
+							</p>
+						</div>
 					))}
+					{oldN !== "NONE" && editCat()}
 				</>
 			);
 		}
@@ -154,11 +200,8 @@ const CategoryCommands = () => {
 				</p>
 				<p>
 					<Link to="" onClick={viewAll}>
-						View all Categories
+						All Categories
 					</Link>
-				</p>
-				<p>
-					<Link to="">Edit Category</Link>
 				</p>
 				<p>
 					<Link to="" onClick={deleteAllCateg}>

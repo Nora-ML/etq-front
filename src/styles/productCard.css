@@ -9,19 +9,21 @@ overflow: hidden;
 /*The smallish cards  --Shop/Category page*/
 .prodBlock_wrapper--medium {
 /*   border: red 2px solid; */
-  background-color: rgba(235, 232, 232, 0.391) ;
+/*  background-color: rgba(235, 232, 232, 0.391) ; */
   border-radius: 5px;
+  min-width: 280px;
   width: 21vw;
-  margin: 5vh 0;
-  height: 65vh;
+  margin: 5vh 1vw;
+  height: 68vh;
 }
 
 /*The larger cards   --Shop/Category page*/
 .prodBlock_wrapper--Big {
-  border: rgba(0, 128, 0, 0.112) 2px solid;
-  width: 30vw;
-  height: 70vh;
-  margin: 5vh 0;
+ /*  border: rgba(0, 128, 0, 0.112) 2px solid; */
+  width: 28vw;
+  min-width: 400px;
+  height: 82vh;
+  margin: 5vh 1vw;
 }
 
 /***  featured  **/
@@ -120,14 +122,14 @@ animation-direction: reverse;
   /*min-heght is key 
   in standardizing the height*/
   min-height: 70%;
-  height: 75%;
+  height: 73%;
 }
 /*Featured*/
 .prodBlock__featured--imgContainer{
  /*border: rgb(128, 0, 73) 2px solid; */
   width: 100%;
   min-height: 85%;
-  height: 90%;
+  height: 88%;
 }
 
 /*--------  The Image ------*/
@@ -138,7 +140,7 @@ animation-direction: reverse;
   height: 100%;
 }
 .prodBlock__img--DELETE-LATER {
-  border: green 1px solid;
+ /*  border: green 1px solid; */
   width: 100%;
   height: 100%;
 }
@@ -177,6 +179,12 @@ animation-direction: reverse;
 .arrow-wrap-left {
   right: 85%;
 }
+.prodBlock_wrapper--Big .arrow-wrap-right {
+  left: 88%;
+}
+.prodBlock_wrapper--Big .arrow-wrap-left {
+  right: 88%;
+}
 /*ArroW Icon general look and animation */
 .arrow-wrap {
   background-color: white;
@@ -188,13 +196,20 @@ animation-direction: reverse;
 /****************************************         Product Description  *************************/
 .prodBlock__description {
   margin-top: 10px;
-  line-height: 2px;
+
 }
 /***/
 
-.prodBlock__description .green {
+.prodBlock__description--green {
   color: rgb(45, 170, 101);
   font-weight: 600;
+  margin-block-start: 10px;
+  inline-size: 95%;
+}
+.prodBlock__description--brand ,.prodBlock__description--price {
+  margin-block-start: 10px;
+  margin-block-end: 10px;
+
 }
 /*****************************************       ADMIN commands  ********************************/
 .prodBlock__adminCommand{
@@ -234,7 +249,7 @@ animation-direction: reverse;
   opacity:0;
   display: flex;
   width: 20%;
-  height: 10%;
+  height: 8%;
   right: 0;
   top: 0;
   justify-content: flex-end;
@@ -257,7 +272,7 @@ background-color: transparent;
   transition: transform 0.60s ease;
 }
 .prodBlock:hover .prodBlock_userCommand .favourites:hover{
-  transform: translateY(-1%);
+  transform: translateY(-2%);
   cursor: pointer;
   transition: transform 0.60s ease;
   opacity: 1;

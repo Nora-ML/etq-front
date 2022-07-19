@@ -177,9 +177,12 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 		console.log("Header.js ---- categoriez()");
 		list("category").then((response, error) => {
 			if (error || !response) {
-				/* console.log("Header.js ---- categoriez() => error"); */
+				console.log("Header.js ---- categoriez() => error");
 			} else {
-				console.log("Header.js ---- categoriez() => success");
+				console.log(
+					"Header.js ---- categoriez() => success response:",
+					response
+				);
 				setCategories(response);
 			}
 		});

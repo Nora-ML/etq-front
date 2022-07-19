@@ -64,6 +64,7 @@ const ShowImage = ({ product, classN }) => {
 			<Link
 				key={product._id}
 				className={classN}
+				/* target="_blank" */
 				to={"/products/" + product._id}
 			>
 				{allImages && (

@@ -173,11 +173,25 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 				"Filter.js --- useEffect --- fetching Locally result.states:",
 				result.states
 			);
-			setCommand("resultinfilter");
+			setCommand(result.states);
 		} else {
 			fetchFilteredProducts(categoryName, 1000);
 		}
 	}, [useParams()]);
+	useEffect(() => {
+		console.log("Filter.js --- useEffect --- command ");
+		if (command) {
+			console.log(
+				"Filter.js ---settingUpData() - fetchingList command:",
+				command
+			);
+			setDiff(command.diff);
+			setSelected(command.selected);
+			setList(command.list);
+			setCount(command.count);
+			setTrail(command.trail);
+		}
+	}, [command, setCommand]);
 
 	useEffect(() => {
 		console.log(
@@ -188,19 +202,8 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 			"selected:",
 			selected
 		);
-		console.log("brand.length :", brand.length);
-		let result = retrieveLocal("filter" + categoryName);
-		console.log("Filter.js --- useEffect --- fetchingList result:", result);
-		if (command === "resultinfilter") {
-			console.log(
-				"Filter.js --- useEffect --- fetching Locally result.states:",
-				result.states
-			);
-			setSelected(result.states.selected);
-			setList(result.states.list);
-			setDiff(result.states.diff);
-			setCount(result.states.count);
-		} else if (
+		console.log("brand.length :", brand.length, "command:", command);
+		if (
 			!command &&
 			brand.length === 0 &&
 			colors.length === 0 &&
@@ -240,11 +243,10 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 					}
 					console.log("Filter.js -- useEffect -set", set);
 					setDiff(set);
-					setCommand();
 				}
 			);
 		}
-	}, [brand, colors, sizes, product_type, categoryName]);
+	}, [brand, colors, sizes, product_type, trail, categoryName]);
 
 	const submitForm = (e) => {
 		console.log("Filter.js ----- submitForm()...");
@@ -270,10 +272,10 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 			}
 		});
 	};
-	//console.log("Filter.js ----- diff", diff);
-	//console.log("Filter.js ----- selected", selected);
-	//console.log("Filter.js ----- list", list);
-	//console.log("Filter.js ----- trail", trail);
+	console.log("Filter.js ----- diff", diff);
+	console.log("Filter.js ----- selected", selected);
+	console.log("Filter.js ----- list", list);
+	console.log("Filter.js ----- trail", trail);
 
 	return (
 		<>

@@ -275,6 +275,9 @@ const AddProductForm = ({ product, className }) => {
 						<option>Coats</option>
 						<option>SweatShirt</option>
 						<option>Short</option>
+						<option>Skirt</option>
+						<option>Dress</option>
+						<option>Knitwear</option>
 						<option>Pants</option>
 						<option>Shoes</option>
 						<option>Accessories</option>

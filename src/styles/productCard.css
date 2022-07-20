@@ -29,13 +29,10 @@ overflow: hidden;
 /***  featured  **/
 .prodBlock__featured--wrapper{
  /*  border: rgba(20, 19, 19, 0.963) 3px solid; */
-  width: 29vw;
+  width: 28vw;
+  min-width: 400px;
   height: 80vh;
-  margin: 0 2.5vw 0 0;  
-}
-.prodBlock__featured--wrapper:first-child{
- /*  border: rgba(20, 19, 19, 0.963) 3px solid; */
-  margin-left: 2.5vw;  
+  margin: 0 0 0 2.5vw;  
 }
 .prod-hidden{
   display: none;
@@ -44,7 +41,7 @@ overflow: hidden;
 ,.prod-active1
 ,.prod-active2
 ,.prod-active3{
-  left: 0;
+  left: 0vw;
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
@@ -68,23 +65,23 @@ animation-direction: reverse;
 }
 @keyframes featuredHide {
   from{transform: translateX(0)}
-  to{transform: translateX(-29vw)}
+  to{transform: translateX(-30.5vw)}
 }
 @keyframes featuredActive {
   from{transform: translateX(0)}
-  to{transform: translateX(-29vw)}
+  to{transform: translateX(-30.5vw)}
 }
 @keyframes featuredActive1 {
   from{transform: translateX(0)}
-  to{transform: translateX(-29vw)}
+  to{transform: translateX(-30.5vw)}
 }
 @keyframes featuredActive2 {
   from{transform: translateX(0)}
-  to{transform: translateX(-29vw)}
+  to{transform: translateX(-30.5vw)}
 }
 @keyframes featuredActive3 {
   from{transform: translateX(0)}
-  to{transform: translateX(-29vw)}
+  to{transform: translateX(-30.5vw)}
 }
 
 
@@ -104,11 +101,7 @@ animation-direction: reverse;
 }
 .prodBlock:hover .arrow-wrap:hover {
   opacity: 1;
-}
-
-
-
- 
+} 
 
 /****************************************         Product Image *************************/
 
@@ -126,10 +119,10 @@ animation-direction: reverse;
 }
 /*Featured*/
 .prodBlock__featured--imgContainer{
- /*border: rgb(128, 0, 73) 2px solid; */
+ /* border: rgb(128, 0, 73) 2px solid; */
   width: 100%;
-  min-height: 85%;
-  height: 88%;
+  min-height: 75%;
+  height: 80%;
 }
 
 /*--------  The Image ------*/
@@ -149,8 +142,6 @@ animation-direction: reverse;
   width: 100%;
   height: 100%;
 }
-
-
 
 /***      Arrow Icons          ***/
 /**/
@@ -172,17 +163,23 @@ animation-direction: reverse;
   position: relative;
   bottom: 35vh;
 }
+/*.... and featured productCard* */
+.prodBlock__featured--wrapper .prodBlock__icons {
+  position: relative;
+  bottom: 35vh;
+}
 /*Positioning applied to both*/
 .arrow-wrap-right {
   left: 85%;
 }
+
 .arrow-wrap-left {
   right: 85%;
 }
-.prodBlock_wrapper--Big .arrow-wrap-right {
+.prodBlock_wrapper--Big .arrow-wrap-right, .prodBlock__featured--wrapper .arrow-wrap-right{
   left: 88%;
 }
-.prodBlock_wrapper--Big .arrow-wrap-left {
+.prodBlock_wrapper--Big .arrow-wrap-left, .prodBlock__featured--wrapper .arrow-wrap-left {
   right: 88%;
 }
 /*ArroW Icon general look and animation */
@@ -190,6 +187,10 @@ animation-direction: reverse;
   background-color: white;
   opacity:0;
   transition: opacity 0.5s ease-out;
+}
+.prodBlock__featured--wrapper .prodBlock__icons {
+  position: relative;
+  bottom: 35vh;
 }
 
 

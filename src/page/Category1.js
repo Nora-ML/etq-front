@@ -92,11 +92,17 @@ const Category1 = () => {
 		//window.scrollTo(0, 0);
 		let result = retrieveLocal("filter" + categoryName);
 		const theDrill = (c) => {
+			console.log("Category1.js ---- itemsCount()--theDRill()");
 			let toSkip = 0;
 			loadingProducts(categoryName, limit, toSkip, c);
 			itemsCount(categoryName).then((response, error) => {
-				console.log("Category1.js ---- itemsCount()");
-				if (error || !response) {
+				console.log(
+					"Category1.js ---- itemsCount() error:",
+					error,
+					"response:",
+					response
+				);
+				if (error) {
 					console.log("Category1.js ---- itemsCount() error:", error);
 				} else {
 					console.log("Category1.js ---- itemsCount() response:", response);
@@ -116,6 +122,7 @@ const Category1 = () => {
 			setDisplayMininav(true);
 			setSubmit(true);
 		} else {
+			console.log("Category1.js ---- useEffect --- no local state");
 			theDrill("");
 		}
 		if (filterReset) {

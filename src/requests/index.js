@@ -207,8 +207,6 @@ export const itemsInCategory = async (categoryName, limit, skip) => {
 			`${API}/shop/${categoryName}?limit=${limit}&skip=${skip}`,
 			{
 				method: "GET",
-				"api-key":
-					"NgY1FgiHqSQnV1gpY1F1pXqDoQu4iqY6OXNDY8BJ29llEw5itewzEI7bkcAfo64N",
 			}
 		);
 		return await response.json();

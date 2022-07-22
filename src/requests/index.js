@@ -217,7 +217,7 @@ export const itemsInCategory = async (categoryName, limit, skip) => {
 export const itemsCount = async (cat) => {
 	console.log("Index.js ---- itemsCount()");
 	try {
-		const response = await fetch(`${API}//shop/count/${cat}`, {
+		const response = await fetch(`${API}/shop/count/${cat}`, {
 			method: "GET",
 		});
 		return await response.json();

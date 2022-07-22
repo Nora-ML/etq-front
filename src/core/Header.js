@@ -296,6 +296,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 							to=""
 							onClick={() => activate("search")}
 							className="nav-box noline"
+							placeholder="Not Active Yet"
 						>
 							Search
 						</Link>

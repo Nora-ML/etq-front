@@ -78,18 +78,18 @@ const UserBoard = () => {
 						</Link>
 					</p>
 					<p className="noline">
-						<Link to="" onClick={activate("orders")}>
-							Orders
-						</Link>
-					</p>
-					<p className="noline">
 						<Link to="#prod" onClick={activate("favourites")}>
 							Favourites
 						</Link>
 					</p>
 					<p className="noline">
 						<Link to="#prod" onClick={activate("bag")}>
-							My Bag
+							Cart
+						</Link>
+					</p>
+					<p className="noline">
+						<Link to="" onClick={activate("orders")}>
+							Orders
 						</Link>
 					</p>
 				</div>
@@ -113,14 +113,14 @@ const UserBoard = () => {
 					)}
 				</div>
 				<div className="main-3col-grid--admin_content">
-					{contactInfo === "active" && (
+					{/* {contactInfo === "active" && (
 						<>
 							<h3>{title}</h3>
 							<p>
-								<Link to="">Delete all users</Link>
+								<Link to=""></Link>
 							</p>
 						</>
-					)}
+					)} */}
 					{favourites === "active" && <MyFav command="favourites" />}
 					{bag === "active" && <MySelection command="bag" />}
 					{successmessage()}

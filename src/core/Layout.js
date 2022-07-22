@@ -25,7 +25,7 @@ const Layout = ({ cart, children, page }) => {
 					}
 				});
 			}
-		}, 6000);
+		}, 12000);
 	}
 
 	useEffect(() => {

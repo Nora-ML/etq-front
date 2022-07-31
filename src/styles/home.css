@@ -18,6 +18,7 @@
   }
   
   .head-img {
+    /* background-color: green; */
     position: relative;
     width: 72%;
     height: 100vh;
@@ -29,7 +30,7 @@
   }
   
   .head-intro {
-    /* border: red solid 1px; */
+   /*  border: red solid 1px; */
     width: 28%;
     height: 50vh;
     padding: 5vh 5vw 0 2.5vw;
@@ -49,6 +50,7 @@
     position: relative;
     /* border: rgb(0, 0, 255) solid 1px; */
     letter-spacing: 1px;
+    font-weight: 500;
     line-height: 2.2rem;
     animation-name: headers;
     animation-duration: 1.5s;
@@ -78,8 +80,56 @@
 .notDisplayed{
     display: none;
 }
+
+@media screen and (max-width:1140px) {
+  .sec-1{
+    position: relative;
+  }
+  .head-img {
+    position: absolute;
+    width: 100%;
+    max-width: 1140px;
+    min-width: 950px;
+  }
+  .head-intro {
+   /*  border: red solid 1px; */
+    font-size: larger;
+    color: rgba(253, 248, 252, 0.859);
+    width: 35vw;
+    left: 1vw;
+    position: absolute;
+    height: auto;
+    bottom: 2vh;
+    padding: 1vh 2.5vh ;
+  }
+  .head-details {
+
+    color: rgba(255, 255, 255, 0.723);
+
+  }
+}
+@media screen and (max-width:900px) {
+  .head-intro {
+    max-width: 45vw;
+  }
+  .head-img {
+    width: 100%;
+    max-width: 950px;
+    min-width: 250px;
+  }
+  .head-preHeader {
+    letter-spacing: 1.2px;
+   font-size: 18px;
+  }
+  .head-header{
+    
+  }
+  .head-details {
+    display: none;
+  }
+}
   
-  /*----------------section 2 */
+  /*----------------------------------  section 2 -INFO ---------------*/
   .sec-2 {
     grid-area: sec-2;
     position: relative;
@@ -133,7 +183,7 @@
     to{bottom: 0%;opacity:1;}
   }
 
-  /*---------------------------------------section 3 */
+/*------------------------------  section 3 -featured Products ---------------*/
   .sec-3 {
     position: relative;
     grid-area: sec-3;

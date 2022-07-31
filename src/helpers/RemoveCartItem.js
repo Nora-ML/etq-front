@@ -29,7 +29,7 @@ const RemoveCartItem = ({ proId, updatedCart }) => {
 	}, []);
 
 	return (
-		<p className="removeItem-p" onClick={remove}>
+		<p className="product-details product-details_remove" onClick={remove}>
 			Remove
 		</p>
 	);

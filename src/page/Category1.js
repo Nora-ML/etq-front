@@ -60,6 +60,10 @@ const Category1 = () => {
 						setfilterC();
 						setfilterReset(false);
 					} else {
+						console.log(
+							"Category1.js  ----- loadingProducts() -- command !== getALL  "
+						);
+						setfilterC();
 						setDisplayLayout(true);
 						setDisplayMininav(true);
 						setskip(ski);
@@ -94,7 +98,7 @@ const Category1 = () => {
 		const theDrill = (c) => {
 			console.log("Category1.js ---- itemsCount()--theDRill()");
 			let toSkip = 0;
-			loadingProducts(categoryName, limit, toSkip, c);
+
 			itemsCount(categoryName).then((response, error) => {
 				console.log(
 					"Category1.js ---- itemsCount() error:",
@@ -109,6 +113,7 @@ const Category1 = () => {
 					setCount(response);
 				}
 			});
+			loadingProducts(categoryName, limit, toSkip, c);
 		};
 
 		console.log(
@@ -142,6 +147,9 @@ const Category1 = () => {
 			loadingProducts(categoryName, limit, toSkip);
 		}
 	}, [commandz]);
+
+	console.log("Category1.js... count :", count);
+	console.log("Category1.js... filterC :", filterC);
 
 	useEffect(() => {
 		console.log("Category1.js ---- useEffect...listening for elemnt");

@@ -17,11 +17,16 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 	const [categories, setCategories] = useState([]);
 	const [itemActive, setItemActive] = useState(false);
 	const [navstate, setnavState] = useState("classic");
+	const [screen, setScreen] = useState(() =>
+		window.innerWidth <= 1140 ? true : false
+	);
 	const [localCart, setLocalCart] = useState(0);
+	const [marker, setMarker] = useState();
 	const [active, setActive] = useState({
 		search: "",
 		help: "",
 		myaccount: "",
+		burger: "",
 		cart: "",
 		overlay: false,
 		redirect: "",
@@ -30,20 +35,45 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 	const [itemCount, setItemCount] = useState(0);
 
 	//destructuring state
-	const { search, help, myaccount, cart, overlay, redirect } = active;
+	const { search, help, myaccount, cart, overlay, redirect, burger } = active;
 
 	/**************          Activating navBar ITEMS on click       ************************/
 	/*********    setting overlay to true to later trigger the overlay effect   ********************/
 
 	const activate = (n, destin) => {
 		console.log("header.js=> activate() =>n: ", n);
-
-		if (active[n] === "active") {
-			//console.log("header.js ---- activate() =>2");
-			setActive({ ...active, [n]: "", overlay: false, redirect: destin });
+		if ((active[n] && active[n] === "active") || n === "all2") {
+			console.log("header.js ---- activate() =>2");
+			Object.keys(active).forEach((key) => {
+				active[key] = "";
+			});
+			setActive({
+				...active,
+				overlay: false,
+				redirect: destin,
+			});
 			setItemActive(false);
+		} else if ((burger === "active" && n !== "burger") || n === "all") {
+			if (n === "all") {
+				setMarker();
+			} else {
+				setMarker("hide");
+			}
+			console.log("header.js ---- activate() =>3");
+			Object.keys(active).forEach((key) => {
+				active[key] = "";
+			});
+			setActive({
+				...active,
+				[n]: "active",
+				burger: "active",
+				overlay: true,
+				redirect: "",
+			});
+
+			setItemActive(true);
 		} else {
-			// console.log("header.js ---- activate() =>3");
+			console.log("header.js ---- activate() =>4");
 			Object.keys(active).forEach((key) => {
 				active[key] = "";
 			});
@@ -77,9 +107,20 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 			console.log("Header.js ----useEffect -- e", e);
 			e.path.find((p) => {
 				if (p.className === "part-1 flex-r") {
+					console.log("part 1 flex r exit active");
 					exitActive();
 				}
-				return p.className === "part-2 flex-r";
+				console.log(
+					"YAAAAAAAAY p.className:",
+					p.className,
+					" -- ",
+					p.className === "part-2 flex-r"
+				);
+				return (
+					p.className === "part-2 flex-r" ||
+					p.className === "burger part-1 white flex-c" ||
+					p.className === "burger part-1 flex-c"
+				);
 			})
 				? console.log("Don't exit")
 				: exitActive();
@@ -128,13 +169,13 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 	const navTrigger = () => {
 		/*	console.log("header.js ---- navTrigger()");*/
 		if (itemActive) {
-			return "main-navigation no-background flex-r";
+			return "main-navigation no-background";
 		} else if (navstate === "classic") {
-			return "main-navigation flex-r";
+			return "main-navigation";
 		} else if (navstate === "hide") {
-			return "main-navigation hide flex-r";
+			return "main-navigation hide";
 		} else if (navstate === "active") {
-			return "main-navigation active flex-r";
+			return "main-navigation active";
 		}
 	};
 
@@ -171,6 +212,24 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 			return () => clearTimeout(timer);
 		}
 	}, [navstate, itemActive]);
+	useEffect(() => {
+		console.log("Header.js ----screen width --useEffect..");
+
+		window.addEventListener("resize", () => {
+			const innerHeight = window.innerHeight;
+			const innerWidth = window.innerWidth;
+			console.log("window :", window);
+
+			if (innerWidth <= 1140) {
+				console.log("Header.js-- less than 1140 -- innerWidth:", innerWidth);
+				setScreen(true);
+			} else {
+				console.log("Header.js -- innerWidth:", innerWidth);
+				setScreen(false);
+			}
+		});
+	}, []);
+	console.log("Header.js ----active :", active);
 
 	/***********    Fetching Product categories to populate Navbar with their name Dynamically & fetch initial items in cart   ***************/
 	const categoriez = () => {
@@ -259,6 +318,8 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 			return "ele-4-cont coll flex-c";
 		}
 	};
+
+	console.log("Header.js --- screen :", screen);
 	return (
 		<>
 			<div
@@ -268,247 +329,556 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 						: "active_overlay hidden active_overlay--nav"
 				}
 			></div>
-			<nav className={navTrigger()}>
-				<ul
-					className={
-						page === "home" && navstate === "classic"
-							? "part-1 white flex-r"
-							: "part-1 flex-r"
-					}
-				>
-					<li>
-						<Link to="/" className="logo">
-							ETQ.
-						</Link>
-					</li>
+			{!screen && (
+				<nav className={navTrigger()}>
+					<Link
+						to="/"
+						className={
+							page === "home" && navstate === "classic"
+								? "logo white "
+								: "logo "
+						}
+					>
+						ETQ.
+					</Link>
 
-					{categories.map((cat) => (
-						<li key={cat._id}>
-							<Link to={`/shop/${cat.name}`} className=" noline">
-								{capitalizeFirst(cat.name).split(" ")[0]}
+					<ul
+						className={
+							page === "home" && navstate === "classic"
+								? "part-1 white flex-r"
+								: "part-1 flex-r"
+						}
+					>
+						{categories.map((cat) => (
+							<li key={cat._id}>
+								<Link to={`/shop/${cat.name}`} className=" noline">
+									{capitalizeFirst(cat.name).split(" ")[0]}
+								</Link>
+							</li>
+						))}
+					</ul>
+					<ul className="part-2 flex-r">
+						<li className="ele-1">
+							<Link
+								to=""
+								onClick={() => activate("search")}
+								className="nav-box noline"
+								placeholder="Not Active Yet"
+							>
+								Search
 							</Link>
-						</li>
-					))}
-				</ul>
-				<ul className="part-2 flex-r">
-					<li className="ele-1">
-						<Link
-							to=""
-							onClick={() => activate("search")}
-							className="nav-box noline"
-							placeholder="Not Active Yet"
-						>
-							Search
-						</Link>
 
-						<div
-							className={
-								search === "active"
-									? "ele-1-cont coll active flex-r"
-									: "ele-1-cont coll flex-r"
-							}
-						>
-							<input
-								type="text"
-								placeholder="Start typing what you\'re looking for"
-							/>
-						</div>
-					</li>
-					<li className="ele-2">
-						<Link
-							to=""
-							onClick={() => activate("help")}
-							className="nav-box noline"
-						>
-							Help
-						</Link>
-
-						<div
-							className={
-								help === "active" ? "ele-2-cont active coll" : "ele-2-cont coll"
-							}
-						>
-							<div className="subNav-Container flex-r">
-								<ul className="ele-2-subcont flex-c">
-									<h4 className=" noline">Contact</h4>
-									<li>
-										<Link to="" className=" noline">
-											Email-us
-										</Link>
-									</li>
-									<li>
-										<Link to="" className=" noline">
-											+31(0)202256153
-										</Link>
-									</li>
-								</ul>
-								<ul className="ele-2-subcont flex-c">
-									<h4 className=" noline">Information</h4>
-									<li className="noline">
-										<Link to="/">Shipping Information</Link>
-									</li>
-									<li className="noline">
-										<Link to="">Returns & Exchanges</Link>
-									</li>
-									<li className="noline">
-										<Link to="">Size guide</Link>
-									</li>
-									<li className="noline">
-										<Link to="">Wholesale & Showroom</Link>
-									</li>
-								</ul>
-								<ul className="ele-2-subcont flex-c">
-									<h4 className=" noline">Frequently asked questions </h4>
-									<li>
-										<Link to="" className=" noline">
-											Do I need an account to place an order?
-										</Link>
-									</li>
-									<li>
-										<Link to="" className=" noline">
-											How do I return or exchange?
-										</Link>
-									</li>
-									<li>
-										<Link to="" className=" noline">
-											Do you ship to my country?
-										</Link>
-									</li>
-									<li>
-										<Link to="" className=" noline">
-											How much does the delivery cost?
-										</Link>
-									</li>
-								</ul>
+							<div
+								className={
+									search === "active"
+										? "ele-1-cont coll active flex-r"
+										: "ele-1-cont coll flex-r"
+								}
+							>
+								<input
+									type="text"
+									placeholder="Start typing what you\'re looking for"
+								/>
 							</div>
-						</div>
-					</li>
-					<li className="user ele-3">
-						{!user && (
-							<>
-								<Link
-									to=""
-									onClick={() => activate("myaccount")}
-									className="nav-box noline"
-								>
-									My Account
-								</Link>
+						</li>
+						<li className="ele-2">
+							<Link
+								to=""
+								onClick={() => activate("help")}
+								className="nav-box noline"
+							>
+								Help
+							</Link>
 
-								<div
-									className={
-										myaccount === "active"
-											? "ele-3-cont active coll flex-c"
-											: "ele-3-cont coll  flex-c"
-									}
-								>
-									<p>
-										Create an account or log in to view your orders, return or
-										adjust your personal information.
-									</p>
-									<div className="ele-3-subcont flex-r">
-										<p>
-											<Link
-												to=""
-												onClick={() => activate("myaccount", "/signup")}
-												className=" noline"
-											>
-												Create account
+							<div
+								className={
+									help === "active"
+										? "ele-2-cont active coll"
+										: "ele-2-cont coll"
+								}
+							>
+								<div className="subNav-Container flex-r">
+									<ul className="ele-2-subcont flex-c">
+										<h4 className=" noline">Contact</h4>
+										<li>
+											<Link to="" className=" noline">
+												Email-us
 											</Link>
-										</p>
-										<button
-											onClick={() => activate("myaccount", "/signin")}
-											className="black-btn-hr"
-											type="submit"
-										>
-											Login
-										</button>
-									</div>
+										</li>
+										<li>
+											<Link to="" className=" noline">
+												+31(0)202256153
+											</Link>
+										</li>
+									</ul>
+									<ul className="ele-2-subcont flex-c">
+										<h4 className=" noline">Information</h4>
+										<li className="noline">
+											<Link to="/">Shipping Information</Link>
+										</li>
+										<li className="noline">
+											<Link to="">Returns & Exchanges</Link>
+										</li>
+										<li className="noline">
+											<Link to="">Size guide</Link>
+										</li>
+										<li className="noline">
+											<Link to="">Wholesale & Showroom</Link>
+										</li>
+									</ul>
+									<ul className="ele-2-subcont flex-c">
+										<h4 className=" noline">Frequently asked questions </h4>
+										<li>
+											<Link to="" className=" noline">
+												Do I need an account to place an order?
+											</Link>
+										</li>
+										<li>
+											<Link to="" className=" noline">
+												How do I return or exchange?
+											</Link>
+										</li>
+										<li>
+											<Link to="" className=" noline">
+												Do you ship to my country?
+											</Link>
+										</li>
+										<li>
+											<Link to="" className=" noline">
+												How much does the delivery cost?
+											</Link>
+										</li>
+									</ul>
 								</div>
-							</>
-						)}
-						{user && (
-							<>
-								<Link
-									to=""
-									onClick={() => activate("myaccount")}
-									className="nav-box noline"
-								>
-									{capitalizeFirst(user.name)}
-								</Link>
-								<div
-									className={
-										myaccount === "active"
-											? "ele-3-cont active coll flex-c"
-											: "ele-3-cont coll  flex-c"
-									}
-								>
-									<p>Display your profile or signout.</p>
-									<div className="ele-3-subcont flex-r">
-										{user.role === 2 && (
+							</div>
+						</li>
+						<li className="user ele-3">
+							{!user && (
+								<>
+									<Link
+										to=""
+										onClick={() => activate("myaccount")}
+										className="nav-box noline"
+									>
+										My Account
+									</Link>
+
+									<div
+										className={
+											myaccount === "active"
+												? "ele-3-cont active coll flex-c"
+												: "ele-3-cont coll  flex-c"
+										}
+									>
+										<p>
+											Create an account or log in to view your orders, return or
+											adjust your personal information.
+										</p>
+										<div className="ele-3-subcont flex-r">
 											<p>
 												<Link
 													to=""
-													onClick={() => activate("myaccount", `/${user._id}`)}
+													onClick={() => activate("myaccount", "/signup")}
 													className=" noline"
 												>
-													Profile
+													Create account
 												</Link>
 											</p>
-										)}
-										{user.role === 1 && (
-											<p>
+											<button
+												onClick={() => activate("myaccount", "/signin")}
+												className="black-btn-hr"
+												type="submit"
+											>
+												Login
+											</button>
+										</div>
+									</div>
+								</>
+							)}
+							{user && (
+								<>
+									<Link
+										to=""
+										onClick={() => activate("myaccount")}
+										className="nav-box noline"
+									>
+										{capitalizeFirst(user.name)}
+									</Link>
+									<div
+										className={
+											myaccount === "active"
+												? "ele-3-cont active coll flex-c"
+												: "ele-3-cont coll  flex-c"
+										}
+									>
+										<p>Display your profile or signout.</p>
+										<div className="ele-3-subcont flex-r">
+											{user.role === 2 && (
+												<p>
+													<Link
+														to=""
+														onClick={() =>
+															activate("myaccount", `/${user._id}`)
+														}
+														className=" noline"
+													>
+														Profile
+													</Link>
+												</p>
+											)}
+											{user.role === 1 && (
+												<p>
+													<Link
+														to=""
+														onClick={() => activate("myaccount", "/admin")}
+														className="nav-box noline"
+													>
+														Admin Board
+													</Link>
+												</p>
+											)}
+											<button
+												onClick={signMeout()}
+												className="black-btn-hr"
+												type="submit"
+											>
+												SignOut
+											</button>
+										</div>
+									</div>
+								</>
+							)}
+						</li>
+						{user.role !== 1 && (
+							<li className="ele-4">
+								<Link
+									to=""
+									onClick={() => activate("cart")}
+									className="the-cart"
+								>
+									<p>{itemCount ? itemCount : 0}</p>
+								</Link>
+								<div className={cartOrNoCart()}>
+									{itemCount === 0 && (
+										<div className="ele-4-subcont flex-c">
+											<p>Your bag is currently empty.</p>
+											<hr className="thin-grey-line" />
+											<button className="nav-cart-btn" type="submit">
+												<Link to="" onClick={() => activate("cart", "/")}>
+													Start Shopping !
+												</Link>
+											</button>
+										</div>
+									)}
+									{itemCount !== 0 && (
+										<div className="ele-4-subcont flex-c">
+											<SemiCart
+												activeState={cart}
+												carts={localCart}
+												itemCount={(r) => setItemCount(r)}
+											/>
+										</div>
+									)}
+								</div>
+							</li>
+						)}
+					</ul>
+				</nav>
+			)}
+			{screen && (
+				<nav className={navTrigger()}>
+					<>
+						<ul
+							className={
+								page === "home" && navstate === "classic"
+									? "burger part-1 white flex-c"
+									: "burger part-1 flex-c"
+							}
+						>
+							<li className="ele-5">
+								<Link
+									to=""
+									onClick={() => activate("burger")}
+									className="nav-box noline"
+								>
+									Burger
+								</Link>
+								<div
+									className={
+										burger === "active"
+											? "ele-5-cont active coll"
+											: "ele-5-cont coll"
+									}
+								>
+									<div className="subNav-Container flex-c">
+										<ul className="ele-5-subcont flex-c">
+											{categories.map((cat) => (
+												<li key={cat._id}>
+													<Link
+														to={`/shop/${cat.name}`}
+														className=" noline"
+														onClick={() => activate("all2")}
+													>
+														{capitalizeFirst(cat.name).split(" ")[0]}
+													</Link>
+												</li>
+											))}
+											<li className="ele-5-search">
 												<Link
 													to=""
-													onClick={() => activate("myaccount", "/admin")}
+													onClick={() => activate("search")}
+													className="nav-box noline"
+													placeholder="Not Active Yet"
+												>
+													Search
+												</Link>
+
+												<div
+													className={
+														search === "active"
+															? "ele-5-search-sub active flex-r"
+															: "ele-5-search-sub hide flex-r"
+													}
+												>
+													<input
+														type="text"
+														placeholder="Start typing what you\'re looking for"
+													/>
+												</div>
+											</li>
+											<li className="ele-5-help">
+												<Link
+													to=""
+													onClick={() => activate("help")}
 													className="nav-box noline"
 												>
-													Admin Board
+													Help
 												</Link>
-											</p>
+
+												<div
+													className={
+														help === "active"
+															? "ele-5-cont active coll"
+															: "ele-5-cont coll"
+													}
+												>
+													<div className="subNav-Container flex-r">
+														<ul className="ele-5-subcont flex-c">
+															<h4 className=" noline">Contact</h4>
+															<li>
+																<Link to="" className=" noline">
+																	Email-us
+																</Link>
+															</li>
+															<li>
+																<Link to="" className=" noline">
+																	+31(0)202256153
+																</Link>
+															</li>
+														</ul>
+														<ul className="ele-5-subcont flex-c">
+															<h4 className=" noline">Information</h4>
+															<li className="noline">
+																<Link to="/">Shipping Information</Link>
+															</li>
+															<li className="noline">
+																<Link to="">Returns & Exchanges</Link>
+															</li>
+															<li className="noline">
+																<Link to="">Size guide</Link>
+															</li>
+															<li className="noline">
+																<Link to="">Wholesale & Showroom</Link>
+															</li>
+														</ul>
+														<ul className="ele-5-subcont flex-c">
+															<h4 className=" noline">
+																Frequently asked questions{" "}
+															</h4>
+															<li>
+																<Link to="" className=" noline">
+																	Do I need an account to place an order?
+																</Link>
+															</li>
+															<li>
+																<Link to="" className=" noline">
+																	How do I return or exchange?
+																</Link>
+															</li>
+															<li>
+																<Link to="" className=" noline">
+																	Do you ship to my country?
+																</Link>
+															</li>
+															<li>
+																<Link to="" className=" noline">
+																	How much does the delivery cost?
+																</Link>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</li>
+											<li className="user ele-5-user">
+												{!user && (
+													<>
+														<Link
+															to=""
+															onClick={() => activate("myaccount")}
+															className="nav-box noline"
+														>
+															My Account
+														</Link>
+
+														<div
+															className={
+																myaccount === "active"
+																	? "ele-3-cont active coll flex-c"
+																	: "ele-3-cont coll  flex-c"
+															}
+														>
+															<p>
+																Create an account or log in to view your orders,
+																return or adjust your personal information.
+															</p>
+															<div className="ele-3-subcont flex-r">
+																<p>
+																	<Link
+																		to=""
+																		onClick={() =>
+																			activate("myaccount", "/signup")
+																		}
+																		className=" noline"
+																	>
+																		Create account
+																	</Link>
+																</p>
+																<button
+																	onClick={() =>
+																		activate("myaccount", "/signin")
+																	}
+																	className="black-btn-hr"
+																	type="submit"
+																>
+																	Login
+																</button>
+															</div>
+														</div>
+													</>
+												)}
+												{user && (
+													<>
+														<Link
+															to=""
+															onClick={() => activate("myaccount")}
+															className="nav-box noline"
+														>
+															{capitalizeFirst(user.name)}
+														</Link>
+														<div
+															className={
+																myaccount === "active"
+																	? "ele-3-cont active coll flex-c"
+																	: "ele-3-cont coll  flex-c"
+															}
+														>
+															<p>Display your profile or signout.</p>
+															<div className="ele-3-subcont flex-r">
+																{user.role === 2 && (
+																	<p>
+																		<Link
+																			to=""
+																			onClick={() =>
+																				activate("myaccount", `/${user._id}`)
+																			}
+																			className=" noline"
+																		>
+																			Profile
+																		</Link>
+																	</p>
+																)}
+																{user.role === 1 && (
+																	<p>
+																		<Link
+																			to=""
+																			onClick={() =>
+																				activate("myaccount", "/admin")
+																			}
+																			className="nav-box noline"
+																		>
+																			Admin Board
+																		</Link>
+																	</p>
+																)}
+																<button
+																	onClick={signMeout()}
+																	className="black-btn-hr"
+																	type="submit"
+																>
+																	SignOut
+																</button>
+															</div>
+														</div>
+													</>
+												)}
+											</li>
+										</ul>
+										{marker === "hide" && (
+											<h4 onClick={() => activate("all")}>Back</h4>
 										)}
-										<button
-											onClick={signMeout()}
-											className="black-btn-hr"
-											type="submit"
-										>
-											SignOut
-										</button>
 									</div>
 								</div>
-							</>
+							</li>
+						</ul>
+					</>
+					<Link
+						to="/"
+						className={
+							page === "home" && navstate === "classic"
+								? "logo white "
+								: "logo "
+						}
+					>
+						ETQ.
+					</Link>
+
+					<ul className="part-2 flex-r">
+						{user.role !== 1 && (
+							<li className="ele-4">
+								<Link
+									to=""
+									onClick={() => activate("cart")}
+									className="the-cart"
+								>
+									<p>{itemCount ? itemCount : 0}</p>
+								</Link>
+								<div className={cartOrNoCart()}>
+									{itemCount === 0 && (
+										<div className="ele-4-subcont flex-c">
+											<p>Your bag is currently empty.</p>
+											<hr className="thin-grey-line" />
+											<button className="nav-cart-btn" type="submit">
+												<Link to="" onClick={() => activate("cart", "/")}>
+													Start Shopping !
+												</Link>
+											</button>
+										</div>
+									)}
+									{itemCount !== 0 && (
+										<div className="ele-4-subcont flex-c">
+											<SemiCart
+												activeState={cart}
+												carts={localCart}
+												itemCount={(r) => setItemCount(r)}
+											/>
+										</div>
+									)}
+								</div>
+							</li>
 						)}
-					</li>
-					{user.role !== 1 && (
-						<li className="ele-4">
-							<Link to="" onClick={() => activate("cart")} className="the-cart">
-								<p>{itemCount ? itemCount : 0}</p>
-							</Link>
-							<div className={cartOrNoCart()}>
-								{itemCount === 0 && (
-									<div className="ele-4-subcont flex-c">
-										<p>Your bag is currently empty.</p>
-										<hr className="thin-grey-line" />
-										<button className="nav-cart-btn" type="submit">
-											<Link to="" onClick={() => activate("cart", "/")}>
-												Start Shopping !
-											</Link>
-										</button>
-									</div>
-								)}
-								{itemCount !== 0 && (
-									<div className="ele-4-subcont flex-c">
-										<SemiCart
-											activeState={cart}
-											carts={localCart}
-											itemCount={(r) => setItemCount(r)}
-										/>
-									</div>
-								)}
-							</div>
-						</li>
-					)}
-				</ul>
-			</nav>
+					</ul>
+				</nav>
+			)}
 		</>
 	);
 };

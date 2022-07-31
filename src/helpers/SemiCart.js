@@ -50,26 +50,26 @@ const SemiCart = ({ activeState, carts, itemCount }) => {
 									<img
 										src={`${API}/products/photo/${cart.productId}`}
 										alt={cart.name}
-										width="100"
-										height="100"
+										width="120"
+										height="120"
 									/>
 								</div>
 								<div className="product-details product-details_name">
 									<p className="green">{cart.name}</p>
-									<p>{cart.brand}</p>
-									<p>{cart.color}</p>
-									<p>{cart.size}</p>
+									<p>Brand: {cart.brand}</p>
+									<p>Color: {cart.color}</p>
+									<p>Size: {cart.size}</p>
 								</div>
 								<div className="product-details product-details_price">
 									<p>$ {cart.price}</p>
-
-									<RemoveCartItem
-										proId={cart.productId}
-										updatedCart={(c) => {
-											updates(c);
-										}}
-									/>
 								</div>
+
+								<RemoveCartItem
+									proId={cart.productId}
+									updatedCart={(c) => {
+										updates(c);
+									}}
+								/>
 							</div>
 						))}
 			</div>

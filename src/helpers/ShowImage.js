@@ -81,7 +81,8 @@ const ShowImage = ({ product, classN }) => {
 								? "prodBlock__featured--img"
 								: "prodBlock__img"
 						}
-						src={`${API}/products/photo/${product._id}`}
+						src=""
+						/* src={`${API}/products/photo/${product._id}`} */
 						alt={product.name}
 					/>
 				)}

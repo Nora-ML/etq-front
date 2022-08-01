@@ -5,8 +5,8 @@ const Cover = () => {
 		<>
 			<div className="sec-1 flex-r">
 				<img
-					src=""
-					/* src="https://cdn.shopify.com/s/files/1/0505/9044/9849/files/Frame_168_1_1080x.png?v=1649326168" */
+					/* src="" */
+					src="https://cdn.shopify.com/s/files/1/0505/9044/9849/files/Frame_168_1_1080x.png?v=1649326168"
 					alt=""
 					className="head-img"
 				/>

@@ -63,13 +63,22 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 			Object.keys(active).forEach((key) => {
 				active[key] = "";
 			});
-			setActive({
-				...active,
-				[n]: "active",
-				burger: "active",
-				overlay: true,
-				redirect: "",
-			});
+			if (n === "cart") {
+				setActive({
+					...active,
+					[n]: "active",
+					overlay: true,
+					redirect: "",
+				});
+			} else {
+				setActive({
+					...active,
+					[n]: "active",
+					burger: "active",
+					overlay: true,
+					redirect: "",
+				});
+			}
 
 			setItemActive(true);
 		} else {
@@ -86,7 +95,6 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 
 			setItemActive(true);
 		}
-		//console.log(`Header.js=> ${n} Activated`);
 	};
 
 	useEffect(() => {
@@ -100,31 +108,26 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 	}, [redirect]);
 
 	useEffect(() => {
-		console.log("Header.js ---- 1st useEffect ...");
-
 		function nonActiveArea(e) {
-			/*	console.log("Header.js ---- 1st useEffect => nonActiveArea() ");*/
-			console.log("Header.js ----useEffect -- e", e);
-			e.path.find((p) => {
-				if (p.className === "part-1 flex-r") {
-					console.log("part 1 flex r exit active");
-					exitActive();
-				}
-				console.log(
-					"YAAAAAAAAY p.className:",
-					p.className,
-					" -- ",
-					p.className === "part-2 flex-r"
-				);
-				return (
-					p.className === "part-2 flex-r" ||
-					p.className === "burger part-1 white flex-c" ||
-					p.className === "burger part-1 flex-c"
-				);
-			})
-				? console.log("Don't exit")
-				: exitActive();
+			if (!overlay && !itemActive) {
+				console.log("NO CLICK");
+			} else {
+				e.path.find((p) => {
+					if (p.className === "part-1 flex-r") {
+						console.log("part 1 flex r exit active");
+						exitActive();
+					}
+					return (
+						p.className === "part-2 flex-r" ||
+						p.className === "burger part-1 white flex-c" ||
+						p.className === "burger part-1 flex-c"
+					);
+				})
+					? console.log("Don't exit")
+					: exitActive();
+			}
 		}
+
 		function exitActive() {
 			console.log("Header.js ----useEffect =>  exitActive() ");
 			Object.keys(active).forEach((key) => {
@@ -139,14 +142,11 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 			setItemActive(false);
 		}
 		window.addEventListener("click", nonActiveArea);
-
-		//cleanup useEffect
 		return () => window.removeEventListener("click", nonActiveArea);
 	}, [active]);
 
 	/**********************      Hiding and activating Main nav bar on SCROLL   *********************/
 	function scrollUp(scroll) {
-		console.log("header.js ---- scrollUp(), itemActive:", itemActive);
 		if (itemActive === true) {
 			setnavState("active");
 		} else if (scroll === 0) {
@@ -156,7 +156,6 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 		}
 	}
 	function scrollDown(scroll, inner) {
-		console.log("header.js ---- ScrollDown()itemActive:", itemActive);
 		if (itemActive === true) {
 			setnavState("active");
 		} else if (scroll < inner) {
@@ -167,7 +166,6 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 	}
 	/**Detects the nav state and returns appropriate classname. Called in the nav element  ***/
 	const navTrigger = () => {
-		/*	console.log("header.js ---- navTrigger()");*/
 		if (itemActive) {
 			return "main-navigation no-background";
 		} else if (navstate === "classic") {
@@ -180,7 +178,6 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 	};
 
 	useEffect(() => {
-		console.log("Header.js ---- 2nd useEffect..");
 		var prevScroll = 0;
 		if (itemActive === true) {
 			setnavState("active");
@@ -188,15 +185,9 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 			window.addEventListener("scroll", () => {
 				var newScroll = window.scrollY;
 				const innerHeight = window.innerHeight;
-				/* console.log("prevScroll :", prevScroll + "-- newScroll :", newScroll); */
-
 				if (prevScroll !== 0 && prevScroll < newScroll) {
-					//scrolling down
-					/*	console.log("Scrolling DOOOWN ... ");*/
 					scrollDown(prevScroll, innerHeight);
 				} else if (prevScroll > newScroll) {
-					//scrolling up
-					/*	console.log("Scrolling UUUP ... ");*/
 					scrollUp(newScroll);
 				}
 				prevScroll = newScroll;
@@ -205,75 +196,45 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 				if (itemActive === false) {
 					if (navstate === "active" && prevScroll > window.innerHeight) {
 						setnavState("hide");
-						/* console.log("This will run after no scroll"); */
 					}
 				}
 			}, 3000);
 			return () => clearTimeout(timer);
 		}
 	}, [navstate, itemActive]);
+
+/**************** Resize screen event listener */
+
 	useEffect(() => {
-		console.log("Header.js ----screen width --useEffect..");
-
 		window.addEventListener("resize", () => {
-			const innerHeight = window.innerHeight;
 			const innerWidth = window.innerWidth;
-			console.log("window :", window);
-
 			if (innerWidth <= 1140) {
-				console.log("Header.js-- less than 1140 -- innerWidth:", innerWidth);
 				setScreen(true);
 			} else {
-				console.log("Header.js -- innerWidth:", innerWidth);
 				setScreen(false);
 			}
 		});
 	}, []);
-	console.log("Header.js ----active :", active);
-
 	/***********    Fetching Product categories to populate Navbar with their name Dynamically & fetch initial items in cart   ***************/
 	const categoriez = () => {
-		console.log("Header.js ---- categoriez()");
 		list("category").then((response, error) => {
 			if (error || !response) {
-				console.log("Header.js ---- categoriez() => error");
 			} else {
-				console.log(
-					"Header.js ---- categoriez() => success response:",
-					response
-				);
 				setCategories(response);
 			}
 		});
 	};
 
 	useEffect(() => {
-		console.log("Header.js ----3rd useEffect , categoriez, ");
 		categoriez();
 	}, []);
 
 	useEffect(() => {
-		console.log(
-			"Header.js ---4th useEffect , cartz :",
-			cartz,
-			"local Cart :",
-			localCart
-		);
 		if (cartz === false || cartz === undefined || cartz === 0) {
 			const localC = retrieveCart();
-			console.log("Header.js ---4th useEffect , localC :", localC);
 			if (localC.cart !== false) {
-				console.log(
-					"Header.js ---3rd useEffect , cartz :",
-					cartz,
-					"local Cart :",
-					localCart,
-					"local C :",
-					localC
-				);
 				setLocalCart(localC);
 				setItemCount(localC.length);
-				/* subTotal(localC); */
 			} else {
 				setLocalCart(0);
 			}
@@ -282,25 +243,19 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 			const localC = retrieveCart();
 			setLocalCart(localC);
 			setItemCount(localC.length);
-			/* subTotal(localC); */
 			activate("cart");
 		} else {
 			console.log("Header.js ---4th useEffect , cartz :", cartz);
 			setLocalCart(cartz);
 			setItemCount(cartz.length);
 			activate("cart");
-			/* subTotal(cartz); */
 		}
 	}, [cartz]);
 
 	/***********    Fetching Product categories to populate Navbar with their name Dynamically    ***************/
 	const signMeout = () => (e) => {
-		console.log("Header.js --- signmeout - event.target ", e);
 		signOut().then((response, error) => {
-			console.log("Header.js --- signMeOut , error:", error);
-			console.log("Header.js --- signMeOut , response:", response);
 			if (response) {
-				console.log("Header.js --- signMeOut , signoutFront()");
 				signOutFront();
 				setuserZ("");
 				activate("myaccount", "/");
@@ -309,7 +264,6 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 	};
 
 	const cartOrNoCart = () => {
-		console.log("Header.js --- cartOrNoCart ");
 		if (cart === "active" && itemCount > 0) {
 			return "ele-4-cont active coll cart-occupied flex-c";
 		} else if (cart === "active") {
@@ -319,7 +273,6 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 		}
 	};
 
-	console.log("Header.js --- screen :", screen);
 	return (
 		<>
 			<div

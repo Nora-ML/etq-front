@@ -5,7 +5,7 @@ const HomeInfoSec = ({ classN }) => {
 	console.log("HomeInfoSec.js --- rendered", classN);
 	return (
 		<div className={classN}>
-			<div className="sec-2_unit flex-r">
+			<div className="sec-2_unit">
 				<img
 					className="sec-2_img"
 					src="https://cdn.shopify.com/s/files/1/0505/9044/9849/articles/ETQ-FitpicsHQ-0845-26-04-22-Packing-Boxes-Crob_400x.jpg?v=1652433511"
@@ -25,7 +25,7 @@ const HomeInfoSec = ({ classN }) => {
 					src="https://cdn.shopify.com/s/files/1/0505/9044/9849/articles/WhatsApp_Image_2022-04-11_at_3.53.14_PM_400x.jpg?v=1649941950"
 					alt=""
 				/>
-				<div className="sec-2_img--det">
+				<div className="sec-2_img--det flex-c">
 					<h4 className="sec-2_img--det-header">Who we are</h4>
 					<p className="sec-2_img--det-details">Our journey explained</p>
 					<Link className="line" to="/">

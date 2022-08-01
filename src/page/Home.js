@@ -76,7 +76,7 @@ const Home = () => {
 					<Cover />
 
 					{animate && animate.includes("first") ? (
-						<HomeInfoSec classN="sec-2 flex-r" />
+						<HomeInfoSec classN="sec-2" />
 					) : (
 						<HomeInfoSec classN="notDisplayed" />
 					)}
@@ -86,7 +86,7 @@ const Home = () => {
 						<HomeFavs classN="notDisplayed" />
 					)}
 					{animate && animate.includes("third") ? (
-						<HomeStore classN="sec-4 flex-r" />
+						<HomeStore classN="sec-4" />
 					) : (
 						<HomeStore classN="notDisplayed" />
 					)}

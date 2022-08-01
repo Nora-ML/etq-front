@@ -6,8 +6,13 @@
     align-self: flex-end;
     grid-template-columns: 100vw;
     grid-template-areas: 'sec-1''sec-1''sec-2''sec-3''sec-3''sec-3''sec-4''sec-4';
-    /* border: 3px blue solid;
-     background-color: cadetblue; */
+  }
+  @media screen and (max-width:900px) {
+    .main-grid {
+      grid-template-rows: 100vh  125vh 57vh 115vh;
+
+      grid-template-areas: 'sec-1''sec-2''sec-3''sec-4';
+    }
   }
   
   /*----------------------------------  section 1 -header ---------------*/
@@ -18,7 +23,7 @@
   }
   
   .head-img {
-    /* background-color: green; */
+    background-color: rgb(181, 236, 181);
     position: relative;
     width: 72%;
     height: 100vh;
@@ -87,9 +92,8 @@
   }
   .head-img {
     position: absolute;
-    width: 100%;
+    width: 100vw;
     max-width: 1140px;
-    min-width: 950px;
   }
   .head-intro {
    /*  border: red solid 1px; */
@@ -134,6 +138,8 @@
     grid-area: sec-2;
     position: relative;
     /* background-color: cadetblue; */
+    display: flex;
+    flex-direction: row;
     padding: 11vh 6vh 5vh 6vh;
     justify-content: space-around;
     animation-name: sect2;
@@ -144,6 +150,8 @@
     width: 30vw;
     height: 100%;
     min-height: 40%;
+    display: flex;
+    flex-direction: row;
      /* border: crimson 2px solid; */
     align-items: center;
   }
@@ -181,6 +189,60 @@
     from{opacity:0;bottom: -10%;}
     40%{opacity:1;}
     to{bottom: 0%;opacity:1;}
+  }
+  @media screen and (max-width:900px) {
+    .sec-2 {
+      padding: 5vh 2vh 5vh 2vh;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    /*   background-color: cadetblue; */
+    }
+    
+    .sec-2_unit {
+      flex-direction: column;
+      width: 45vw;
+      height: 47vh;
+      min-height: 0;
+    /*   border: crimson 2px solid; */
+    }
+    .sec-2_img {
+     /*  border: rgb(37, 20, 220) 2px solid; */
+      width: 100%;
+      height: 65%;
+    }
+    .sec-2_img--det {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      height: 30%;
+     /*  background-color: rgb(176, 235, 145); */
+      padding: 15px 0 0 5px ;
+    }
+    .sec-2_img--det-details{
+      font-size: 13px;
+      margin-block-start:5px;
+      margin-block-end:0;
+      line-height: 1rem;
+    }
+    .sec-2_img--det-link{
+      display: inline-block;
+      margin-block-start:5px;
+      margin-block-end:0;
+      border-bottom: 1px solid gray;
+    }
+
+    .sec-2_unit:first-child {
+      width: 93vw;
+      height: 60vh;
+      margin-bottom: 1vh;
+    }
+    .sec-2_unit:first-child .sec-2_img {
+       height: 80%;
+     }
+    .sec-2_unit:first-child .sec-2_img--det {
+      height: 20%;
+    }
   }
 
 /*------------------------------  section 3 -featured Products ---------------*/
@@ -236,14 +298,36 @@
     position: relative;
     width: 200vw;
   }
+
+  /******** Responsiveness *****/
+
+  @media screen and (max-width:900px) {
+    .sec-3 {
+      padding: 2.5vh 10px;
+      /* background-color: rgb(141, 222, 135); */
+    }
+    .sec-3_header{
+      /* background-color: burlywood; */
+      margin: 0 10px 1.25vh 2.5vw;
+      max-width: 900px;
+      width: 93vw;
+      min-width: 770px;
+    }
+    .sec-3_header--title{
+      font-weight: lighter;
+      font-size: 20px;
+    }
+  }
   
   /*---------------------------------------section 4 */
   .sec-4 {
       position: relative;
     grid-area: sec-4;
-  /*   background-color: cadetblue; */
+   /*  background-color: cadetblue; */
     justify-content: space-between;
     padding: 15vh 2vw;
+    display: flex;
+    flex-direction: row;
     animation-name: sect3;
     animation-duration: 2s;
     margin: 0 1vw;
@@ -267,7 +351,30 @@
 
   @keyframes sect3{
     from{opacity:0;bottom: -15%;}
-
     to{opacity:1;bottom: 0%;}
+  }
+
+  /**** responsive section 4*****/
+  @media screen and (max-width:900px) {
+    .sec-4 {
+    flex-direction: column;
+    margin: 0 ;
+    padding: 5vh 1vw;
+    align-items: center;
+    justify-content:space-evenly;
+  }
+  .sec-4-unit {
+    width: 90%;
+    height: auto;
+    /* border: crimson 2px solid; */
+  }
+  .sec-4-unit img {
+    height: 80%;
+  }
+  
+  .sec-4-img-det {
+    margin-top: 6px;
+    line-height: 10px;
+  }
   }
   

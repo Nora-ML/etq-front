@@ -3,21 +3,20 @@
     height: 40vh;
     padding: 0 3.2vw;
     display: grid;
-    /* background-color: burlywood; */
+   /*  background-color: rgb(241, 245, 241); */
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 70% 30%;
     grid-template-areas: 'a a b c d e' 'f f g h h i';
   }
   
   .sec-5-unit {
-     /* border: crimson 2px solid; */
+   /*   border: crimson 2px solid; */
     padding: 5px 20px 0;
     letter-spacing: 1px;
   }
   
   .sec-5-unit h5 {
     font-weight: bold;
-    /* color: red; */
   }
   .sec-5-unit p ,.sec-5-unit li {
     font-size: 14px;
@@ -70,4 +69,49 @@
   
   .sec-5-unit.i>p {
     font-size: 9px;
+  }
+
+
+
+
+
+  /**************** Less than 900 px screen *************/
+
+  @media screen and (max-width:900px) {
+    .footer {
+      display: flex;
+      height: max-content;
+margin-bottom: 5vh;
+      flex-direction: column;
+     /*  background-color: rgb(135, 222, 135); */
+    }
+    .sec-5-unit {
+      /* border: crimson 2px solid; */
+      border-bottom: 1px rgb(214, 210, 210) solid;
+   }
+  }
+
+  .display-subFooter{
+    animation-name:footSlide ;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+  }
+  .hide-subFooter{
+    visibility: hidden;
+    height: 0;
+    animation-duration: 0.5s;
+    animation-name:footSlideO ;
+    animation-fill-mode: both;
+  }
+
+  @keyframes footSlide {
+    from{height: 0;visibility: hidden;opacity:0}
+   40%{height: fit-content;visibility: hidden;}
+    100%{visibility: visible;}
+  }
+  @keyframes footSlideO {
+    from{height: fit-content;visibility: visible;}
+   30%{height: fit-content;visibility:hidden;}
+    100%{height: 0;visibility: hidden;}
+    
   }

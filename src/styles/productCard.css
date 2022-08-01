@@ -352,15 +352,27 @@ background-color: transparent;
   bottom: 33vh;
 }
 
+/*************   Responsiveness ********/
 
+@media screen and (max-width:900px) {
+ /***  featured  **/
+.prodBlock__featured--wrapper{
+   /* border: rgba(20, 19, 19, 0.963) 3px solid; */
+   width: 75vw;
+   min-width: 220px;
+   height: 84%;
+   margin: 0 0 0 2.5vw;  
+ }
+ .prodBlock__description--green {
+  color: rgb(45, 170, 101);
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+  font-weight: 600;
 
-/* Method i previously used to set a pattern to display a couple
-/* of rows with smallish product cards followed by a few of the 
-/* larger ones in the ---shop/category page
-/* replaced by function in "Category1.js" (shop page)
-.prodBlock--shop:nth-child(14n+9),.prodBlock--shop:nth-child(14n+10),.prodBlock--shop:nth-child(14n+11),.prodBlock--shop:nth-child(14n+12),.prodBlock--shop:nth-child(14n+13),.prodBlock--shop:nth-child(14n+14){
-  width: 30vw;
-  height: 70vh;
-  margin: 3vh 0;
-  /* border: rgb(230, 227, 50) 4px double; 
-} */
+}
+.prodBlock__description--brand ,.prodBlock__description--price {
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+
+}
+}

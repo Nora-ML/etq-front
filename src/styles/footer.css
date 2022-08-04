@@ -77,11 +77,11 @@
 
   /**************** Less than 900 px screen *************/
 
-  @media screen and (max-width:900px) {
+  @media screen and (max-width:920px) {
     .footer {
       display: flex;
       height: max-content;
-margin-bottom: 5vh;
+      margin-bottom: 5vh;
       flex-direction: column;
      /*  background-color: rgb(135, 222, 135); */
     }

@@ -4,7 +4,7 @@ import "../styles/footer.css";
 
 const Footer = () => {
 	const [screen, setScreen] = useState(() =>
-		window.innerWidth <= 900 ? true : false
+		window.innerWidth <= 920 ? true : false
 	);
 	const [hide, setHide] = useState();
 	const [active, setActive] = useState({
@@ -47,6 +47,8 @@ const Footer = () => {
 			}
 		});
 	}, []);
+
+	console.log("Fotter - window.innerwidth:", window.innerWidth);
 
 	return (
 		<>

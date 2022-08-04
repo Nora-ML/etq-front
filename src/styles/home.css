@@ -32,12 +32,12 @@
   /*----------------------------------  section 1 -header ---------------*/
   .sec-1 {
     grid-area: sec-1;
-    background-color: burlywood;
+    /* background-color: burlywood; */
     align-items: center;
   }
   
   .head-img {
-    background-color: rgb(181, 236, 181);
+    /* background-color: rgb(181, 236, 181); */
     position: relative;
     width: 72%;
     height: 100vh;

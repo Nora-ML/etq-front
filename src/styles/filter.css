@@ -82,6 +82,7 @@ pointer-events: none;
     grid-area: a;
     margin-right: 2vw;
     max-height: 100%;
+    margin-bottom: 1vh;
    /*  border: 1px solid tan; */  
 }
 
@@ -124,8 +125,8 @@ pointer-events: none;
 }
 
 .size-list li {
-    margin-bottom: 5px;
-    width: 3vw; 
+    min-width: 3vw; 
+    width: max-content;
 }
 
 /*---------------------------color Section*/
@@ -250,3 +251,106 @@ cursor: pointer;
     padding: 10px 1px;
     text-align: center;
 }
+@media screen and (max-width:1025px) and (min-width:480px){
+    .filter_page {
+        width: 80vw;
+        left :10vw;
+        max-height: 85vh;
+        height: 82vh;
+        top: 7vh;
+        padding: 0 1vw 3vh 2vw;
+        grid-template-columns: minmax(42vw,auto) minmax(30vw,auto);
+       
+        grid-template-areas: 'a b' 'a b' 'c b' 'c d' 'e f ' 'e g';
+        column-gap: 0.5vw;
+        animation-name: slide;
+        animation-duration: 0.30s; 
+    }
+    .proType-img {
+       max-height: 70%;
+    }
+    .filter_page.hidden{
+        background-color: rgba(216, 13, 13, 0.959);
+        left: -90%;
+        animation-name: slide2;
+        animation-duration: 0.25s;
+    }
+    .filter_page li{
+        display: block;
+        border: rgba(227, 227, 223, 0.837) 2px solid;
+        border-radius: 3px;
+        color: rgba(0, 0, 0, 0.703);
+        margin: 5px 3px;
+        padding: 7px 5px;
+        margin-bottom: 5px;
+        align-self: flex-start;
+        text-align: center;
+        cursor: pointer;
+        font-variant-caps: all-petite-caps;
+    }
+    @keyframes slide {
+        from{left:-90% ;background-color: rgba(255, 255, 255, 0.959);}
+        to{left: 10vw;background-color: rgba(255, 255, 255, 0.959);}
+    }
+    @keyframes slide2 {
+        from{left:10vw ;  background-color: rgba(255, 255, 255, 0.959);}
+        to{left:-90% ;background-color: rgba(255, 255, 255, 0.959);}
+    }
+  }
+  @media screen and (max-width:480px) /* and (min-width:480px) */ {
+    .filter_page {
+        position: fixed;
+        width: 94vw;
+        left :3vw;
+        max-height: 94vh;
+        height: 88vh;
+        z-index: 50;
+        top: 2vh;
+        visibility: visible;
+        display: grid;
+        padding: 0 1vw 3vh 2vw;
+        background-color: rgba(255, 255, 255, 0.959);
+        grid-template-columns: repeat(3,minmax(30vw,1fr));
+        grid-template-rows: repeat(5,minmax(7vh,auto)) ;
+        grid-template-areas: 'a a a' 'b b b' 'c c c' 'e e e'  'd  g f';
+        column-gap: 0.5vw;
+        align-items: flex-end;
+        animation-name: slide;
+        font-size: 13.5px;
+        animation-duration: 0.30s; 
+    }
+    .filter_page h4{
+        margin-block-end:10px
+    }
+    .filter_page li{
+        display: block;
+        border: rgba(231, 231, 213, 0.837) 2px solid;
+        border-radius: 3px;
+        color: rgba(0, 0, 0, 0.703);
+        margin: 4px 2px;
+        padding: 4px 3px;
+        margin-bottom: 3px;
+        align-self: flex-start;
+        text-align: center;
+        cursor: pointer;
+        font-variant-caps: all-petite-caps;
+    }
+    .filter_page.hidden{
+        background-color: rgba(216, 13, 13, 0.959);
+        left: -100%;
+        animation-name: slide2;
+        animation-duration: 0.25s;
+    }
+    @keyframes slide {
+        from{left:-90% ;background-color: rgba(255, 255, 255, 0.959);}
+        to{left: 4vw;background-color: rgba(255, 255, 255, 0.959);}
+    }
+    @keyframes slide2 {
+        from{left:4vw ;  background-color: rgba(255, 255, 255, 0.959);}
+        to{left:-90% ;background-color: rgba(255, 255, 255, 0.959);}
+    }
+    }
+  
+  @media screen and (max-width:480px) {
+
+  }

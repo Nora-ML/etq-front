@@ -532,7 +532,7 @@
   /**** responsive section 4*****/
   @media screen and (max-width:920px) {
     .sec-4 {
-         background-color: cadetblue;
+         /* background-color: cadetblue; */
     flex-direction: column;
     margin: 0 ;
     padding: 5vh 1vw;

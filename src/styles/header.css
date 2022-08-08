@@ -37,7 +37,12 @@ nav {
 }
 
 
-
+.burger-icon {
+  background-color:  rgba(253, 252, 248, 0.8);
+  width: 34Px;
+  height: 34px;
+  border-radius: 5px;
+}
 
 nav li a, .logo{
   color: black;

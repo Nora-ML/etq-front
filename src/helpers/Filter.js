@@ -381,12 +381,12 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 				</div>
 				<div className="reset">
 					<div className="header">
-						<h4 onClick={() => clearOut()}>Reset Filters</h4>
+						<h4 onClick={() => clearOut()}>Reset</h4>
 					</div>
 				</div>
 				<div className="count">
 					<div className="header">
-						<h4>Number of items:</h4>
+						<h4>Items:</h4>
 						<p>{count}</p>
 					</div>
 				</div>

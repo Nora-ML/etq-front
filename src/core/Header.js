@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import burgerz from "../icons/5957012_menu_icon.png";
+import cross from "../icons/cross-sign.png";
 import {
 	signOut,
 	signOutFront,
@@ -203,7 +205,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 		}
 	}, [navstate, itemActive]);
 
-/**************** Resize screen event listener */
+	/**************** Resize screen event listener */
 
 	useEffect(() => {
 		window.addEventListener("resize", () => {
@@ -552,9 +554,14 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 								<Link
 									to=""
 									onClick={() => activate("burger")}
-									className="nav-box noline"
+									className="nav-box burger-icon"
 								>
-									Burger
+									<img
+										src={burger === "active" ? cross : burgerz}
+										alt="mobileMenu"
+										width="35"
+										height="35"
+									/>
 								</Link>
 								<div
 									className={

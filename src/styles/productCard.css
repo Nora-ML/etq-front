@@ -8,24 +8,106 @@ overflow: hidden;
 
 /*The smallish cards  --Shop/Category page*/
 .prodBlock_wrapper--medium {
-/*   border: red 2px solid; */
-/*  background-color: rgba(235, 232, 232, 0.391) ; */
+ /* background-color: rgba(161, 194, 211, 0.723) ; */
   border-radius: 5px;
-  min-width: 280px;
-  width: 21vw;
+  min-width: 205px;
+  max-width: 21vw;
   margin: 5vh 1vw;
-  height: 68vh;
+  height: auto;
 }
 
 /*The larger cards   --Shop/Category page*/
 .prodBlock_wrapper--Big {
  /*  border: rgba(0, 128, 0, 0.112) 2px solid; */
-  width: 28vw;
-  min-width: 400px;
-  height: 82vh;
+  width: 30vw;
+  height: auto;
   margin: 5vh 1vw;
 }
-
+ @media screen and (max-width:1025px) /* and (min-width:480px) */{
+            .prodBlock_wrapper--medium {
+            /* background-color: rgba(65, 161, 91, 0.761); */
+              max-width: 500px;
+              width: 44vw;
+              min-width: 125px;
+              margin: 1vh 1vw 5vh 1vw;
+              height: auto;
+              justify-content: space-between;
+            }
+            .prodBlock_wrapper--Big {
+             /*  border: rgba(8, 14, 8, 0.874) 2px solid; */
+              max-width: 900px;
+              width: 90vw;
+              min-width: 250px;
+              margin: 5vh 1vw;
+              max-height: 125vh;
+              height: auto;
+              justify-content: space-between;
+            }
+            .prodBlock__anchor-img--taller {
+              /* border: rgb(242, 21, 21) 1px solid; */
+              width: 100%;
+              height: auto;
+              /* min-height: 40vh;
+              max-height: 80vh; */
+              overflow: hidden;
+            }
+            .prodBlock__img {
+              /* border: rgb(108, 35, 226) 2px dashed; */
+              width: 100%;
+              height: 40%;
+            }
+            .prodBlock__description {
+              margin-top: 10px;
+              width: 100%;
+              height: auto;
+              min-height: 4vh;
+             /*  border: yellow 1px dashed; */
+             }    
+          /*   .prodBlock_wrapper--medium .prodBlock__description--brand{
+              font-size: 12px;
+            }   
+            .prodBlock_wrapper--medium .prodBlock__description--price{
+              margin-right: 10px;
+            } */
+ }
+ @media screen and (max-width:770px) and (min-width:480px) {
+            .prodBlock_wrapper--medium .prodBlock__description--green{
+              font-size: 12.5px;
+              height: 2rem;
+              width: 100%;
+              font-weight: 100;
+            }      
+            .prodBlock_wrapper--medium .prodBlock__description--brand{
+              font-size: 12px;
+            }   
+            .prodBlock_wrapper--medium .prodBlock__description--price{
+              margin-right: 11px;
+            }
+ }
+ @media screen and (max-width:480px) {
+  .prodBlock_wrapper--medium .prodBlock__description {
+              padding: 0 5px;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              flex-wrap: wrap;
+              font-weight: 100  ;
+            }
+            .prodBlock_wrapper--medium .prodBlock__description--green{
+              font-size: 11.5px;
+              letter-spacing: 1.2px;
+              line-height: 1.1rem;
+              height: 2rem;
+              width: 100%;
+            }      
+            .prodBlock_wrapper--medium .prodBlock__description--brand{
+              font-size: 11px;
+            }   
+            .prodBlock_wrapper--medium .prodBlock__description--price{
+              margin-right: 10px;
+            }
+ 
+ }
 /***  featured  **/
 .prodBlock__featured--wrapper{
  /*  border: rgba(20, 19, 19, 0.963) 3px solid; */
@@ -106,16 +188,12 @@ animation-direction: reverse;
 /****************************************         Product Image *************************/
 
 /*------  wrapper ------*/
-
-
 /*Shop-Category page*/
 .prodBlock__anchor-img--taller {
-  /* border: red 1px solid;*/
+  /* border: rgb(0, 4, 255) 1px solid; */
   width: 100%;
-  /*min-heght is key 
-  in standardizing the height*/
+  height: auto;
   min-height: 70%;
-  height: 73%;
 }
 /*Featured*/
 .prodBlock__featured--imgContainer{
@@ -128,9 +206,9 @@ animation-direction: reverse;
 /*--------  The Image ------*/
 
 .prodBlock__img {
-  /* border: green 1px solid;*/
+  /* border: rgb(128, 41, 0) 2px dashed; */
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 .prodBlock__img--DELETE-LATER {
  /*  border: green 1px solid; */
@@ -142,6 +220,18 @@ animation-direction: reverse;
   width: 100%;
   height: 100%;
 }
+
+@media screen and (max-width:1025px) and (min-width:770px){
+
+}
+@media screen and (max-width:770px) and (min-width:480px) {
+
+}
+@media screen and (max-width:480px) {
+
+}
+
+
 
 /***      Arrow Icons          ***/
 /**/
@@ -197,7 +287,6 @@ animation-direction: reverse;
 /****************************************         Product Description  *************************/
 .prodBlock__description {
   margin-top: 10px;
-
 }
 /***/
 
@@ -282,51 +371,6 @@ background-color: transparent;
 
 
 
-/******UNUSED : Customer Feedback - like and dislike********************/
-
-.customer-feedback {
-  background-color: rgba(197, 8, 8, 0.679);
-  opacity:0;
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  bottom: -0.5vh;
-  border-radius: 5px;
-  width: 60%;
-  right: 0;
-  transition: opacity 0.5s ease-out;
-}
-/*Positioning applied to both*/
-.like {
-  border-radius: 5px;
-}
-.dislike {
-  border-radius: 5px;
-}
-/* effect of like dislike on hover*/
-/*prodBlock_wrapper = A shared className for both big and small product card*/
-.prodBlock_wrapper:hover .customer-feedback{
-  opacity: 0.4;
-  transition: opacity 0.5s ease-in;
-}
-
-.prodBlock_wrapper:hover .customer-feedback .like {
-  transform: translateX(-7%);
-  transition: transform 0.5s ease-in-out;
-}
-.prodBlock_wrapper:hover .customer-feedback .dislike {
-  transform: translateX(7%);
-  transition: transform 0.5s ease-in-out;
-}
-.prodBlock_wrapper:hover .customer-feedback:hover {
-  opacity: 1;
-}
-
-
-
-
-
-
 /**********************************************************************************/
 /*Thumbnail sized view  ---No YEt utilized seriously */
 /**/
@@ -355,24 +399,24 @@ background-color: transparent;
 /*************   Responsiveness ********/
 
 @media screen and (max-width:900px) {
- /***  featured  **/
-.prodBlock__featured--wrapper{
-   /* border: rgba(20, 19, 19, 0.963) 3px solid; */
-   width: 75vw;
-   min-width: 220px;
-   height: 84%;
-   margin: 0 0 0 2.5vw;  
- }
- .prodBlock__description--green {
-  color: rgb(45, 170, 101);
-  margin-block-start: 5px;
-  margin-block-end: 5px;
-  font-weight: 600;
-
-}
-.prodBlock__description--brand ,.prodBlock__description--price {
-  margin-block-start: 5px;
-  margin-block-end: 5px;
-
-}
+        /***  featured  **/
+        .prodBlock__featured--wrapper{
+          /* border: rgba(20, 19, 19, 0.963) 3px solid; */
+          width: 75vw;
+          min-width: 220px;
+          height: 84%;
+          margin: 0 0 0 2.5vw;  
+        }
+        .prodBlock__description--green {
+          color: rgb(45, 170, 101);
+          margin-block-start: 5px;
+          margin-block-end: 5px;
+          font-weight: 600;
+       
+        }
+        .prodBlock__description--brand ,.prodBlock__description--price {
+          margin-block-start: 5px;
+          margin-block-end: 5px;
+       
+        }
 }

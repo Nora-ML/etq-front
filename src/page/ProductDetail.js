@@ -15,7 +15,9 @@ import "../styles/product.css";
 
 const ProductDetail = () => {
 	console.log("productDetail.js--- rendered");
-
+	const [wWidth, setWWidth] = useState(() =>
+		window.innerWidth < 1025 ? "1025" : "out"
+	);
 	const { productId } = useParams();
 	const filterRef = useRef(null);
 	const containerRef = useRef(null);
@@ -208,68 +210,79 @@ const ProductDetail = () => {
 						style={stylez}
 						ref={filterRef}
 					>
-						<h2>{product.name}</h2>
-						<h3>{colors[0]}</h3>
-						<h4>$ {product.price}</h4>
-						<p>
-							Everything we do is meant to last. Our designs last. Our products
-							last. This collection of wardrobe essentials comes in six tim...
-						</p>
-						<Link to="#info">More information</Link>
-						<div className="dropdown" onClick={() => activate("color")}>
-							<p>{color !== "" ? color : colors[0]}</p>
-							<div
-								className={
-									active === "color" && colors.length > 1
-										? "dropdown-content active"
-										: "dropdown-content"
-								}
-							>
-								{colors &&
-									colors.map((col, index) => (
-										<div key={index} className="dropDown-item">
-											<p onClick={(e) => choiceB(e, "color")}>{col}</p>
-										</div>
-									))}
-							</div>
+						<div className="product-info product-info-1">
+							<h2>{product.name}</h2>
+							<h3>{colors[0]}</h3>
+							<h4>$ {product.price}</h4>
+							<p>
+								Everything we do is meant to last. Our designs last. Our
+								products last. This collection of wardrobe essentials comes in
+								six tim...
+							</p>
+							<Link to="#info">More information</Link>
 						</div>
-						<div className="dropdown" onClick={() => activate("size")}>
-							<p>{size !== "" ? size : sizes[0]}</p>
-							<div
-								className={
-									active === "size" && sizes.length > 1
-										? "dropdown-content active"
-										: "dropdown-content"
-								}
-							>
-								{sizes &&
-									sizes.length > 1 &&
-									sizes.map((col, index) => (
-										<div key={index} className="dropDown-item">
-											<p onClick={(e) => choiceB(e, "size")}>{col}</p>
-										</div>
-									))}
+						<div className="product-info product-info-2">
+							<div className="dropdown" onClick={() => activate("color")}>
+								<p>{color !== "" ? color : colors[0]}</p>
+								<div
+									className={
+										active === "color" && colors.length > 1
+											? "dropdown-content active"
+											: "dropdown-content"
+									}
+								>
+									{colors &&
+										colors.map((col, index) => (
+											<div key={index} className="dropDown-item">
+												<p onClick={(e) => choiceB(e, "color")}>{col}</p>
+											</div>
+										))}
+								</div>
 							</div>
-						</div>
-						<button className="black-btn" type="submit" onClick={submit}>
-							Add to Bag
-						</button>
+							<div className="dropdown" onClick={() => activate("size")}>
+								<p>{size !== "" ? size : sizes[0]}</p>
+								<div
+									className={
+										active === "size" && sizes.length > 1
+											? "dropdown-content active"
+											: "dropdown-content"
+									}
+								>
+									{sizes &&
+										sizes.length > 1 &&
+										sizes.map((col, index) => (
+											<div key={index} className="dropDown-item">
+												<p onClick={(e) => choiceB(e, "size")}>{col}</p>
+											</div>
+										))}
+								</div>
+							</div>
+							<button className="black-btn" type="submit" onClick={submit}>
+								Add to Bag
+							</button>
 
-						<ul className="check-list">
-							<li>
-								Pay with iDeal, Apple Pay, Mastercard, Visa, PayPal, Klarna
-							</li>
-							<li>Order with free European standard shipping</li>
-							<li>
-								Orders placed between today and December 25 enjoy an extended
-								return period of 45 days.
-							</li>
-							<li>Replenishment service: free new laces upon request</li>
-						</ul>
+							<ul className="check-list">
+								<li>
+									Pay with iDeal, Apple Pay, Mastercard, Visa, PayPal, Klarna
+								</li>
+								<li>Order with free European standard shipping</li>
+								<li>
+									Orders placed between today and December 25 enjoy an extended
+									return period of 45 days.
+								</li>
+								<li>Replenishment service: free new laces upon request</li>
+							</ul>
+						</div>
 					</div>
 				</div>
+				{wWidth && wWidth === "1025" && (
+					<div className="productDet-Special-Image flex-r-wrap">
+						<img src={`${API}/product/featuredphoto/${productId}`} alt={name} />
+						<img src={`${API}/product/defaultphoto/${productId}`} alt={name} />
+					</div>
+				)}
 				<div className="even-container" id="info">
-					<div className="prod-description">
+					<div className="even-sub prod-description">
 						<h3>Description</h3>
 						<p>
 							Everything we do is meant to last. Our designs last. Our products
@@ -306,7 +319,7 @@ const ProductDetail = () => {
 							</li>
 						</ul>
 					</div>
-					<div className="prod-information">
+					<div className="even-sub prod-information">
 						<h3>Information</h3>
 						<h4>Shipping</h4>
 						<p>

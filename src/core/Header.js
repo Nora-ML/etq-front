@@ -210,7 +210,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 	useEffect(() => {
 		window.addEventListener("resize", () => {
 			const innerWidth = window.innerWidth;
-			if (innerWidth <= 1140) {
+			if (innerWidth <= 1025) {
 				setScreen(true);
 			} else {
 				setScreen(false);
@@ -618,64 +618,63 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 												<div
 													className={
 														help === "active"
-															? "ele-5-cont active coll"
-															: "ele-5-cont coll"
+															? "ele-5-help-sub active "
+															: "ele-5-help-sub hide "
 													}
 												>
-													<div className="subNav-Container flex-r">
-														<ul className="ele-5-subcont flex-c">
-															<h4 className=" noline">Contact</h4>
-															<li>
-																<Link to="" className=" noline">
-																	Email-us
-																</Link>
-															</li>
-															<li>
-																<Link to="" className=" noline">
-																	+31(0)202256153
-																</Link>
-															</li>
-														</ul>
-														<ul className="ele-5-subcont flex-c">
-															<h4 className=" noline">Information</h4>
-															<li className="noline">
-																<Link to="/">Shipping Information</Link>
-															</li>
-															<li className="noline">
-																<Link to="">Returns & Exchanges</Link>
-															</li>
-															<li className="noline">
-																<Link to="">Size guide</Link>
-															</li>
-															<li className="noline">
-																<Link to="">Wholesale & Showroom</Link>
-															</li>
-														</ul>
-														<ul className="ele-5-subcont flex-c">
-															<h4 className=" noline">
-																Frequently asked questions{" "}
-															</h4>
-															<li>
-																<Link to="" className=" noline">
-																	Do I need an account to place an order?
-																</Link>
-															</li>
-															<li>
-																<Link to="" className=" noline">
-																	How do I return or exchange?
-																</Link>
-															</li>
-															<li>
-																<Link to="" className=" noline">
-																	Do you ship to my country?
-																</Link>
-															</li>
-															<li>
-																<Link to="" className=" noline">
-																	How much does the delivery cost?
-																</Link>
-															</li>
-														</ul>
+													<div className="main-help-sub flex-c">
+														<div className="ele-5-help-sub-2 flex-r">
+															<h4>Information</h4>
+															<ul className="ele-5-help-lists flex-r">
+																<li>
+																	<Link to="/">Shipping Information</Link>
+																</li>
+																<li>
+																	<Link to="">Returns & Exchanges</Link>
+																</li>
+																<li>
+																	<Link to="">Size guide</Link>
+																</li>
+																<li>
+																	<Link to="">Wholesale & Showroom</Link>
+																</li>
+															</ul>
+														</div>
+
+														<div className="ele-5-help-sub-2 flex-r">
+															<h4>Frequently asked questions </h4>
+															<ul className="ele-5-help-lists flex-r">
+																<li>
+																	<Link to="">
+																		Do I need an account to place an order?
+																	</Link>
+																</li>
+																<li>
+																	<Link to="">
+																		How do I return or exchange?
+																	</Link>
+																</li>
+																<li>
+																	<Link to="">Do you ship to my country?</Link>
+																</li>
+																<li>
+																	<Link to="">
+																		How much does the delivery cost?
+																	</Link>
+																</li>
+															</ul>
+														</div>
+														<div className="ele-5-help-sub-2 flex-r">
+															<h4>Contact</h4>
+															<ul className="ele-5-help-lists flex-r">
+																<li>
+																	<Link to="">Email-us</Link>
+																</li>
+																<li>
+																	<Link to="">+31(0)202256153</Link>
+																</li>
+															</ul>
+														</div>
 													</div>
 												</div>
 											</li>
@@ -693,35 +692,39 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 														<div
 															className={
 																myaccount === "active"
-																	? "ele-3-cont active coll flex-c"
-																	: "ele-3-cont coll  flex-c"
+																	? "ele-5-user-sub active active flex-c"
+																	: "ele-5-user-sub hide flex-c"
 															}
 														>
-															<p>
-																Create an account or log in to view your orders,
-																return or adjust your personal information.
-															</p>
-															<div className="ele-3-subcont flex-r">
+															<div className="main-user-sub flex-c">
 																<p>
-																	<Link
-																		to=""
-																		onClick={() =>
-																			activate("myaccount", "/signup")
-																		}
-																		className=" noline"
-																	>
-																		Create account
-																	</Link>
+																	Create an account or log in to view your
+																	orders, return or adjust your personal
+																	information.
 																</p>
-																<button
-																	onClick={() =>
-																		activate("myaccount", "/signin")
-																	}
-																	className="black-btn-hr"
-																	type="submit"
-																>
-																	Login
-																</button>
+
+																<div className="main-user-sub-action flex-r">
+																	<p>
+																		<Link
+																			to=""
+																			onClick={() =>
+																				activate("myaccount", "/signup")
+																			}
+																			className=" noline"
+																		>
+																			Create account
+																		</Link>
+																	</p>
+																	<button
+																		onClick={() =>
+																			activate("myaccount", "/signin")
+																		}
+																		className="black-btn-hr"
+																		type="submit"
+																	>
+																		Login
+																	</button>
+																</div>
 															</div>
 														</div>
 													</>
@@ -738,45 +741,45 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 														<div
 															className={
 																myaccount === "active"
-																	? "ele-3-cont active coll flex-c"
-																	: "ele-3-cont coll  flex-c"
+																	? "ele-5-user-sub active flex-c"
+																	: "ele-5-user-sub hide flex-c"
 															}
 														>
-															<p>Display your profile or signout.</p>
-															<div className="ele-3-subcont flex-r">
-																{user.role === 2 && (
-																	<p>
-																		<Link
-																			to=""
-																			onClick={() =>
-																				activate("myaccount", `/${user._id}`)
-																			}
-																			className=" noline"
-																		>
-																			Profile
-																		</Link>
-																	</p>
-																)}
-																{user.role === 1 && (
-																	<p>
-																		<Link
-																			to=""
-																			onClick={() =>
-																				activate("myaccount", "/admin")
-																			}
-																			className="nav-box noline"
-																		>
-																			Admin Board
-																		</Link>
-																	</p>
-																)}
-																<button
-																	onClick={signMeout()}
-																	className="black-btn-hr"
-																	type="submit"
-																>
-																	SignOut
-																</button>
+															<div className="main-user-sub flex-c">
+																<p>Display your profile or signout.</p>
+																<div className="main-user-sub-action flex-r">
+																	{user.role === 2 && (
+																		<p>
+																			<Link
+																				to=""
+																				onClick={() =>
+																					activate("myaccount", `/${user._id}`)
+																				}
+																			>
+																				Profile
+																			</Link>
+																		</p>
+																	)}
+																	{user.role === 1 && (
+																		<p>
+																			<Link
+																				to=""
+																				onClick={() =>
+																					activate("myaccount", "/admin")
+																				}
+																			>
+																				Admin Board
+																			</Link>
+																		</p>
+																	)}
+																	<button
+																		onClick={signMeout()}
+																		className="black-btn-hr"
+																		type="submit"
+																	>
+																		SignOut
+																	</button>
+																</div>
 															</div>
 														</div>
 													</>

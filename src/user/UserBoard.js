@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import "../styles/adminBoard.css";
 import "../styles/userBoard.css";
 import { loggedIn } from "../requests";
-import MySelection from "./MySelection";
+import MyCart from "./MyCart";
 import MyFav from "./MyFav";
 
 const UserBoard = () => {
@@ -113,16 +113,8 @@ const UserBoard = () => {
 					)}
 				</div>
 				<div className="main-3col-grid--admin_content">
-					{/* {contactInfo === "active" && (
-						<>
-							<h3>{title}</h3>
-							<p>
-								<Link to=""></Link>
-							</p>
-						</>
-					)} */}
 					{favourites === "active" && <MyFav command="favourites" />}
-					{bag === "active" && <MySelection command="bag" />}
+					{bag === "active" && <MyCart />}
 					{successmessage()}
 					{errormessage()}
 				</div>

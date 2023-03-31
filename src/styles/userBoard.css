@@ -18,23 +18,3 @@
   margin-bottom: 5%;
 }
 
-
-  /************************   My bag   ****************/
-  .selection-table{
-    /* background-color: blanchedalmond; */
-  }
-  .selection_sub-container{
-    background-color: skyblue;
-    display: grid;
-    grid-template-columns: 1fr 0.75fr 0.75fr 1fr 0.5fr;
-    grid-template-areas: "a b c d e";
-  }
-  .tb-product{grid-area: a;}
-  .tb-color{grid-area: b;}
-  .tb-size{grid-area: c;}
-  .tb-qty{grid-area: d;}
-  .tb-price{grid-area: e;}
-  
-  hr.blackLine{
-  border-top: rgba(0, 0, 0, 0.771) 3px solid;
-  }

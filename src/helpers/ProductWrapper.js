@@ -6,7 +6,12 @@ import UserCommands from "../helpers/UserCommands.js";
 import { loggedIn } from "../requests";
 
 const ProductWrapper = ({ products, classN }) => {
-	console.log("ProductWrapper.js  => rendered ..,products: ", products);
+	console.log(
+		"ProductWrapper.js  => rendered ..,products: ",
+		products,
+		"classN",
+		classN
+	);
 	const [userz, setUser] = useState("");
 	//const [location, setLocation] = useState("");
 	const [images, setImages] = useState(false);
@@ -61,8 +66,7 @@ const ProductWrapper = ({ products, classN }) => {
 				classN === "featured"
 					? `prodBlock ${product.classP} flex-c`
 					: productDisplay(index)
-			}
-		>
+			}>
 			{images && (
 				<ShowImage
 					product={product}

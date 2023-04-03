@@ -5,7 +5,15 @@ import { viewImage } from "../requests";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const ShowImage = ({ product, classN }) => {
-	console.log("ShowImage.js ----  Rendered");
+	console.log(
+		"ShowImage.js ----  Rendered ,product",
+		product,
+		"classN",
+		classN
+	);
+	const {
+		image: { images },
+	} = product;
 
 	const [allImages, setAllImages] = useState("");
 	const [state, setState] = useState(1);
@@ -46,7 +54,7 @@ const ShowImage = ({ product, classN }) => {
 				console.log("ShowImage.js -----  displayImage (), error :", error);
 				//if we are fetching ALL photo the response will be an "Array" therefore checking by length is easier
 			} else if (response.length) {
-				//console.log("SetAllImages...");
+				console.log("SetAllImages..., ALL IMAGES FETCHED", response);
 				setAllImages(response);
 			}
 		});
@@ -65,12 +73,12 @@ const ShowImage = ({ product, classN }) => {
 				key={product._id}
 				className={classN}
 				/* target="_blank" */
-				to={"/products/" + product._id}
-			>
+				to={"/products/" + product._id}>
 				{allImages && (
 					<img
 						className="prodBlock__img--DELETE-LATER"
-						src={getSRC(allImages[state].contentType, allImages[state].data)}
+						//src="{allImages[state].data}"
+						src={images[state].data}
 						alt={product.name}
 					/>
 				)}
@@ -82,8 +90,9 @@ const ShowImage = ({ product, classN }) => {
 								: "prodBlock__img"
 						}
 						/* src="" */
-						src={`${API}/products/photo/${product._id}`}
-						alt={product.name}
+						src={images[0].data}
+						//src={`${API}/products/photo/${product._id}`}
+						alt={images[0].name}
 					/>
 				)}
 			</Link>
@@ -93,19 +102,16 @@ const ShowImage = ({ product, classN }) => {
 					product.image_count > 1
 						? "prodBlock__icons"
 						: "prodBlock__icons--hide"
-				}
-			>
+				}>
 				<div
 					className="arrow-wrap arrow-wrap-left"
-					onClick={() => slide("minus", product._id)}
-				>
+					onClick={() => slide("minus", product._id)}>
 					<i className="arrow-wrap__icon arrow-wrap__icon-left fas fa-angle-left"></i>
 				</div>
 
 				<div
 					className="arrow-wrap arrow-wrap-right"
-					onClick={() => slide("plus", product._id)}
-				>
+					onClick={() => slide("plus", product._id)}>
 					<i className="arrow-wrap__icon arrow-wrap__icon-right fas fa-angle-right"></i>
 				</div>
 			</div>

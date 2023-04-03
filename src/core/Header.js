@@ -8,7 +8,6 @@ import {
 	capitalizeFirst,
 	list,
 	retrieveCart,
-	signup,
 } from "../requests";
 import "../styles/header.css";
 import SemiCart from "../helpers/SemiCart.js";
@@ -282,8 +281,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 					overlay
 						? "active_overlay active_overlay--nav"
 						: "active_overlay hidden active_overlay--nav"
-				}
-			></div>
+				}></div>
 			{!screen && (
 				<nav className={navTrigger()}>
 					<Link
@@ -292,8 +290,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 							page === "home" && navstate === "classic"
 								? "logo white "
 								: "logo "
-						}
-					>
+						}>
 						ETQ.
 					</Link>
 
@@ -302,8 +299,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 							page === "home" && navstate === "classic"
 								? "part-1 white flex-r"
 								: "part-1 flex-r"
-						}
-					>
+						}>
 						{categories.map((cat) => (
 							<li key={cat._id}>
 								<Link to={`/shop/${cat.name}`} className=" noline">
@@ -318,8 +314,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 								to=""
 								onClick={() => activate("search")}
 								className="nav-box noline"
-								placeholder="Not Active Yet"
-							>
+								placeholder="Not Active Yet">
 								Search
 							</Link>
 
@@ -328,8 +323,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 									search === "active"
 										? "ele-1-cont coll active flex-r"
 										: "ele-1-cont coll flex-r"
-								}
-							>
+								}>
 								<input
 									type="text"
 									placeholder="Start typing what you\'re looking for"
@@ -340,8 +334,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 							<Link
 								to=""
 								onClick={() => activate("help")}
-								className="nav-box noline"
-							>
+								className="nav-box noline">
 								Help
 							</Link>
 
@@ -350,8 +343,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 									help === "active"
 										? "ele-2-cont active coll"
 										: "ele-2-cont coll"
-								}
-							>
+								}>
 								<div className="subNav-Container flex-r">
 									<ul className="ele-2-subcont flex-c">
 										<h4 className=" noline">Contact</h4>
@@ -413,8 +405,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 									<Link
 										to=""
 										onClick={() => activate("myaccount")}
-										className="nav-box noline"
-									>
+										className="nav-box noline">
 										My Account
 									</Link>
 
@@ -423,8 +414,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 											myaccount === "active"
 												? "ele-3-cont active coll flex-c"
 												: "ele-3-cont coll  flex-c"
-										}
-									>
+										}>
 										<p>
 											Create an account or log in to view your orders, return or
 											adjust your personal information.
@@ -434,16 +424,14 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 												<Link
 													to=""
 													onClick={() => activate("myaccount", "/signup")}
-													className=" noline"
-												>
+													className=" noline">
 													Create account
 												</Link>
 											</p>
 											<button
 												onClick={() => activate("myaccount", "/signin")}
 												className="black-btn-hr"
-												type="submit"
-											>
+												type="submit">
 												Login
 											</button>
 										</div>
@@ -455,8 +443,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 									<Link
 										to=""
 										onClick={() => activate("myaccount")}
-										className="nav-box noline"
-									>
+										className="nav-box noline">
 										{capitalizeFirst(user.name)}
 									</Link>
 									<div
@@ -464,8 +451,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 											myaccount === "active"
 												? "ele-3-cont active coll flex-c"
 												: "ele-3-cont coll  flex-c"
-										}
-									>
+										}>
 										<p>Display your profile or signout.</p>
 										<div className="ele-3-subcont flex-r">
 											{user.role === 2 && (
@@ -475,8 +461,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 														onClick={() =>
 															activate("myaccount", `/${user._id}`)
 														}
-														className=" noline"
-													>
+														className=" noline">
 														Profile
 													</Link>
 												</p>
@@ -486,8 +471,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 													<Link
 														to=""
 														onClick={() => activate("myaccount", "/admin")}
-														className="nav-box noline"
-													>
+														className="nav-box noline">
 														Admin Board
 													</Link>
 												</p>
@@ -495,8 +479,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 											<button
 												onClick={signMeout()}
 												className="black-btn-hr"
-												type="submit"
-											>
+												type="submit">
 												SignOut
 											</button>
 										</div>
@@ -509,8 +492,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 								<Link
 									to=""
 									onClick={() => activate("cart")}
-									className="the-cart"
-								>
+									className="the-cart">
 									<p>{itemCount ? itemCount : 0}</p>
 								</Link>
 								<div className={cartOrNoCart()}>
@@ -548,14 +530,12 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 								page === "home" && navstate === "classic"
 									? "burger part-1 white flex-c"
 									: "burger part-1 flex-c"
-							}
-						>
+							}>
 							<li className="ele-5">
 								<Link
 									to=""
 									onClick={() => activate("burger")}
-									className="nav-box burger-icon"
-								>
+									className="nav-box burger-icon">
 									<img
 										src={burger === "active" ? cross : burgerz}
 										alt="mobileMenu"
@@ -568,8 +548,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 										burger === "active"
 											? "ele-5-cont active coll"
 											: "ele-5-cont coll"
-									}
-								>
+									}>
 									<div className="subNav-Container flex-c">
 										<ul className="ele-5-subcont flex-c">
 											{categories.map((cat) => (
@@ -577,8 +556,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 													<Link
 														to={`/shop/${cat.name}`}
 														className=" noline"
-														onClick={() => activate("all2")}
-													>
+														onClick={() => activate("all2")}>
 														{capitalizeFirst(cat.name).split(" ")[0]}
 													</Link>
 												</li>
@@ -588,8 +566,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 													to=""
 													onClick={() => activate("search")}
 													className="nav-box noline"
-													placeholder="Not Active Yet"
-												>
+													placeholder="Not Active Yet">
 													Search
 												</Link>
 
@@ -598,8 +575,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 														search === "active"
 															? "ele-5-search-sub active flex-r"
 															: "ele-5-search-sub hide flex-r"
-													}
-												>
+													}>
 													<input
 														type="text"
 														placeholder="Start typing what you\'re looking for"
@@ -610,8 +586,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 												<Link
 													to=""
 													onClick={() => activate("help")}
-													className="nav-box noline"
-												>
+													className="nav-box noline">
 													Help
 												</Link>
 
@@ -620,8 +595,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 														help === "active"
 															? "ele-5-help-sub active "
 															: "ele-5-help-sub hide "
-													}
-												>
+													}>
 													<div className="main-help-sub flex-c">
 														<div className="ele-5-help-sub-2 flex-r">
 															<h4>Information</h4>
@@ -684,8 +658,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 														<Link
 															to=""
 															onClick={() => activate("myaccount")}
-															className="nav-box noline"
-														>
+															className="nav-box noline">
 															My Account
 														</Link>
 
@@ -694,8 +667,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 																myaccount === "active"
 																	? "ele-5-user-sub active active flex-c"
 																	: "ele-5-user-sub hide flex-c"
-															}
-														>
+															}>
 															<div className="main-user-sub flex-c">
 																<p>
 																	Create an account or log in to view your
@@ -710,8 +682,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 																			onClick={() =>
 																				activate("myaccount", "/signup")
 																			}
-																			className=" noline"
-																		>
+																			className=" noline">
 																			Create account
 																		</Link>
 																	</p>
@@ -720,8 +691,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 																			activate("myaccount", "/signin")
 																		}
 																		className="black-btn-hr"
-																		type="submit"
-																	>
+																		type="submit">
 																		Login
 																	</button>
 																</div>
@@ -734,8 +704,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 														<Link
 															to=""
 															onClick={() => activate("myaccount")}
-															className="nav-box noline"
-														>
+															className="nav-box noline">
 															{capitalizeFirst(user.name)}
 														</Link>
 														<div
@@ -743,8 +712,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 																myaccount === "active"
 																	? "ele-5-user-sub active flex-c"
 																	: "ele-5-user-sub hide flex-c"
-															}
-														>
+															}>
 															<div className="main-user-sub flex-c">
 																<p>Display your profile or signout.</p>
 																<div className="main-user-sub-action flex-r">
@@ -754,8 +722,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 																				to=""
 																				onClick={() =>
 																					activate("myaccount", `/${user._id}`)
-																				}
-																			>
+																				}>
 																				Profile
 																			</Link>
 																		</p>
@@ -766,8 +733,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 																				to=""
 																				onClick={() =>
 																					activate("myaccount", "/admin")
-																				}
-																			>
+																				}>
 																				Admin Board
 																			</Link>
 																		</p>
@@ -775,8 +741,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 																	<button
 																		onClick={signMeout()}
 																		className="black-btn-hr"
-																		type="submit"
-																	>
+																		type="submit">
 																		SignOut
 																	</button>
 																</div>
@@ -800,8 +765,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 							page === "home" && navstate === "classic"
 								? "logo white "
 								: "logo "
-						}
-					>
+						}>
 						ETQ.
 					</Link>
 
@@ -811,8 +775,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 								<Link
 									to=""
 									onClick={() => activate("cart")}
-									className="the-cart"
-								>
+									className="the-cart">
 									<p>{itemCount ? itemCount : 0}</p>
 								</Link>
 								<div className={cartOrNoCart()}>

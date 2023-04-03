@@ -5,20 +5,20 @@ import { addProduct, list, updateProduct } from "../requests";
 const AddProductForm = ({ product, className }) => {
 	console.log("## FE => ProductForm() => rendered");
 	const [state, setState] = useState({
-		name: "",
+		name: "nora2023",
 		product_type: "",
 		//the category i selected
 		category: "",
 		promotion: "",
-		description: "",
+		description: "ghva hgvh g vhg h g h",
 		featured: false,
-		brand: "",
-		price: 0,
-		quantity: 0,
+		brand: "Hexa",
+		price: 50,
+		quantity: 50,
 		sold: 0,
 		image: { images: "", default_image: "", featured_image: "" },
-		colors: "",
-		sizes: "",
+		colors: "red",
+		sizes: "14",
 		available: false,
 		success: false,
 		error: false,
@@ -217,8 +217,7 @@ const AddProductForm = ({ product, className }) => {
 					<select
 						onChange={changeHandler("category")}
 						name="category"
-						value={category}
-					>
+						value={category}>
 						<option>Choose category..</option>
 						{categories &&
 							categories.map((c, i) => (
@@ -233,8 +232,7 @@ const AddProductForm = ({ product, className }) => {
 					<select
 						onChange={changeHandler("promotion")}
 						name="promotion"
-						value={promotion}
-					>
+						value={promotion}>
 						<option>Choose promotion..</option>
 						{promotions &&
 							promotions.map((c, i) => (
@@ -267,8 +265,7 @@ const AddProductForm = ({ product, className }) => {
 					<select
 						onChange={changeHandler("product_type")}
 						name="product_type"
-						value={product_type}
-					>
+						value={product_type}>
 						<option>Choose prod type:</option>
 						<option>Shirt</option>
 						<option>Jacket</option>

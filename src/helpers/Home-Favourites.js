@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { featured } from "../requests/index";
 import ProductWrapper from "./ProductWrapper";
 
+// The featured Product Section:
+// - fetching the featuredProducts after first render . In useEffect.
 const HomeFavs = ({ classN }) => {
 	console.log("HomeFavs.js --- rendered", classN);
 	const [products, setProducts] = useState();
@@ -15,6 +17,7 @@ const HomeFavs = ({ classN }) => {
 			if (error || !data) {
 				console.log("HomeFavs.js --- fetFeaturedProd() error", error);
 			} else {
+				console.log("FEATURED DATA FETCHED ...", data);
 				data.map((p, index) =>
 					index < 4
 						? (p.classP = "prodBlock__featured--wrapper")
@@ -65,9 +68,6 @@ const HomeFavs = ({ classN }) => {
 		}
 	};
 
-	console.log("count", count);
-	console.log("products", products);
-
 	useEffect(() => {
 		console.log("HomeFavs.js --- useEffect() ");
 		getFeaturedProd();
@@ -83,8 +83,7 @@ const HomeFavs = ({ classN }) => {
 							? "arrow-wrap arrow-wrap-left arrow-wrap-left--header arrow-faded"
 							: "arrow-wrap arrow-wrap-left arrow-wrap-left--header"
 					}
-					onClick={() => slide("minus")}
-				>
+					onClick={() => slide("minus")}>
 					<i className="arrow-wrap__icon arrow-wrap__icon-left fas fa-angle-left"></i>
 				</div>
 				<div
@@ -93,8 +92,7 @@ const HomeFavs = ({ classN }) => {
 							? "arrow-wrap arrow-wrap-right arrow-wrap-right--header arrow-faded "
 							: "arrow-wrap arrow-wrap-right arrow-wrap-right--header "
 					}
-					onClick={() => slide("plus")}
-				>
+					onClick={() => slide("plus")}>
 					<i className="arrow-wrap__icon arrow-wrap__icon-right fas fa-angle-right"></i>
 				</div>
 			</div>

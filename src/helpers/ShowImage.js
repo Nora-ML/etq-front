@@ -5,12 +5,12 @@ import { viewImage } from "../requests";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const ShowImage = ({ product, classN }) => {
-	console.log(
+	/* console.log(
 		"ShowImage.js ----  Rendered ,product",
 		product,
 		"classN",
 		classN
-	);
+	); */
 	const {
 		image: { images },
 	} = product;
@@ -20,7 +20,7 @@ const ShowImage = ({ product, classN }) => {
 	const [productID, setProductID] = useState("");
 
 	const slide = (direction, id) => {
-		console.log("ShowImage.js ---- slide()=> arrow clicked");
+		//console.log("ShowImage.js ---- slide()=> arrow clicked");
 		//onclick will send a request to back end to fetch all the product images
 		//will check first if this has not been run before so to prvent running it on every click
 		if (productID !== id) {
@@ -48,13 +48,13 @@ const ShowImage = ({ product, classN }) => {
 		}
 	};
 	const displayImage = (id, url) => {
-		console.log("ShowImage.js ----- displayImage () => fetching Images");
+		//console.log("ShowImage.js ----- displayImage () => fetching Images");
 		viewImage(id, url).then((response, error) => {
 			if (error) {
-				console.log("ShowImage.js -----  displayImage (), error :", error);
+				//console.log("ShowImage.js -----  displayImage (), error :", error);
 				//if we are fetching ALL photo the response will be an "Array" therefore checking by length is easier
 			} else if (response.length) {
-				console.log("SetAllImages..., ALL IMAGES FETCHED", response);
+				//console.log("SetAllImages..., ALL IMAGES FETCHED", response);
 				setAllImages(response);
 			}
 		});

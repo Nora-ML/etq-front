@@ -4,7 +4,7 @@ import ProductEdit from "../admin/ProductEdit";
 import Overlay from "../core/Overlay";
 
 const AdminCommands = ({ product }) => {
-	console.log("AdminCommand.js---- rendered...");
+	//console.log("AdminCommand.js---- rendered...");
 	const [editStuff, setEditStuff] = useState({
 		productz: "",
 		coordinates: "",
@@ -37,9 +37,10 @@ const AdminCommands = ({ product }) => {
 		setClass_Overlay("");
 	};
 	const deacTivate = (classf) => {
-		console.log("AdminCommand.js---- deacTivate()");
+		//console.log("AdminCommand.js---- deacTivate()");
 		setClass_Overlay(classf);
 		setEditStuff({ ...editStuff, className: "hide" });
+
 		const time = setTimeout(() => {
 			console.log("AdminCommand.js---- deacTivate(), TimeOut ()");
 			setEditStuff({ ...editStuff, activate: false, className: "" });
@@ -59,14 +60,12 @@ const AdminCommands = ({ product }) => {
 			<div key={product._id} className="prodBlock__adminCommand flex-r--wrap">
 				<button
 					onClick={() => deleteProduct(product._id)}
-					className="prodBlock__adminCommand--delete"
-				>
+					className="prodBlock__adminCommand--delete">
 					Delete
 				</button>
 				<button
 					onClick={(e) => getEditForm(e, product)}
-					className="prodBlock__adminCommand--edit"
-				>
+					className="prodBlock__adminCommand--edit">
 					Edit
 				</button>
 			</div>

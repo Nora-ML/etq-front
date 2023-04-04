@@ -44,6 +44,7 @@ export const saveToken = (user) => {
 export const savelocally = (info) => {
 	const { name } = info;
 	console.log("Index.js ---- savelocally() info:", info);
+
 	if (typeof window !== "undefined") {
 		console.log("Index.js ---- retrieveLocal() adding to local");
 		localStorage.setItem(name, JSON.stringify(info));

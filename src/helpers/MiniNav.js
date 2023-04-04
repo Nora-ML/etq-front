@@ -1,73 +1,64 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../styles/mininav.css";
 import "../styles/filter.css";
+import { MiniNavContext } from "../context/miniNavContext";
+import { useContext } from "react";
 
-const MiniNav = ({
-	display,
-	class_Overlay,
-	class_Filter,
-	submit_Func,
-	submit,
-}) => {
-	console.log("MiniNav.js ----  rendered ");
-	const [miniNavState, setMiniNavState] = useState("");
-	const [istoggled, setToggle] = useState(false);
+const MiniNav = () => {
+	const {
+		miniNavState,
+		setMiniNavState,
+		filterState,
+		headerState,
+		enterFilter,
+		exitFilter,
+	} = useContext(MiniNavContext);
 
+	console.log("MiniNAV ::", miniNavState);
+
+	// Hide miniNav when i get closer to the footer
 	useEffect(() => {
-		console.log("MiniNav.js ---- useEffect()=> rendered");
+		console.log("MiniNav.js -- useEffect()=> Hide MinBar at trigger point");
 
-		// This will listen to the scroll event and hide the miniNav when i get closer to the footer */
-		window.addEventListener("scroll", () => {
+		const hideMiniBar = () => {
 			var all_height = document.documentElement.scrollHeight;
 			var scrollbar = document.documentElement.scrollTop;
 			var intViewportHeight = window.innerHeight * 1.5;
 			if (scrollbar <= all_height - intViewportHeight) {
-				setMiniNavState("");
+				setMiniNavState(true);
 			} else {
-				setMiniNavState("hide");
+				exitFilter();
+				setTimeout(() => {
+					setMiniNavState(false);
+				}, 400);
 			}
-		});
+		};
 
-		function exitActive() {
-			console.log("MiniNav.js ----  exitActive() ");
-			setToggle(false);
-			class_Filter("hidden");
-			class_Overlay("hidden");
-			submit_Func(false);
-		}
-		function activate() {
-			console.log("MiniNav.js ----  activate() ");
-			class_Filter("");
-			class_Overlay("");
-			display(true);
-		}
-		if (submit === true) {
-			console.log("MiniNav.js ---- useEffect()=> submit =", submit);
-			exitActive();
-		} else if (istoggled) {
-			console.log("MiniNav.js ---- useEffect()=> isToggled =", istoggled);
-			activate();
-		} else if (!istoggled) {
-			console.log("MiniNav.js ---- useEffect()=> isToggled =", istoggled);
-			exitActive();
-		}
-	}, [istoggled, submit, submit_Func, display, class_Filter, class_Overlay]);
+		window.addEventListener("scroll", hideMiniBar);
+
+		return () => window.removeEventListener("scroll", hideMiniBar);
+	}, []);
 
 	return (
 		<>
-			<div className={"mini-nav flex-r " + miniNavState}>
+			<div
+				className={
+					miniNavState && !headerState
+						? "mini-nav flex-r"
+						: "mini-nav flex-r hide"
+				}>
 				<h4
-					onClick={() => setToggle(false)}
-					className={!istoggled ? "nav-bar-item shopz current" : "nav-bar-item"}
-				>
+					onClick={() => exitFilter()}
+					className={
+						!filterState ? "nav-bar-item shopz current" : "nav-bar-item"
+					}>
 					Shop
 				</h4>
 				<h4
-					onClick={() => setToggle(true)}
+					onClick={() => enterFilter()}
 					className={
-						istoggled ? "nav-bar-item filterz current" : "nav-bar-item"
-					}
-				>
+						filterState ? "nav-bar-item filterz current" : "nav-bar-item"
+					}>
 					Filter
 				</h4>
 			</div>

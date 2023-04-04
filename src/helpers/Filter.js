@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
 	itemsInCategory,
 	filter,
-	savelocally,
 	retrieveLocal,
 	removeLocal,
 } from "../requests";
 import "../styles/filter.css";
+import { MiniNavContext } from "../context/miniNavContext";
+import { useContext } from "react";
 
-const Filter = ({ filteredProducts, classN, filterSet }) => {
+const Filter = () => {
 	console.log("Filter.js ----- rendered");
+	const { filterState, headerState, exitFilter, setFilterSelection } =
+		useContext(MiniNavContext);
+
 	const filters = ["brand", "colors", "sizes", "product_type"];
 	const { categoryName } = useParams();
 	const [trail, setTrail] = useState();
@@ -64,7 +68,7 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 		if (result.states) {
 			console.log("Filter.js --- clearOut() --- clearing local-filter");
 			removeLocal("filter" + categoryName);
-			filterSet(true);
+			setFilterSelection(false);
 		}
 		setDiff({
 			sizes_diff: "",
@@ -79,6 +83,9 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 			product_type: [],
 			submit: true,
 		});
+		if (!headerState) {
+			exitFilter();
+		}
 	};
 	const searchArray = (e, name) => {
 		console.log("Filter.js ----- searchArray()...");
@@ -168,6 +175,7 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 		console.log("Filter.js --- useEffect --- fetchingList");
 		let result = retrieveLocal("filter" + categoryName);
 		console.log("Filter.js --- useEffect --- fetchingList result:", result);
+
 		if (result.states) {
 			console.log(
 				"Filter.js --- useEffect --- fetching Locally result.states:",
@@ -178,6 +186,7 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 			fetchFilteredProducts(categoryName, 1000);
 		}
 	}, [useParams()]);
+
 	useEffect(() => {
 		console.log("Filter.js --- useEffect --- command ");
 		if (command) {
@@ -250,38 +259,30 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 
 	const submitForm = (e) => {
 		console.log("Filter.js ----- submitForm()...");
-		filter({
-			categoryName,
-			brand,
-			colors,
-			sizes,
-			product_type,
-			submit: true,
-		}).then((data, error) => {
-			if (data) {
-				console.log("Filter.js ----- submitForm()> data: ", data);
-				filteredProducts({ data: data, filterCount: data.length });
-				savelocally({
-					name: "filter" + categoryName,
-					states: { selected, diff, list, trail, count },
-					data: data,
-					filterCount: data.length,
-				});
-			} else {
-				console.log("Filter.js ----- submitForm()> error: ", error);
-			}
+		setFilterSelection({
+			toFetch: {
+				categoryName,
+				brand,
+				colors,
+				sizes,
+				product_type,
+				submit: true,
+			},
+			toSaveLocally: {
+				name: "filter" + categoryName,
+				states: { selected, diff, list, trail, count },
+			},
 		});
+		exitFilter();
 	};
-	console.log("Filter.js ----- diff", diff);
-	console.log("Filter.js ----- selected", selected);
-	console.log("Filter.js ----- list", list);
-	console.log("Filter.js ----- trail", trail);
+	//console.log("Filter.js ----- diff", diff);
+	//console.log("Filter.js ----- selected", selected);
+	//console.log("Filter.js ----- list", list);
+	//console.log("Filter.js ----- trail", trail);
 
 	return (
 		<>
-			<div
-				className={classN === "hidden" ? "filter_page hidden" : "filter_page"}
-			>
+			<div className={!filterState ? "filter_page hidden" : "filter_page"}>
 				<div className="proType">
 					<div className="header">
 						<h4>Category</h4>
@@ -299,8 +300,7 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 											: product_type && product_type.includes(s)
 											? "selected"
 											: ""
-									}
-								>
+									}>
 									{s}
 								</li>
 							))}
@@ -323,8 +323,7 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 											: brand.includes(s)
 											? "selected"
 											: ""
-									}
-								>
+									}>
 									{s}
 								</li>
 							))}
@@ -348,8 +347,7 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 												: sizes.includes(s)
 												? "selected"
 												: ""
-										}
-									>
+										}>
 										{s}
 									</li>
 								);
@@ -372,8 +370,7 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 											: colors.includes(s)
 											? "selected"
 											: ""
-									}
-								>
+									}>
 									{s}
 								</li>
 							))}
@@ -397,4 +394,4 @@ const Filter = ({ filteredProducts, classN, filterSet }) => {
 		</>
 	);
 };
-export default Filter;
+export default memo(Filter);

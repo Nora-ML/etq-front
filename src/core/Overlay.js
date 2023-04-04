@@ -1,48 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { MiniNavContext } from "../context/miniNavContext";
 import "../styles/overlay.css";
 
-const Overlay = ({ classN, submit_Func }) => {
-	console.log("Overlay.js ---- rendered classN:", classN);
-	const [state, setState] = useState(classN);
+const Overlay = ({ trigger }) => {
+	const { overlayState, onClickingOnOverlay, headerState } =
+		useContext(MiniNavContext);
 
-	useEffect(() => {
-		setState(classN);
-	}, [classN]);
-
-	console.log("Overlay state :", state);
-
-	useEffect(() => {
-		function exitActive() {
-			console.log("Overlay.js ----  exitActive() ");
-			submit_Func(true);
-		}
-
-		function nonActiveArea(e) {
-			console.log("Overlay.js ----  nonActiveArea()=> e ==", e);
-			e.path.find((p) => {
-				return (
-					p.className === "mini-nav flex-r " ||
-					p.className === "filter_page" ||
-					p.className === "form-container edit"
-				);
-			})
-				? console.log("Don't exit")
-				: exitActive();
-		}
-		window.addEventListener("click", nonActiveArea);
-
-		//cleanup useEffect
-		return () => window.removeEventListener("click", nonActiveArea);
-	}, []);
+	console.log("Overlay  ::", overlayState);
 
 	return (
 		<div
+			onClick={() => onClickingOnOverlay()}
 			className={
-				state === "hidden"
-					? "active_overlay active_overlay--miniNav hidden"
-					: "active_overlay active_overlay--miniNav"
-			}
-		></div>
+				!overlayState
+					? `active_overlay active_overlay--${
+							headerState ? "header" : trigger
+					  } hidden `
+					: `active_overlay active_overlay--${headerState ? "header" : trigger}`
+			}></div>
 	);
 };
 export default Overlay;

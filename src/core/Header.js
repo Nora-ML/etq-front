@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import burgerz from "../icons/5957012_menu_icon.png";
 import cross from "../icons/cross-sign.png";
 import {
@@ -10,13 +10,18 @@ import {
 	retrieveCart,
 } from "../requests";
 import "../styles/header.css";
+
 import SemiCart from "../helpers/SemiCart.js";
+import { MiniNavContext } from "../context/miniNavContext";
+import { useContext } from "react";
 
 const Header = ({ page, cartz, user, setuserZ }) => {
 	console.log("header.js=> rendered ...");
+	const { overlayState, setOverlayState, headerState, setHeaderState } =
+		useContext(MiniNavContext);
 	const navigate = useNavigate();
+
 	const [categories, setCategories] = useState([]);
-	const [itemActive, setItemActive] = useState(false);
 	const [navstate, setnavState] = useState("classic");
 	const [screen, setScreen] = useState(() =>
 		window.innerWidth <= 1140 ? true : false
@@ -29,14 +34,13 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 		myaccount: "",
 		burger: "",
 		cart: "",
-		overlay: false,
 		redirect: "",
 	});
 	/* 	const [state, setState] = useState(); */
 	const [itemCount, setItemCount] = useState(0);
 
 	//destructuring state
-	const { search, help, myaccount, cart, overlay, redirect, burger } = active;
+	const { search, help, myaccount, cart, redirect, burger } = active;
 
 	/**************          Activating navBar ITEMS on click       ************************/
 	/*********    setting overlay to true to later trigger the overlay effect   ********************/
@@ -50,10 +54,10 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 			});
 			setActive({
 				...active,
-				overlay: false,
 				redirect: destin,
 			});
-			setItemActive(false);
+			setOverlayState(false);
+			setHeaderState(false);
 		} else if ((burger === "active" && n !== "burger") || n === "all") {
 			if (n === "all") {
 				setMarker();
@@ -68,20 +72,20 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 				setActive({
 					...active,
 					[n]: "active",
-					overlay: true,
 					redirect: "",
 				});
+				setOverlayState(true);
 			} else {
 				setActive({
 					...active,
 					[n]: "active",
 					burger: "active",
-					overlay: true,
 					redirect: "",
 				});
+				setOverlayState(true);
 			}
 
-			setItemActive(true);
+			setHeaderState(true);
 		} else {
 			console.log("header.js ---- activate() =>4");
 			Object.keys(active).forEach((key) => {
@@ -90,11 +94,12 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 			setActive({
 				...active,
 				[n]: "active",
-				overlay: true,
+
 				redirect: "",
 			});
+			setOverlayState(true);
 
-			setItemActive(true);
+			setHeaderState(true);
 		}
 	};
 
@@ -109,46 +114,19 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 	}, [redirect]);
 
 	useEffect(() => {
-		function nonActiveArea(e) {
-			if (!overlay && !itemActive) {
-				console.log("NO CLICK");
-			} else {
-				e.path.find((p) => {
-					if (p.className === "part-1 flex-r") {
-						console.log("part 1 flex r exit active");
-						exitActive();
-					}
-					return (
-						p.className === "part-2 flex-r" ||
-						p.className === "burger part-1 white flex-c" ||
-						p.className === "burger part-1 flex-c"
-					);
-				})
-					? console.log("Don't exit")
-					: exitActive();
-			}
-		}
-
-		function exitActive() {
+		if (!overlayState) {
 			console.log("Header.js ----useEffect =>  exitActive() ");
 			Object.keys(active).forEach((key) => {
-				if (key !== "overlay") {
-					active[key] = "";
-				}
+				active[key] = "";
 			});
-			setActive({
-				...active,
-				overlay: false,
-			});
-			setItemActive(false);
+
+			setHeaderState(false);
 		}
-		window.addEventListener("click", nonActiveArea);
-		return () => window.removeEventListener("click", nonActiveArea);
-	}, [active]);
+	}, [overlayState]);
 
 	/**********************      Hiding and activating Main nav bar on SCROLL   *********************/
 	function scrollUp(scroll) {
-		if (itemActive === true) {
+		if (headerState === true) {
 			setnavState("active");
 		} else if (scroll === 0) {
 			setnavState("classic");
@@ -157,7 +135,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 		}
 	}
 	function scrollDown(scroll, inner) {
-		if (itemActive === true) {
+		if (headerState === true) {
 			setnavState("active");
 		} else if (scroll < inner) {
 			setnavState("active");
@@ -167,7 +145,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 	}
 	/**Detects the nav state and returns appropriate classname. Called in the nav element  ***/
 	const navTrigger = () => {
-		if (itemActive) {
+		if (headerState) {
 			return "main-navigation no-background";
 		} else if (navstate === "classic") {
 			return "main-navigation";
@@ -180,7 +158,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 
 	useEffect(() => {
 		var prevScroll = 0;
-		if (itemActive === true) {
+		if (headerState === true) {
 			setnavState("active");
 		} else {
 			window.addEventListener("scroll", () => {
@@ -194,7 +172,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 				prevScroll = newScroll;
 			});
 			const timer = setTimeout(() => {
-				if (itemActive === false) {
+				if (headerState === false) {
 					if (navstate === "active" && prevScroll > window.innerHeight) {
 						setnavState("hide");
 					}
@@ -202,7 +180,7 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 			}, 3000);
 			return () => clearTimeout(timer);
 		}
-	}, [navstate, itemActive]);
+	}, [navstate, headerState]);
 
 	/**************** Resize screen event listener */
 
@@ -276,12 +254,13 @@ const Header = ({ page, cartz, user, setuserZ }) => {
 
 	return (
 		<>
-			<div
+			{/* <div
 				className={
 					overlay
 						? "active_overlay active_overlay--nav"
 						: "active_overlay hidden active_overlay--nav"
-				}></div>
+				}></div> */}
+
 			{!screen && (
 				<nav className={navTrigger()}>
 					<Link

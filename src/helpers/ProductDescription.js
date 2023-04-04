@@ -1,7 +1,7 @@
 import React from "react";
 
 const ProductDescription = ({ product }) => {
-	console.log("ProductDescription.js ----  Rendered");
+	//console.log("ProductDescription.js ----  Rendered");
 
 	return (
 		<div className="prodBlock__description">

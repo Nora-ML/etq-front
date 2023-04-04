@@ -5,12 +5,12 @@ import Cover from "../helpers/Home-Cover";
 import HomeInfoSec from "../helpers/Home-Info";
 import HomeFavs from "../helpers/Home-Favourites";
 import HomeStore from "../helpers/Home-Store";
+import Overlay from "../core/Overlay";
 import "../styles/home.css";
 
 const Home = () => {
 	console.log("Home.js --- rendered");
 	const [animate, setAnimate] = useState(localStorage.getItem("HomeAnimate"));
-
 
 	window.onload = () => {
 		if (localStorage.getItem("HomeAnimate")) {
@@ -72,6 +72,7 @@ const Home = () => {
 	const content = () => {
 		return (
 			<>
+				<Overlay trigger="header" />
 				<div className="main-grid">
 					<Cover />
 

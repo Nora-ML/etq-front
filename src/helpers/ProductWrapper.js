@@ -6,12 +6,12 @@ import UserCommands from "../helpers/UserCommands.js";
 import { loggedIn } from "../requests";
 
 const ProductWrapper = ({ products, classN }) => {
-	console.log(
+	/* console.log(
 		"ProductWrapper.js  => rendered ..,products: ",
 		products,
 		"classN",
 		classN
-	);
+	); */
 	const [userz, setUser] = useState("");
 	//const [location, setLocation] = useState("");
 	const [images, setImages] = useState(false);
@@ -20,7 +20,7 @@ const ProductWrapper = ({ products, classN }) => {
 	let count = 1;
 	let start = 8;
 	const productDisplay = (index) => {
-		console.log("ProductWrapper.js  => productDisplay(), index: ", index);
+		//console.log("ProductWrapper.js  => productDisplay(), index: ", index);
 		const length = products.length;
 		let cycle = Math.ceil((length - 7) / 14);
 		let interva_BIG = 8;
@@ -44,7 +44,7 @@ const ProductWrapper = ({ products, classN }) => {
 	};
 
 	useEffect(() => {
-		console.log("ProductWrapper.js --- useEffect => getting User info");
+		//console.log("ProductWrapper.js --- useEffect => getting User info");
 		if (userz === "") {
 			console.log("ProductWrapper.js --- useEffect => loggedIn():", userz);
 			const { user } = loggedIn();

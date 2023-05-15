@@ -4,7 +4,7 @@ import Layout from "../core/Layout";
 import { signup } from "../requests";
 
 const Signup = () => {
-	console.log("## FE => SignUp component => rendered");
+	console.log("SignUp component => rendered");
 	const [state, setState] = useState({
 		name: "",
 		email: "",
@@ -36,14 +36,14 @@ const Signup = () => {
 			subscribe,
 		})
 			.then((response) => {
-				console.log("Front-End > signup Component - 1 - response fetched");
+				//console.log("Front-End > signup Component - 1 - response fetched");
 				//response is blank object
-				console.log(response);
+				//console.log(response);
 				if (response.error) {
-					console.log("Front-End > signup Component - 3 - response - error ");
+					//console.log("Front-End > signup Component - 3 - response - error ");
 					setState({ ...state, error: response.error, success: false });
 				} else {
-					console.log("Front-End > signup Component - 4 - response - success ");
+					//console.log("Front-End > signup Component - 4 - response - success ");
 					setState({
 						name: "",
 						email: "",
@@ -57,8 +57,8 @@ const Signup = () => {
 				}
 			})
 			.catch((err) => {
-				console.log("Front-End > signup Component - 2 - catch error");
-				console.log(err);
+				//console.log("Front-End > signup Component - 2 - catch error");
+				//console.log(err);
 			});
 	};
 	const errormessage = () => {
@@ -170,8 +170,7 @@ const Signup = () => {
 					<button
 						className="black-btn-signUp"
 						onClick={submitForm}
-						type="submit"
-					>
+						type="submit">
 						Create Account
 					</button>
 				</div>
@@ -179,7 +178,7 @@ const Signup = () => {
 		);
 	};
 	return (
-		<Layout>
+		<Layout overlayTrigger="header">
 			<div className="main-doublegrid main-doublegrid--account">
 				<div className="filter filter--account flex-c">
 					<h4>My Account</h4>

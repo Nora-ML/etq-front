@@ -1,71 +1,68 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { featured } from "../requests/index";
 import ProductWrapper from "./ProductWrapper";
+import "../styles/landing_favourites.css";
 
-// The featured Product Section:
-// - fetching the featuredProducts after first render . In useEffect.
 const HomeFavs = ({ classN }) => {
 	console.log("HomeFavs.js --- rendered", classN);
-	const [products, setProducts] = useState();
+	const [products, setProducts] = useState(false);
 	const [count, setCount] = useState(0);
-	const [num, setNum] = useState(0);
+	const [numOfFeaturedProducts, setNumberOfFeaturedProduct] = useState(0);
+	const [productsCardWidth, setProductsCardWidth] = useState({});
+	const [slideAnim, setSlideAnim] = useState();
+	let [numberOfItemsInView, setNumberOfItemsInView] = useState(0);
+	let [touchStart, setTouchStart] = useState(0);
 
 	const getFeaturedProd = () => {
-		console.log("HomeFavs.js --- fetFeaturedProd() ");
 		featured().then((data, error) => {
 			if (error || !data) {
 				console.log("HomeFavs.js --- fetFeaturedProd() error", error);
 			} else {
-				console.log("FEATURED DATA FETCHED ...", data);
-				data.map((p, index) =>
-					index < 4
-						? (p.classP = "prodBlock__featured--wrapper")
-						: (p.classP = "prodBlock__featured--wrapper prod-hidden")
-				);
 				setProducts(data);
-				setNum(data.length);
+				setNumberOfFeaturedProduct(data.length);
 			}
 		});
 	};
 
-	const slide = (direction) => {
-		console.log("HomeFavs.js --- slide(),direction: ", direction);
-		if (direction === "plus" && count < num - 3) {
-			console.log("HomeFavs.js --- slide(),plus");
-			const newProduct = products.map((p, index) =>
-				index === count
-					? { ...p, classP: "prodBlock__featured--wrapper prod-hide" }
-					: index === count + 1
-					? { ...p, classP: "prodBlock__featured--wrapper prod-active" }
-					: index === count + 2
-					? { ...p, classP: "prodBlock__featured--wrapper prod-active1" }
-					: index === count + 3
-					? { ...p, classP: "prodBlock__featured--wrapper prod-active2" }
-					: index === count + 4
-					? { ...p, classP: "prodBlock__featured--wrapper prod-active3" }
-					: { ...p, classP: "prodBlock__featured--wrapper prod-hidden" }
-			);
-			setProducts(newProduct);
+	function scrollToIndex(direction) {
+		/* console.log(
+			"SLIIIIIDEEEEEEEEEEEE. numberOfItemsInView",
+			numberOfItemsInView,
+			"\n productCardWIdth",
+			productsCardWidth,
+			"direction",
+			direction,
+			"count",
+			count,
+			"numOfFeaturedProducts",
+			numOfFeaturedProducts
+		); */
+		if (
+			direction === "plus" &&
+			count >= 0 &&
+			count < numOfFeaturedProducts - [numberOfItemsInView]
+		) {
+			console.log("SLIIIIIDEEEEEEEEEEEE. RIGHT ..");
+			setSlideAnim(productsCardWidth[count]);
 			setCount(count + 1);
-		} else if (direction === "minus" && count > 0) {
-			console.log("HomeFavs.js --- slide(),minus");
-			const newProduct = products.map((p, index) =>
-				index === count + 3
-					? { ...p, classP: "prodBlock__featured--wrapper prod-hide minus" }
-					: index === count + 2
-					? { ...p, classP: "prodBlock__featured--wrapper prod-active3 minus" }
-					: index === count + 1
-					? { ...p, classP: "prodBlock__featured--wrapper prod-active2 minus" }
-					: index === count
-					? { ...p, classP: "prodBlock__featured--wrapper prod-active1 minus" }
-					: index === count - 1
-					? { ...p, classP: "prodBlock__featured--wrapper prod-active minus" }
-					: { ...p, classP: "prodBlock__featured--wrapper prod-hidden" }
-			);
-			setProducts(newProduct);
+		}
+		if (
+			direction === "minus" &&
+			count >= 1 &&
+			count <= numOfFeaturedProducts - 1
+		) {
+			console.log("SLIIIIIDEEEEEEEEEEEE. LEFT ..");
+			count === 1
+				? setSlideAnim(0)
+				: setSlideAnim(productsCardWidth[count - 2]);
 			setCount(count - 1);
 		}
+	}
+	const triggerTouch = (e) => {
+		let direction =
+			touchStart - e.changedTouches[0].screenX > 0 ? "plus" : "minus";
+		scrollToIndex(direction);
 	};
 
 	useEffect(() => {
@@ -73,31 +70,60 @@ const HomeFavs = ({ classN }) => {
 		getFeaturedProd();
 	}, []);
 
+	useEffect(() => {
+		console.log("HomeFavs.js 2--- useEffect() - getting Width Data");
+		const productCard = document.querySelectorAll(
+			".landing-favourites_product-card"
+		)[count];
+
+		if (products && productCard) {
+			let { offsetWidth, offsetLeft } = productCard;
+			let cardWidth = offsetWidth + offsetLeft;
+
+			setProductsCardWidth({ ...productsCardWidth, [count]: -cardWidth });
+
+			if (!numberOfItemsInView && !count) {
+				let itemsInView = Math.floor(window.outerWidth / cardWidth);
+				setNumberOfItemsInView(itemsInView);
+			}
+		}
+	}, [products, count]);
+
 	return (
 		<div className={classN}>
-			<div className="sec-3_header flex-r">
-				<h1 className="sec-3_header--title">Our Favourite Models</h1>
-				<div
-					className={
-						count === 0
-							? "arrow-wrap arrow-wrap-left arrow-wrap-left--header arrow-faded"
-							: "arrow-wrap arrow-wrap-left arrow-wrap-left--header"
-					}
-					onClick={() => slide("minus")}>
-					<i className="arrow-wrap__icon arrow-wrap__icon-left fas fa-angle-left"></i>
-				</div>
-				<div
-					className={
-						count === 6
-							? "arrow-wrap arrow-wrap-right arrow-wrap-right--header arrow-faded "
-							: "arrow-wrap arrow-wrap-right arrow-wrap-right--header "
-					}
-					onClick={() => slide("plus")}>
-					<i className="arrow-wrap__icon arrow-wrap__icon-right fas fa-angle-right"></i>
+			<div className="landing-favourites_header">
+				<h1 className="landing-favourites_header--title">
+					Our Favourite Models
+				</h1>
+				<div className="landing-favourites_arrows">
+					<div
+						className={
+							count === 0
+								? "landing-favourites_arrow-wrap faded "
+								: "landing-favourites_arrow-wrap"
+						}
+						onClick={() => scrollToIndex("minus")}>
+						<i className="arrow-icon arrow-icon-left fas fa-angle-left"></i>
+					</div>
+					<div
+						className={
+							count === 6
+								? "landing-favourites_arrow-wrap faded"
+								: "landing-favourites_arrow-wrap"
+						}
+						onClick={() => scrollToIndex("plus")}>
+						<i className="arrow-icon arrow-icon-right fas fa-angle-right"></i>
+					</div>
 				</div>
 			</div>
-			<div className="productDisplay__featured flex-r">
-				{products && <ProductWrapper products={products} classN="featured" />}
+			<div className="landing-favourites_products ">
+				<div
+					onTouchStart={(e) => setTouchStart(e.changedTouches[0].screenX)}
+					onTouchEnd={(e) => triggerTouch(e)}
+					className="landing-favourites_products-container"
+					style={{ transform: `translateX(${slideAnim}px)` }}>
+					{products && <ProductWrapper products={products} classN="featured" />}
+				</div>
 			</div>
 		</div>
 	);

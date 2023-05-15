@@ -7,42 +7,33 @@ import {
 	filter,
 	savelocally,
 } from "../requests";
-import { MiniNavContext } from "../context/miniNavContext";
+import { FilterNavBarContext } from "../context/filterContext";
 
 import "../styles/shop.css";
 import Layout from "../core/Layout";
-import MiniNav from "../helpers/MiniNav";
+import FilterNavBar from "../helpers/FilterNavBar";
+import FilterWindow from "../helpers/FilterWindow";
 import ProductWrapper from "../helpers/ProductWrapper";
-import Filter from "../helpers/Filter";
-import Overlay from "../core/Overlay";
 
-const Category1 = () => {
-	console.log("Category1.js  ----- rendered");
+const Shop = () => {
+	console.log("Shop.js  ----- rendered");
 	const { categoryName } = useParams();
 	const { main } = useRef(null);
-	const { filterSelection, setFilterSelection } = useContext(MiniNavContext);
+	const { filterSelection } = useContext(FilterNavBarContext);
 
 	const limit = 18;
 	const [state, setState] = useState([]);
 	const [refetch, setRefetch] = useState(false);
-
 	const [fetchCondition, setFetchCondition] = useState({
 		skip: 0,
 		fetchCount: 0,
 	});
+	let { skip, fetchCount } = fetchCondition;
 	let trigg = 8 * fetchCondition.fetchCount;
 	const [numberOfItemsInCat, setNumberItemsInCat] = useState();
 
-	let { skip, fetchCount } = fetchCondition;
-
 	// Fetching all products in the category specified in the parameter
 	const loadingProducts = (condition) => {
-		console.log(
-			"Category1.js  ----- loadingProducts() ...fetchCount",
-			fetchCount,
-			"skip",
-			skip
-		);
 		let new_fetch = condition === "reset" ? 0 : fetchCount;
 		let skip_new = limit * new_fetch;
 		itemsInCategory(categoryName, limit, skip_new)
@@ -52,23 +43,21 @@ const Category1 = () => {
 					: setState(data);
 				setFetchCondition({ skip: skip_new, fetchCount: new_fetch + 1 });
 			})
-			.catch((error) => console.log("Category1.js  => error fetching "));
+			.catch((error) => console.log("Shop.js  => error fetching "));
 	};
 
 	const firstLoad = () => {
-		console.log("Category1.js ---- itemsCount()--- First Load()");
+		//console.log("Shop.js ---- itemsCount()--- First Load()");
 		// getting the numbers of items in the category
-
 		itemsCount(categoryName).then((response, error) => {
 			if (error) {
-				//console.log("Category1.js ---- itemsCount() error:", error);
+				//console.log("Shop.js ---- itemsCount() error:", error);
 			} else {
-				//console.log("Category1.js ---- itemsCount() response:", response);
+				//console.log("Shop.js ---- itemsCount() response:", response);
 				setNumberItemsInCat(response);
 			}
 		});
 		// fetching first batch
-
 		loadingProducts("reset");
 	};
 
@@ -77,15 +66,15 @@ const Category1 = () => {
 	// 1- localStorage (In case of filtered data)
 	// 2- fetch from db
 	useEffect(() => {
-		//console.log("Category1.js ---- useEffect=> loadingProducts()");
+		//console.log("Shop.js ---- useEffect=> loadingProducts()");
 		//window.scrollTo(0, 0);
 		let result = retrieveLocal("filter" + categoryName);
 		// data saved loclly
 		if (result.states) {
-			//console.log("Category1.js ---- useEffect --- fetching Local data");
+			//console.log("Shop.js ---- useEffect --- fetching Local data");
 			setState(result.data);
 		} else {
-			//console.log("Category1.js ---- useEffect --- no local state");
+			//console.log("Shop.js ---- useEffect --- no local state");
 			window.scrollTo(0, 0);
 			firstLoad();
 		}
@@ -95,9 +84,8 @@ const Category1 = () => {
 	// runs on submitting filter selection
 	useEffect(() => {
 		//console.log("Detects changes in filterSelection. Fetch filter data if true.");
-
 		if (filterSelection) {
-			//console.log("Category1.js ---- useEffect ---FilterSelection TRUE");
+			//console.log("Shop.js ---- useEffect ---FilterSelection TRUE");
 			window.scrollTo(0, 0);
 			filter(filterSelection.toFetch).then((data, error) => {
 				if (data) {
@@ -115,14 +103,14 @@ const Category1 = () => {
 			});
 		}
 		if (!filterSelection && refetch) {
-			//console.log("Category1.js ---- useEffect ---FilterSelection FALSE");
+			//console.log("Shop.js ---- useEffect ---FilterSelection FALSE");
 			window.scrollTo(0, 0);
 			firstLoad();
 		}
 	}, [filterSelection]);
 
 	useEffect(() => {
-		//console.log("Category1.js ---- useEffect...listening for elemnt");
+		//console.log("Shop.js ---- useEffect...listening for elemnt");
 		const detectProductIndex = () => {
 			if (document.getElementById(trigg) && numberOfItemsInCat > limit + skip) {
 				let element = document.getElementById(trigg);
@@ -134,10 +122,10 @@ const Category1 = () => {
 					scroll <= eleTop + eleHeight * 2 &&
 					!refetch
 				) {
-					//console.log("Category1.js ---- useEffect...HELLOOOOOOOOOOO ..");
+					//console.log("Shop.js ---- useEffect...HELLOOOOOOOOOOO ..");
 					setRefetch(true);
 				} else {
-					//console.log("Category1.js ---- useEffect...BYYYYYYE");
+					//console.log("Shop.js ---- useEffect...BYYYYYYE");
 				}
 			} else {
 				//console.log("ELEMENT with this ID doesn't exist");
@@ -153,14 +141,14 @@ const Category1 = () => {
 	useEffect(() => {
 		//console.log("Detects changes due to intersection. ");
 		if (refetch) {
-			//console.log("Category1.js ---- Refetching , fetchCount", fetchCount);
+			//console.log("Shop.js ---- Refetching , fetchCount", fetchCount);
 			loadingProducts();
 		}
 	}, [refetch]);
 
 	//products display view , and calling ProductCard component
 	const products = () => {
-		//console.log("Category1.js  ----- products()");
+		//console.log("Shop.js  ----- products()");
 		return (
 			<div ref={main} className="singleContainer">
 				<h4 className="singleContainer__header">
@@ -175,15 +163,12 @@ const Category1 = () => {
 	};
 
 	return (
-		<>
-			<Overlay trigger="miniNav" />
-			<Layout>
-				{products()}
-				<MiniNav />
-				<Filter />
-			</Layout>
-		</>
+		<Layout>
+			{products()}
+			<FilterNavBar />
+			<FilterWindow />
+		</Layout>
 	);
 };
 
-export default Category1;
+export default Shop;

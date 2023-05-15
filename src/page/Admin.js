@@ -10,7 +10,7 @@ import CategoryCommands from "../admin/Categories";
 const { name, role } = loggedIn().user;
 
 const AdminBoard = () => {
-	console.log("## FE => ADMIN component => rendered");
+	console.log("ADMIN component => rendered");
 	const adminRef = useRef(null);
 	//  my states
 	const [state, setState] = useState({
@@ -25,7 +25,7 @@ const AdminBoard = () => {
 	const { products, categories, title, users } = state;
 
 	const activate = (n) => (e) => {
-		console.log("Front-end => Admin component => activate()");
+		//console.log("Front-end => Admin component => activate()");
 		if (state[n] === "active") {
 			setState({ ...state, [n]: "" });
 		} else {
@@ -62,8 +62,7 @@ const AdminBoard = () => {
 				<div
 					className="main-3col-grid--admin_nav "
 					style={stylez}
-					ref={adminRef}
-				>
+					ref={adminRef}>
 					<h3>Schemas</h3>
 					<p className="noline">
 						<Link to="" onClick={activate("users")}>

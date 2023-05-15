@@ -7,8 +7,8 @@ import {
 	getfav,
 	loggedIn,
 	saveFavs,
-	getCart,
-	saveCarts,
+	getCart_DB,
+	addToCart_localStorage,
 } from "../requests";
 
 const Signup = () => {
@@ -27,11 +27,11 @@ const Signup = () => {
 	const { user } = loggedIn();
 
 	const changeHandler = (name) => (e) => {
-		console.log("Signin.js => changeHandler()");
+		//console.log("Signin.js => changeHandler()");
 		setState({ ...state, [name]: e.target.value });
 	};
 	const submitForm = (e) => {
-		console.log("Signin.js => submitForm()");
+		//console.log("Signin.js => submitForm()");
 		e.preventDefault();
 		/* 		setState({ ...state, error: false, success: false }); */
 		signin({
@@ -40,12 +40,12 @@ const Signup = () => {
 			success,
 		})
 			.then((response) => {
-				console.log("Signin.js -- submitForm(), response:", response);
+				//console.log("Signin.js -- submitForm(), response:", response);
 				if (response.error) {
-					console.log("Signin.js --- submitForm() - error ");
+					//console.log("Signin.js --- submitForm() - error ");
 					setState({ ...state, error: response.error, success: false });
 				} else {
-					console.log("Signin.js --- submitForm()- response :", response);
+					//console.log("Signin.js --- submitForm()- response :", response);
 
 					saveToken(response);
 					gettingCart(response.user._id);
@@ -53,28 +53,28 @@ const Signup = () => {
 				}
 			})
 			.catch((err) => {
-				console.log("## FE =>SignIN Component - 2 - catch error");
-				console.log(err);
+				//console.log("## FE =>SignIN Component - 2 - catch error");
+				//console.log(err);
 			});
 	};
 
 	const gettingFavourites = (id) => {
 		getfav(id).then((response, error) => {
 			if (error) {
-				console.log("Signin.js - gettingFavourites()- error ");
+				//console.log("Signin.js - gettingFavourites()- error ");
 			} else {
-				console.log("Signin.js - gettingFavourites()- success ");
+				//console.log("Signin.js - gettingFavourites()- success ");
 				saveFavs(response);
 			}
 		});
 	};
 	const gettingCart = (id) => {
-		getCart(id).then((response, error) => {
+		getCart_DB(id).then((response, error) => {
 			if (error) {
-				console.log("Signin.js - gettingCart()- error ");
+				//console.log("Signin.js - gettingCart()- error ");
 			} else {
-				console.log("Signin.js - gettingCart()- success ");
-				saveCarts(response);
+				//console.log("Signin.js - gettingCart()- success ");
+				addToCart_localStorage(response);
 				/* setCart(response); */
 				setState({
 					email: "",
@@ -87,7 +87,7 @@ const Signup = () => {
 		});
 	};
 	/* 	useEffect(() => {
-		console.log("Signin.js - useEffect -- render on cart change ");
+		//console.log("Signin.js - useEffect -- render on cart change ");
 	}, [cart]); */
 
 	const errormessage = () => {
@@ -106,7 +106,7 @@ const Signup = () => {
 		} else if (user && user.role === 2) {
 			return navigate("/");
 		} else {
-			console.log("##FE => SignIn component => redirection ()");
+			//console.log("##FE => SignIn component => redirection ()");
 		}
 	};
 
@@ -144,8 +144,7 @@ const Signup = () => {
 					<button
 						className="black-btn-signIN"
 						onClick={submitForm}
-						type="submit"
-					>
+						type="submit">
 						Log In
 					</button>
 				</div>

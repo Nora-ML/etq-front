@@ -7,13 +7,15 @@ import {
 	removeLocal,
 } from "../requests";
 import "../styles/filter.css";
-import { MiniNavContext } from "../context/miniNavContext";
+import { FilterNavBarContext } from "../context/filterContext";
+import { OverlayContext } from "../context/overlayContext";
 import { useContext } from "react";
 
-const Filter = () => {
+const FilterWindow = () => {
 	console.log("Filter.js ----- rendered");
-	const { filterState, headerState, exitFilter, setFilterSelection } =
-		useContext(MiniNavContext);
+	const { exitFilterandOverlay, setFilterSelection, filterWindow } =
+		useContext(FilterNavBarContext);
+	const { overlayState, setOverlayState } = useContext(OverlayContext);
 
 	const filters = ["brand", "colors", "sizes", "product_type"];
 	const { categoryName } = useParams();
@@ -49,7 +51,6 @@ const Filter = () => {
 		console.log("Filter.js ----- fetchFilteredProducts () ..");
 		itemsInCategory(cat, limit).then((data, error) => {
 			//console.log("fetchFilteredProducts () ;", data);
-			//console.log(error);
 			if (error || !data) {
 				console.log("Filter.js ----- fetchFilteredProducts() => error");
 			} else {
@@ -64,7 +65,6 @@ const Filter = () => {
 	const clearOut = () => {
 		console.log("Filter.js ----- clearOut() ");
 		let result = retrieveLocal("filter" + categoryName);
-		console.log("Filter.js --- clearOut() --- result:", result);
 		if (result.states) {
 			console.log("Filter.js --- clearOut() --- clearing local-filter");
 			removeLocal("filter" + categoryName);
@@ -83,9 +83,9 @@ const Filter = () => {
 			product_type: [],
 			submit: true,
 		});
-		if (!headerState) {
+		/* if (!headerState) {
 			exitFilter();
-		}
+		} */
 	};
 	const searchArray = (e, name) => {
 		console.log("Filter.js ----- searchArray()...");
@@ -93,7 +93,6 @@ const Filter = () => {
 		const numerify = Math.floor(item);
 		//iterate through "selected" object
 		Object.entries(selected).forEach(([key, value]) => {
-			// console.log("Filter.js- searchArray() - mapping.. Key:",	key,"name:",name);
 			if (key === name) {
 				const index =
 					key === "sizes"
@@ -174,13 +173,7 @@ const Filter = () => {
 	useEffect(() => {
 		console.log("Filter.js --- useEffect --- fetchingList");
 		let result = retrieveLocal("filter" + categoryName);
-		console.log("Filter.js --- useEffect --- fetchingList result:", result);
-
 		if (result.states) {
-			console.log(
-				"Filter.js --- useEffect --- fetching Locally result.states:",
-				result.states
-			);
 			setCommand(result.states);
 		} else {
 			fetchFilteredProducts(categoryName, 1000);
@@ -190,10 +183,6 @@ const Filter = () => {
 	useEffect(() => {
 		console.log("Filter.js --- useEffect --- command ");
 		if (command) {
-			console.log(
-				"Filter.js ---settingUpData() - fetchingList command:",
-				command
-			);
 			setDiff(command.diff);
 			setSelected(command.selected);
 			setList(command.list);
@@ -203,15 +192,7 @@ const Filter = () => {
 	}, [command, setCommand]);
 
 	useEffect(() => {
-		console.log(
-			"Filter.js ----- useEffect -- realtime list:",
-			list,
-			"diff:",
-			diff,
-			"selected:",
-			selected
-		);
-		console.log("brand.length :", brand.length, "command:", command);
+		console.log("Filter.js ----- useEffect -- realtime list");
 		if (
 			!command &&
 			brand.length === 0 &&
@@ -259,6 +240,7 @@ const Filter = () => {
 
 	const submitForm = (e) => {
 		console.log("Filter.js ----- submitForm()...");
+
 		setFilterSelection({
 			toFetch: {
 				categoryName,
@@ -273,16 +255,13 @@ const Filter = () => {
 				states: { selected, diff, list, trail, count },
 			},
 		});
-		exitFilter();
+
+		exitFilterandOverlay();
 	};
-	//console.log("Filter.js ----- diff", diff);
-	//console.log("Filter.js ----- selected", selected);
-	//console.log("Filter.js ----- list", list);
-	//console.log("Filter.js ----- trail", trail);
 
 	return (
 		<>
-			<div className={!filterState ? "filter_page hidden" : "filter_page"}>
+			<div className={!filterWindow ? "filter_page hidden" : "filter_page"}>
 				<div className="proType">
 					<div className="header">
 						<h4>Category</h4>
@@ -394,4 +373,4 @@ const Filter = () => {
 		</>
 	);
 };
-export default memo(Filter);
+export default memo(FilterWindow);

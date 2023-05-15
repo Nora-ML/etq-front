@@ -1,16 +1,27 @@
-import React, { useEffect, useState } from "react";
-import Header from "./Header";
+import React, { useEffect, useState, useContext } from "react";
+import MainNavBar from "./MainNavBar";
+import MainNavBarSmallScreen from "./MainNavBar_SmallScreen";
 import Footer from "./Footer";
+import Overlay from "./Overlay";
 import { loggedIn, getfav, saveFavs } from "../requests";
+import { ScreenSizeContext } from "../context/screenSizeContext";
 
-const Layout = ({ cart, children, page }) => {
+const Layout = ({
+	overlayTrigger,
+	cart,
+	children,
+	page,
+	specificClass,
+	noFooter,
+}) => {
+	console.log("LAYOUT component");
+	const [user, setUser] = useState("");
+	const { screenType } = useContext(ScreenSizeContext);
 
-	const [userz, setUser] = useState("");
-
-	if (userz.role !== 1) {
+	if (user.role !== 1) {
 		setInterval(() => {
-			if (userz) {
-				getfav(userz._id).then((response, error) => {
+			if (user) {
+				getfav(user._id).then((response, error) => {
 					if (error) {
 					} else {
 						saveFavs(response);
@@ -21,24 +32,34 @@ const Layout = ({ cart, children, page }) => {
 	}
 
 	useEffect(() => {
-		if (userz === "") {
-			const { user } = loggedIn();
+		if (user === "") {
+			let { user } = loggedIn();
 			setUser(user);
 		}
-	}, [userz]);
+	}, [user]);
 
 	return (
-		<>
-			<Header
-				page={page}
-				cartz={cart}
-				user={userz}
-				setuserZ={(use) => setUser(use)}
-			/>
+		<div className={specificClass}>
+			<Overlay />
+			{screenType !== "desktop" ? (
+				<MainNavBarSmallScreen
+					page={page}
+					cartz={cart}
+					user={user}
+					setuserZ={(use) => setUser(use)}
+				/>
+			) : (
+				<MainNavBar
+					page={page}
+					cartz={cart}
+					user={user}
+					setuserZ={(use) => setUser(use)}
+				/>
+			)}
 			{children}
-			<Footer />
-		</>
+			{!noFooter && <Footer />}
+		</div>
 	);
-};;
+};
 
 export default React.memo(Layout);

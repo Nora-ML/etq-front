@@ -1,45 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { API } from "../config";
 import { Link } from "react-router-dom";
-import { viewImage } from "../requests";
-window.Buffer = window.Buffer || require("buffer").Buffer;
+import { viewProductImages } from "../requests";
 
 const ShowImage = ({ product, classN }) => {
-	/* console.log(
+	console.log(
 		"ShowImage.js ----  Rendered ,product",
 		product,
 		"classN",
 		classN
-	); */
-	const {
-		image: { images },
-	} = product;
-
+	);
+	let { image, id, image_count } = product;
 	const [allImages, setAllImages] = useState("");
 	const [state, setState] = useState(1);
-	const [productID, setProductID] = useState("");
 
-	const slide = (direction, id) => {
-		//console.log("ShowImage.js ---- slide()=> arrow clicked");
-		//onclick will send a request to back end to fetch all the product images
-		//will check first if this has not been run before so to prvent running it on every click
-		if (productID !== id) {
-			setProductID(id);
-			displayImage(id, "allphoto");
+	const slide = async (direction, id) => {
+		try {
+			await displayImage(id);
+			return navigating(direction);
+		} catch (error) {
+			console.log("Error", error);
 		}
-		navigating(direction);
 	};
-	const navigating = (direction) => {
-		console.log("ShowImage.js ---- navigating ()");
+	const navigating = async (direction) => {
+		console.log("ShowImage.js ---- navigating ...");
 		if (allImages && direction === "plus") {
-			/*console.log(" PLUS ");*/
 			if (state >= allImages.length - 1) {
 				setState(0);
 			} else {
 				setState(state + 1);
 			}
 		} else if (direction === "minus") {
-			/*console.log(" Minus");*/
 			if (state === 0) {
 				setState(allImages.length - 1);
 			} else {
@@ -47,71 +38,42 @@ const ShowImage = ({ product, classN }) => {
 			}
 		}
 	};
-	const displayImage = (id, url) => {
-		//console.log("ShowImage.js ----- displayImage () => fetching Images");
-		viewImage(id, url).then((response, error) => {
+	const displayImage = async (id) => {
+		console.log("ShowImage.js ---- Fetching Images ...");
+		await viewProductImages(id).then((response, error) => {
 			if (error) {
-				//console.log("ShowImage.js -----  displayImage (), error :", error);
+				console.log("ShowImage.js -----  displayImage (), error :", error);
 				//if we are fetching ALL photo the response will be an "Array" therefore checking by length is easier
 			} else if (response.length) {
-				//console.log("SetAllImages..., ALL IMAGES FETCHED", response);
-				setAllImages(response);
+				console.log("ShowImage.js ---- ALL IMAGES FETCHED", response);
+				return setAllImages(response);
 			}
 		});
-	};
-	const getSRC = (content, data) => {
-		//console.log("ShowImage.js ----  Getting Image source");
-		//console.log("Data Type to be Buffered : ", typeof data);
-		var b64 = Buffer.from(data).toString("base64");
-		// console.log("Buffered Image =>>>", "data:" + content + ";base64," + b64);
-		return "data:" + content + ";base64," + b64;
 	};
 
 	return (
 		<>
-			<Link
-				key={product._id}
-				className={classN}
-				/* target="_blank" */
-				to={"/products/" + product._id}>
-				{allImages && (
-					<img
-						className="prodBlock__img--DELETE-LATER"
-						//src="{allImages[state].data}"
-						src={images[state].data}
-						alt={product.name}
-					/>
-				)}
-				{!allImages && (
-					<img
-						className={
-							classN.includes("featured")
-								? "prodBlock__featured--img"
-								: "prodBlock__img"
-						}
-						/* src="" */
-						src={images[0].data}
-						//src={`${API}/products/photo/${product._id}`}
-						alt={images[0].name}
-					/>
-				)}
+			<Link key={id} className={classN} to={"/products/" + id}>
+				<img
+					className={`${classN}_image`}
+					src={allImages ? allImages[state].data : image.data}
+					alt={allImages ? allImages[state].name : image.name}
+				/>
 			</Link>
 
 			<div
 				className={
-					product.image_count > 1
-						? "prodBlock__icons"
-						: "prodBlock__icons--hide"
+					image_count > 1 ? `${classN}_arrows` : `${classN}_arrows-hide`
 				}>
 				<div
-					className="arrow-wrap arrow-wrap-left"
-					onClick={() => slide("minus", product._id)}>
+					className="shop_arrow-wrap shop_arrow-wrap-left"
+					onClick={() => slide("minus", id)}>
 					<i className="arrow-wrap__icon arrow-wrap__icon-left fas fa-angle-left"></i>
 				</div>
 
 				<div
-					className="arrow-wrap arrow-wrap-right"
-					onClick={() => slide("plus", product._id)}>
+					className="shop_arrow-wrap shop_arrow-wrap-right"
+					onClick={() => slide("plus", id)}>
 					<i className="arrow-wrap__icon arrow-wrap__icon-right fas fa-angle-right"></i>
 				</div>
 			</div>

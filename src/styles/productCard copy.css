@@ -107,66 +107,82 @@
 		margin-right: 10px;
 	}
 }
-
 /***  featured  **/
-
-.product__featured--wrapper {
+.prodBlock__featured--wrapper {
 	/*  border: rgba(20, 19, 19, 0.963) 3px solid; */
-	/* width: 28vw; */
-	/* min-width: 400px; */
-	/* min-height: 150px;
-	min-width: 200px; */
+	width: 28vw;
+	min-width: 400px;
+	height: 80vh;
 	margin: 0 0 0 2.5vw;
 }
-
-.product__featured--imgContainer {
-	border: rgb(224, 80, 162) 2px solid;
-	width: 100%;
-	height: 80%;
+.prod-hidden {
+	display: none;
 }
-.product__featured--img {
-	/*border: rgb(16, 202, 215) 1px dashed; */
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+.prod-hide,
+.prod-active,
+.prod-active1,
+.prod-active2,
+.prod-active3 {
+	left: 0vw;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
 }
-
-/* mobile screen settings  */
-@media screen and (max-width: 480px) {
-	.product__featured--wrapper {
-		border: rgba(20, 19, 19, 0.963) 3px solid;
-		/* ideal for galaxy fold 280px 
-		height: 250px;
-		width: 200px; */
-		height: clamp(200px, 40vh, 450px);
-		width: 200px;
-	}
-	.product__featured--imgContainer {
-		border: rgb(31, 228, 38) 3px solid;
-		height: 75%;
-		width: 100%;
-	}
-	.product__featured--img {
-		/*border: rgb(16, 202, 215) 1px dashed; */
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
+.prod-hide {
+	animation-name: featuredHide;
 }
-/* tablet screen settings  */
-@media screen and (min-width: 480px) and (max-width: 769px) {
-	.product__featured--wrapper {
-		border: rgba(41, 23, 235, 0.963) 3px solid;
-		height: 45vh;
-		min-width: 40vw;
+.prod-active {
+	animation-name: featuredActive;
+}
+.prod-active1 {
+	animation-name: featuredActive1;
+}
+.prod-active2 {
+	animation-name: featuredActive2;
+}
+.prod-active3 {
+	animation-name: featuredActive3;
+}
+.prodBlock__featured--wrapper.minus {
+	animation-direction: reverse;
+}
+@keyframes featuredHide {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-30.5vw);
 	}
 }
-/* desktop screen settings 1364px  */
-@media screen and (min-width: 769px) {
-	.product__featured--wrapper {
-		border: rgba(223, 19, 19, 0.963) 3px solid;
-		height: 680px;
-		min-width: 450px;
+@keyframes featuredActive {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-30.5vw);
+	}
+}
+@keyframes featuredActive1 {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-30.5vw);
+	}
+}
+@keyframes featuredActive2 {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-30.5vw);
+	}
+}
+@keyframes featuredActive3 {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-30.5vw);
 	}
 }
 
@@ -198,6 +214,13 @@
 	height: auto;
 	min-height: 70%;
 }
+/*Featured*/
+.prodBlock__featured--imgContainer {
+	/* border: rgb(128, 0, 73) 2px solid; */
+	width: 100%;
+	min-height: 75%;
+	height: 80%;
+}
 
 /*--------  The Image ------*/
 
@@ -208,6 +231,11 @@
 }
 .prodBlock__img--DELETE-LATER {
 	/*  border: green 1px solid; */
+	width: 100%;
+	height: 100%;
+}
+.prodBlock__featured--img {
+	/*border: rgb(16, 202, 215) 1px dashed; */
 	width: 100%;
 	height: 100%;
 }
@@ -240,7 +268,7 @@
 	bottom: 35vh;
 }
 /*.... and featured productCard* */
-.product__featured--wrapper .prodBlock__icons {
+.prodBlock__featured--wrapper .prodBlock__icons {
 	position: relative;
 	bottom: 35vh;
 }
@@ -253,11 +281,11 @@
 	right: 85%;
 }
 .prodBlock_wrapper--Big .arrow-wrap-right,
-.product__featured--wrapper .arrow-wrap-right {
+.prodBlock__featured--wrapper .arrow-wrap-right {
 	left: 88%;
 }
 .prodBlock_wrapper--Big .arrow-wrap-left,
-.product__featured--wrapper .arrow-wrap-left {
+.prodBlock__featured--wrapper .arrow-wrap-left {
 	right: 88%;
 }
 /*ArroW Icon general look and animation */
@@ -266,7 +294,7 @@
 	opacity: 0;
 	transition: opacity 0.5s ease-out;
 }
-.product__featured--wrapper .prodBlock__icons {
+.prodBlock__featured--wrapper .prodBlock__icons {
 	position: relative;
 	bottom: 35vh;
 }
@@ -383,7 +411,13 @@
 
 @media screen and (max-width: 900px) {
 	/***  featured  **/
-
+	.prodBlock__featured--wrapper {
+		/* border: rgba(20, 19, 19, 0.963) 3px solid; */
+		width: 75vw;
+		min-width: 220px;
+		height: 84%;
+		margin: 0 0 0 2.5vw;
+	}
 	.prodBlock__description--green {
 		color: rgb(45, 170, 101);
 		margin-block-start: 5px;

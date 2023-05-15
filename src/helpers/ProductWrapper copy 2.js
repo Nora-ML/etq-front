@@ -15,6 +15,33 @@ const ProductWrapper = ({ products, classN }) => {
 	const [userz, setUser] = useState("");
 	const [images, setImages] = useState(false);
 
+	// Setting a pattern for product Card sizes and passing className accordingly
+	let count = 1;
+	let start = 8;
+	const productDisplay = (index) => {
+		//console.log("ProductWrapper.js  => productDisplay(), index: ", index);
+		const length = products.length;
+		let cycle = Math.ceil((length - 7) / 14);
+		let interva_BIG = 8;
+		let interval_Reg = 6;
+		let secondInterval = start + interval_Reg;
+		let end = interva_BIG + secondInterval - 1;
+		if (index <= 7) {
+			return "prodBlock prodBlock_wrapper--medium flex-c";
+		}
+		if (count <= cycle && index <= end) {
+			if (index >= start && index < secondInterval) {
+				return "prodBlock prodBlock_wrapper--Big flex-c";
+			} else if (index >= secondInterval && index < end) {
+				return "prodBlock prodBlock_wrapper--medium flex-c";
+			} else if (index === end) {
+				count++;
+				start = end + 1;
+				return "prodBlock prodBlock_wrapper--medium flex-c";
+			}
+		}
+	};
+
 	useEffect(() => {
 		//console.log("ProductWrapper.js --- useEffect => getting User info");
 		if (userz === "") {
@@ -34,19 +61,15 @@ const ProductWrapper = ({ products, classN }) => {
 			className={
 				classN === "featured"
 					? `landing-favourites_product-card`
-					: "shop_product-card"
+					: productDisplay(index)
 			}>
 			{images && (
 				<ShowImage
-					product={{
-						id: product._id,
-						image: product.image.default_image,
-						image_count: product.image_count,
-					}}
+					product={product}
 					classN={
 						classN === "featured"
 							? "landing-favourites_product-card_image-container"
-							: "shop_product-card_image-container"
+							: "flex-r--wrap prodBlock__anchor-img--taller"
 					}
 				/>
 			)}
@@ -55,7 +78,7 @@ const ProductWrapper = ({ products, classN }) => {
 				classN={
 					classN === "featured"
 						? "landing-favourites_product-card_details"
-						: "shop_product-card_details"
+						: "flex-r--wrap prodBlock__anchor-img--taller"
 				}
 			/>
 			{userz && userz.role !== 1 && (

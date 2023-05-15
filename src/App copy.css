@@ -1,0 +1,406 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  overflow-x:hidden;
+  width: 100vw;
+  font-family: 'Poppins', sans-serif;
+}
+
+.flex-r {
+  display: flex;
+  flex-direction: row;
+}
+.flex-r--wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.flex-c {
+  display: flex;
+  flex-direction: column;
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  display: inline-block;
+}
+/* 
+a {
+  color: black;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+
+
+h1 {
+  line-height: 2.2rem;
+  font-size: 27px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+p {
+  font-size: 14px;
+} */
+
+
+
+
+
+/*----General icon setting*/
+
+/*the circle around the arrow*/
+.arrow-wrap {
+  border: rgba(128, 128, 128, 0.233) 1px solid;
+  border-radius: 50%;
+  padding: 20px 20px;
+  position: absolute;
+  align-self: center;
+}
+
+.arrow-wrap__icon {
+  position: absolute;
+  bottom: 30%;
+  color: black;
+  font-size: 16px;
+}
+
+.arrow-wrap__icon::after {
+  content: "";
+  width: 0px;
+  height: 2px;
+  top: 42%;
+  border-radius: 5px;
+  position: absolute;
+}
+
+/*----------------------right*/
+/*the head of the arrow*/
+
+.arrow-wrap__icon-right {
+  left: 15%;
+  transition: left 0.3s linear;
+  /* background-color: rgb(186, 226, 43); */
+  padding-left: 11px;
+  overflow: hidden;
+}
+
+.arrow-wrap-right:hover .arrow-wrap__icon-right {
+  left: 21%;
+  transition: left 0.3s linear;
+}
+
+/*the body of the arrow*/
+
+.arrow-wrap__icon-right::after {
+  right: 1px;
+  transition: right 0.3s linear;
+}
+
+.arrow-wrap-right:hover .arrow-wrap__icon-right::after {
+  background-color: rgb(0, 0, 0);
+  width: 9px;
+  right: 3px;
+  transition: width 0.3s linear, right 0.3s linear;
+}
+
+/*---------------------left*/
+
+/*the head of the arrow*/
+
+.arrow-wrap__icon-left {
+  right: 10%;
+  transition: right 0.3s linear;
+  /* background-color: rgb(92, 6, 172); */
+  padding-right: 11px;
+  overflow: hidden;
+}
+
+.arrow-wrap-left:hover .fas {
+  right: 16%;
+  transition: right 0.3s linear;
+}
+
+/*the body of the arrow*/
+
+.arrow-wrap__icon-left::after {
+  left: 1px;
+  transition: left 0.3s linear;
+}
+
+.arrow-wrap-left:hover .arrow-wrap__icon-left::after {
+  background-color: rgb(17, 16, 16);
+  width: 9px;
+  left: 3px;
+  transition: width 0.3s linear, left 0.3s linear;
+}
+
+
+  /***********************Originally in Collection.css*************************/
+  /*******************************   Signup  ********************************/
+:root {
+  --filt_top: 0px;
+}
+
+.main-doublegrid {
+  overflow-x: hidden;
+  display: grid;
+  position: relative;
+  min-width: 100vw;
+  min-height: 80vh;/*recent*/
+  margin-top: 18vh;
+  grid-template-rows: 100%;
+ /*  border: black 2px double; */
+}
+
+.main-doublegrid--prod {
+    grid-template-columns: 65% 35%;
+    grid-template-areas: 'scrollcontent fixedbar';
+    margin-top: 0;
+    border: green 2px double;
+}
+
+.main-doublegrid--account {
+  /* border: blue 2px double; */
+  margin-bottom: 10vh;
+  grid-template-columns: 30% minmax(60vw,70%);
+  grid-template-areas: 'fixedbar scrollcontent';
+}
+
+/*h4 {
+  margin-block-end: 2px;
+  margin-block-start: 2px;
+} */
+
+.main-doublegrid ul {
+  padding-inline-start: 0;
+}
+
+/*----------------------------------------Content section*/
+.content {
+  grid-area: scrollcontent;
+  /* border: yellow 1px solid; */
+}
+
+.content--collection {
+  border: red 1px solid;
+  margin-left: 2vw;
+}
+
+.content--account {
+  justify-content: space-between;
+  /* background-color: aquamarine; */
+}
+.signup-form{
+  height: 70vh;
+  margin-top: 5vh;
+  justify-content: flex-start;
+  /* background-color: blueviolet; */
+}
+.form-item{
+  height: 10%;
+ /*  background-color:aquamarine; */
+ width: 35%;
+ margin-bottom: 10px;
+ margin-right: 4vw;
+}
+.form-item>label{
+ padding: 10px;
+
+}
+.form-item input{
+/*   background-color: black; */
+ padding: 10px;
+ border-radius: 5px;
+ border: 1px gray solid;
+}
+
+/*----------------------------------------Filter section*/
+/* .filter {
+  grid-area: fixedbar;
+  width: 85%;
+  height: max-content;
+  margin-left: 30px;
+  padding: 5px 10px;
+  position: sticky;
+  top: var(--filt_top);
+  /* border: yellow 1px solid; 
+}
+
+.filter--product {
+  /*     top: 10vh; 
+  margin-top: 10vh;
+  padding: 5px 20px;
+  /*  border: green 1px solid; 
+}
+
+.filter--account {
+   /* border: blue 1px solid;  
+}
+
+/*---------------------------Style Section
+.style {
+  /*  background-color: rgb(71, 151, 255); 
+  margin-top: 2vh;
+}
+
+.style-img {
+  width: 100%;
+  height: max-content;
+  /* background-color: hotpink; 
+  justify-content: flex-start;
+}
+
+.style-img li {
+  /* background-color: rgb(178, 255, 105); 
+  margin: 5px;
+  width: 30%;
+  height: 50%;
+}
+
+.style-img img {
+  width: 100%;
+  height: 100%;
+  /*  border: purple 2px solid; 
+}
+
+/*---------------------------Size Section
+.size {
+  /*  background-color: rgb(114, 255, 71); 
+  margin-top: 7vh;
+}
+
+.size .header {
+  justify-content: space-between;
+}
+
+.size-list {
+  /*  background-color: blue; 
+  height: max-content;
+}
+
+.size-list li {
+  border: 0.5px rgb(202, 200, 200) solid;
+  width: 50px;
+  height: 50px;
+  /* background-color: blueviolet; 
+}
+
+.size-list li>a {
+  display: block;
+  /* background-color: rgb(43, 226, 83); 
+  padding: 12px 7px;
+  text-align: center;
+}
+
+/*---------------------------color Section
+.color {
+  /* background-color: rgb(227, 255, 71); 
+  margin-top: 7vh;
+}
+
+.color .header {
+  justify-content: space-between;
+}
+
+.color-list {
+  /*  background-color: blue; 
+  height: max-content;
+}
+
+.color-list li {
+  border: 0.5px rgb(202, 200, 200) solid;
+  width: 40px;
+  height: 40px;
+  /* background-color: blueviolet; 
+}
+
+.color-list li>a {
+  display: block;
+  /* background-color: rgb(43, 226, 83); 
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  text-align: center;
+  /*  background-color: tomato; 
+}
+
+/*---------------------------Leather Section
+.leather {
+  /*  background-color: tomato; 
+  margin-top: 7vh;
+  height: 45vh;
+}
+
+.leather .header {
+  justify-content: space-between;
+}
+
+.leather-type {
+  /*  background-color: blue; 
+  height: 90%;
+}
+
+.leather-type li {
+  border: 0.5px rgb(202, 200, 200) solid;
+  width: 50%;
+  height: 50%;
+  /* background-color: blueviolet; 
+}
+
+.leather-type li>a {
+  display: block;
+  /*  background-color: rgb(43, 226, 83); 
+  padding: 12px 12px;
+  text-align: center;
+}
+
+/*---------------------------Vegan Section
+.vegan {
+  /* background-color: rgb(255, 71, 246); 
+  margin-top: 7vh;
+  height: 45vh;
+}
+
+.vegan .header {
+  justify-content: space-between;
+}
+
+.vegan-materials {
+  /*  background-color: blue; 
+  height: 90%;
+}
+
+.vegan-materials li {
+  border: 0.5px rgb(202, 200, 200) solid;
+  width: 50%;
+  height: 50%;
+  /* background-color: blueviolet;
+}
+.vegan-materials li>a {
+  display: block;
+  /* background-color: rgb(43, 226, 83);
+  padding: 12px 12px;
+  text-align: center;
+}
+.vegan-materials li>a>h4 {
+  /*  background-color: rgb(226, 43, 113);
+  padding: 5px 5px;
+  text-align: center;
+}
+
+.vegan-materials li>a>p {
+  /*   background-color: rgb(226, 43, 113);
+  padding: 10px 1px;
+  text-align: center;
+} */

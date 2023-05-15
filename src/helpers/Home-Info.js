@@ -1,46 +1,61 @@
 import React from "react";
 import image from "../icons/leather_Small2_400x.png";
 import { Link } from "react-router-dom";
+import "../styles/landing_info.css";
 
 const HomeInfoSec = ({ classN }) => {
 	console.log("HomeInfoSec.js --- rendered", classN);
 	return (
 		<div className={classN}>
-			<div className="sec-2_unit">
-				<img
-					className="sec-2_img"
-					src="https://cdn.shopify.com/s/files/1/0505/9044/9849/articles/ETQ-FitpicsHQ-0845-26-04-22-Packing-Boxes-Crob_400x.jpg?v=1652433511"
-					alt=""
+			<div className="landing-info_card main-card">
+				<div
+					style={{
+						backgroundImage:
+							"url(https://cdn.shopify.com/s/files/1/0505/9044/9849/articles/ETQ-FitpicsHQ-0855-26-04-22-Packing-Boxes_crob_LR_15_400x.png?v=1672415228)",
+					}}
+					className="landing-info_img"
 				/>
-				<div className="sec-2_img--det">
-					<h4 className="sec-2_img--det-header">Modular Packaging</h4>
-					<p className="sec-2_img--det-details">Unboxing like never before</p>
-					<Link className="sec-2_img--det-link-Wrapper" to="/">
-						<p className="sec-2_img--det-link">Read story</p>
+				<div className="landing-info_img--det">
+					<h4 className="landing-info_img--det-header">Modular Packaging</h4>
+					<p className="landing-info_img--det-details">
+						Unboxing like never before
+					</p>
+					<Link className="landing-info_img--det-link" to="/">
+						Read story...
 					</Link>
 				</div>
 			</div>
-			<div className="sec-2_unit">
-				<img
-					className="sec-2_img"
-					src="https://cdn.shopify.com/s/files/1/0505/9044/9849/articles/WhatsApp_Image_2022-04-11_at_3.53.14_PM_400x.jpg?v=1649941950"
-					alt=""
+			<div className="landing-info_card">
+				<div
+					style={{
+						backgroundImage:
+							"url(https://cdn.shopify.com/s/files/1/0505/9044/9849/articles/ETQ-FitpicsHQ-0855-26-04-22-Packing-Boxes_crob_LR_17_400x.png?v=1682003114)",
+					}}
+					className="landing-info_img"
 				/>
-				<div className="sec-2_img--det">
-					<h4 className="sec-2_img--det-header">Who we are</h4>
-					<p className="sec-2_img--det-details">Our journey explained</p>
-					<Link className="line" to="/">
-						<p className="sec-2_img--det-link">Read story</p>
+				<div className="landing-info_img--det">
+					<h4 className="landing-info_img--det-header">Who we are</h4>
+					<p className="landing-info_img--det-details">Our journey explained</p>
+					<Link className="landing-info_img--det-link" to="/">
+						Read story...
 					</Link>
 				</div>
 			</div>
-			<div className="sec-2_unit">
-				<img className="sec-2_img" src={image} alt="" />
-				<div className="sec-2_img--det">
-					<h4 className="sec-2_img--det-header">How it's made</h4>
-					<p className="sec-2_img--det-details">Sneakers made like shoes</p>
-					<Link className="line" to="/">
-						<p className="sec-2_img--det-link">Read story</p>
+			<div className="landing-info_card">
+				<div
+					className="landing-info_img"
+					style={{
+						backgroundImage:
+							"url(https://cdn.shopify.com/s/files/1/0505/9044/9849/files/ETQ-Januari23-0464_1200x.jpg?v=1679598214)",
+					}}
+				/>
+				<div className="landing-info_img--det">
+					<h4 className="landing-info_img--det-header">How it's made</h4>
+					<p className="landing-info_img--det-details">
+						Sneakers made like shoes
+					</p>
+					<Link className="landing-info_img--det-link" to="/">
+						Read story...
 					</Link>
 				</div>
 			</div>

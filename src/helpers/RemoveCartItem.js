@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { retrieveCart, saveCarts, removeFromCart, loggedIn } from "../requests";
+import {
+	getCart_localStorage,
+	addToCart_localStorage,
+	removeFromCart_DB,
+	loggedIn,
+} from "../requests";
 
 const RemoveCartItem = ({ proId, updatedCart }) => {
 	console.log("RemoveCartItem.js -- rendered");
@@ -8,15 +13,15 @@ const RemoveCartItem = ({ proId, updatedCart }) => {
 	//remove item from localStorage
 	const remove = () => {
 		console.log("RemoveCartItem.js -- remove()");
-		const prevCart = retrieveCart();
+		const prevCart = getCart_localStorage();
 		const newArray = prevCart.filter((f) => f.productId !== proId);
-		saveCarts(newArray);
+		addToCart_localStorage(newArray);
 		//assign new updated cart to updateCart to re-render the semiCart
 		updatedCart(newArray);
 		//Also remove item from database if registered and logged in user
 		if (user) {
 			console.log("RemoveCartItem.js -- remove() from DB, user:", user);
-			removeFromCart(user._id, proId).then((response, error) => {
+			removeFromCart_DB(user._id, proId).then((response, error) => {
 				console.log("RemoveCartItem.js -- remove(), resoponse:", response);
 				console.log("RemoveCartItem.js -- remove(), error:", error);
 			});

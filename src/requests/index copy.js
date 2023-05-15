@@ -268,10 +268,10 @@ export const viewProduct = async (productId) => {
 	}
 };
 
-export const viewProductImages = async (productId) => {
-	console.log("Index.js ---- viewProductImages", productId);
+export const viewImage = async (productId, url) => {
+	console.log("Index.js ---- viewImage()");
 	try {
-		const response = await fetch(`${API}/products/allImages/${productId}`, {
+		const response = await fetch(`${API}/products/${url}/${productId}`, {
 			method: "GET",
 			headers: {
 				Accept: "image/jpeg",
@@ -279,7 +279,7 @@ export const viewProductImages = async (productId) => {
 		});
 		return await response.json();
 	} catch (error) {
-		console.log("Index.js ---- viewProductImages => error :", error);
+		console.log("Index.js ---- viewImage() => error :", error);
 	}
 };
 
@@ -385,29 +385,8 @@ export const featured = async () => {
 	}
 };
 
-//  cart
-// On user signing in we will fetch his cart from DB then save a local copy
-export const getCart_DB = async (id) => {
-	console.log("Index.js ---- getCart() id", id);
-	try {
-		const response = await fetch(`${API}/${id}/cart`, {
-			method: "GET",
-		});
-		return await response.json();
-	} catch (error) {
-		console.log("Index.js ---- getCart() error", error);
-	}
-};
-
-export const addToCart_localStorage = (cart) => {
-	console.log("Index.js ---- saveCarts()");
-	if (typeof window !== "undefined") {
-		localStorage.setItem("Cart", JSON.stringify(cart));
-	}
-};
-
-// on user signOut retrieve updated cart from local storage and update DB
-export const addToCart_DB = async (user, data) => {
+/*******************    cart   *********************/
+export const addToCart = async (user, data) => {
 	console.log("Index.js ---- addToCart() user", user, "produ data", data);
 	try {
 		const response = await fetch(`${API}/${user}/cart`, {
@@ -424,18 +403,35 @@ export const addToCart_DB = async (user, data) => {
 	}
 };
 
-export const getCart_localStorage = () => {
-	console.log("Index.js ----getCart_localStorage() ");
+export const getCart = async (id) => {
+	console.log("Index.js ---- getCart() id", id);
+	try {
+		const response = await fetch(`${API}/${id}/cart`, {
+			method: "GET",
+		});
+		return await response.json();
+	} catch (error) {
+		console.log("Index.js ---- getCart() error", error);
+	}
+};
+export const saveCarts = (cart) => {
+	console.log("Index.js ---- saveCarts()");
+	if (typeof window !== "undefined") {
+		localStorage.setItem("Cart", JSON.stringify(cart));
+	}
+};
+export const retrieveCart = () => {
+	console.log("Index.js ----retrieveCart() ");
 	if (localStorage.getItem("Cart")) {
-		console.log("Index.js ----getCart_localStorage() --success");
+		console.log("Index.js ----retrieveCart() --success");
 		return JSON.parse(localStorage.getItem("Cart"));
 	} else {
-		console.log("Index.js ----getCart_localStorage() --error");
+		console.log("Index.js ----retrieveCart() --error");
 		return { cart: false };
 	}
 };
 
-export const removeFromCart_DB = async (user, proId) => {
+export const removeFromCart = async (user, proId) => {
 	console.log("Index.js ---- removeFromCart() userid", user, "proId", proId);
 	try {
 		const response = await fetch(`${API}/${user}/${proId}`, {

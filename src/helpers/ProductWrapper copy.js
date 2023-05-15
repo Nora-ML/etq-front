@@ -6,14 +6,42 @@ import UserCommands from "../helpers/UserCommands.js";
 import { loggedIn } from "../requests";
 
 const ProductWrapper = ({ products, classN }) => {
-	console.log(
+	/* console.log(
 		"ProductWrapper.js  => rendered ..,products: ",
 		products,
 		"classN",
 		classN
-	);
+	); */
 	const [userz, setUser] = useState("");
+	//const [location, setLocation] = useState("");
 	const [images, setImages] = useState(false);
+
+	// Setting a pattern for product Card sizes and passing className accordingly
+	let count = 1;
+	let start = 8;
+	const productDisplay = (index) => {
+		//console.log("ProductWrapper.js  => productDisplay(), index: ", index);
+		const length = products.length;
+		let cycle = Math.ceil((length - 7) / 14);
+		let interva_BIG = 8;
+		let interval_Reg = 6;
+		let secondInterval = start + interval_Reg;
+		let end = interva_BIG + secondInterval - 1;
+		if (index <= 7) {
+			return "prodBlock prodBlock_wrapper--medium flex-c";
+		}
+		if (count <= cycle && index <= end) {
+			if (index >= start && index < secondInterval) {
+				return "prodBlock prodBlock_wrapper--Big flex-c";
+			} else if (index >= secondInterval && index < end) {
+				return "prodBlock prodBlock_wrapper--medium flex-c";
+			} else if (index === end) {
+				count++;
+				start = end + 1;
+				return "prodBlock prodBlock_wrapper--medium flex-c";
+			}
+		}
+	};
 
 	useEffect(() => {
 		//console.log("ProductWrapper.js --- useEffect => getting User info");
@@ -21,9 +49,12 @@ const ProductWrapper = ({ products, classN }) => {
 			console.log("ProductWrapper.js --- useEffect => loggedIn():", userz);
 			const { user } = loggedIn();
 			setUser(user);
+			/* setLocation(
+				window.location.href.slice(window.location.href.lastIndexOf("/"))
+			); */
 			setTimeout(() => {
 				setImages(true);
-			}, 200);
+			}, 400);
 		}
 	}, [userz]);
 
@@ -33,31 +64,20 @@ const ProductWrapper = ({ products, classN }) => {
 			id={index}
 			className={
 				classN === "featured"
-					? `landing-favourites_product-card`
-					: "shop_product-card"
+					? `prodBlock ${product.classP} flex-c`
+					: productDisplay(index)
 			}>
 			{images && (
 				<ShowImage
-					product={{
-						id: product._id,
-						image: product.image.default_image,
-						image_count: product.image_count,
-					}}
+					product={product}
 					classN={
 						classN === "featured"
-							? "landing-favourites_product-card_image-container"
-							: "shop_product-card_image-container"
+							? "prodBlock__featured--imgContainer"
+							: "flex-r--wrap prodBlock__anchor-img--taller"
 					}
 				/>
 			)}
-			<ProductDescription
-				product={product}
-				classN={
-					classN === "featured"
-						? "landing-favourites_product-card_details"
-						: "shop_product-card_details"
-				}
-			/>
+			<ProductDescription product={product} />
 			{userz && userz.role !== 1 && (
 				/* location.includes("pillow") && */ <UserCommands
 					product={product}

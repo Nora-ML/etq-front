@@ -1,0 +1,226 @@
+.product-detail-page_main-container {
+	/* border: 3px blue solid; */
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+
+	width: 100vw;
+	height: auto;
+}
+
+.product-detail-page_images-container {
+	/* background-color: rgb(228, 153, 83); */
+	flex-basis: 100%;
+	height: auto;
+
+	display: flex;
+	flex-wrap: wrap;
+
+	margin-top: 0;
+}
+.product-detail-page_image-wrap {
+	width: 100%;
+	max-height: 100vh;
+}
+.product-detail-page_image {
+	min-width: 100%;
+}
+@media screen and (min-width: 480px) and (min-aspect-ratio: 1) {
+	.product-detail-page_images-container {
+		flex-basis: 70%;
+		height: fit-content;
+		order: -1;
+	}
+	.product-detail-page_image-wrap {
+		flex-basis: 50%;
+		max-height: 100vh;
+	}
+	.product-detail-page_image {
+		max-width: 100%;
+		height: 100%;
+	}
+}
+.product-detail-page_drawer::before {
+	content: "";
+	display: block;
+
+	background-color: rgb(83, 77, 77);
+	border-radius: 50%;
+
+	width: 50%;
+	height: 4px;
+	top: 1vh;
+	right: 50%;
+
+	transform: translateX(50%);
+}
+.product-detail-page_drawer {
+	/* background-color: rgb(49, 81, 194); */
+	background-color: rgb(255, 253, 253);
+	position: fixed;
+	z-index: 5;
+
+	width: 100%;
+	top: 80vh;
+	height: 20vh;
+	right: 0;
+	padding: 2vh 5vw;
+
+	transition: all 0.3s ease;
+}
+
+.drawer-active {
+	/* background-color: rgb(128, 1, 1); */
+	height: 95vh;
+	top: 5vh;
+
+	overflow-y: auto;
+	transition: all 0.3s ease;
+}
+.product-detail-page_details {
+	/* background-color: red; */
+	display: flex;
+	flex-wrap: wrap;
+}
+
+@media screen and (min-width: 480px) and (min-aspect-ratio: 1) {
+	.product-detail-page_details {
+		/* background-color: aqua; */
+
+		position: relative;
+		min-height: 100vh;
+		height: fit-content;
+		width: 30%;
+		padding: 4vh 2vw 1vh;
+		top: 0;
+
+		order: -1;
+	}
+}
+
+.product-detail-page_details > * {
+	margin-bottom: 1vh;
+}
+.product-detail-page_product-data {
+	/* background-color: yellow; */
+	flex-basis: 100%;
+	order: -1;
+	height: calc(((20vh - 7vh) / 3) * 2);
+	margin-top: 2vh;
+
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+}
+.product-detail-page_product-data * {
+	margin-block: 0;
+	font-variant: all-small-caps;
+}
+.product-detail-page_product-name {
+	width: 100%;
+
+	font-size: 18px;
+	letter-spacing: -0.5px;
+}
+.product-detail-page_product-color,
+.product-detail-page_product-price {
+	width: 50%;
+
+	font-size: 15px;
+	letter-spacing: 2px;
+	line-height: 2em;
+	font-weight: 200;
+}
+
+.product-detail-page_product-price {
+	text-align: end;
+}
+
+.product-detail-page_product-info {
+	margin-block: 0;
+	padding: 0.5em 0;
+	letter-spacing: 1.5px;
+	font-size: 16px;
+	line-height: 1.3em;
+}
+.product-detail-page_product-options {
+	/* background-color: aqua; */
+	width: 100%;
+	height: 5vh; /* revise laster to be responsive*/
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.dropdown-container {
+	position: relative;
+	width: calc((100% - 10px) / 2);
+	height: 100%;
+}
+.dropdown-container:first-of-type {
+	margin-right: 10px;
+}
+.dropdown-list {
+	position: absolute;
+
+	display: flex;
+	flex-wrap: wrap;
+
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 5vh;
+}
+.dropdown-list.active {
+	height: auto;
+	transition: height 0.5s ease;
+}
+.dropdown-item {
+	margin-block: 0;
+	width: 100%;
+	height: 0;
+	text-align: center;
+	line-height: 3em;
+	background-color: gainsboro;
+	opacity: 0;
+	transition: height 0.5s ease, opacity 0.3s ease 0.2s;
+}
+.dropdown-list.active .dropdown-item {
+	height: 5vh;
+	opacity: 1;
+	transition: height 0.5s ease, opacity 0.3s ease 0.2s;
+}
+.dropdown-item.selected {
+	background-color: whitesmoke;
+	border: gainsboro solid 1px;
+	height: 5vh;
+	opacity: 1;
+	transition: height 0.5s ease;
+	order: -2;
+}
+
+.product-detail-page_add-btn {
+	background-color: black;
+	height: calc((20vh - 7vh) / 3);
+	width: 100%;
+
+	color: white;
+	border: none;
+	cursor: pointer;
+	order: -1;
+}
+.order-normal {
+	order: 0;
+}
+
+.product-detail-page_general-info {
+	/* background-color: rgb(255, 0, 162); */
+	transition: height 0.5s ease;
+}
+.product-detail-page_general-info > ul {
+	list-style-image: url(/public/check-mark-black-outline.png);
+	font-size: 14px;
+}
+.product-detail-page_general-info li {
+	margin: 8px 0;
+	line-height: 1.5em;
+}

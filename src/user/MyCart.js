@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { retrieveCart } from "../requests";
+import { getCart_localStorage } from "../requests";
 import "../styles/myCart.css";
 import { API } from "../config";
 
 const MyCart = () => {
 	console.log("MyCart.js --  rendered");
 	const { userId } = useParams();
-	const [cart, setCart] = useState(retrieveCart);
+	const [cart, setCart] = useState(getCart_localStorage);
 
 	console.log("MyCart :", cart);
 	return (

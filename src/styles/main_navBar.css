@@ -1,0 +1,266 @@
+.main-navigation {
+	background-color: rgba(245, 245, 245, 0.998);
+	opacity: 1;
+	position: fixed;
+	z-index: 2;
+	top: 1vh;
+	right: 0;
+	width: 98%;
+	left: 50%;
+	min-height: 50px;
+	height: 6vh;
+	transform: translateX(-50%);
+	font-size: clamp(14px, 1vh, 20px);
+
+	color: rgb(0, 0, 0);
+
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	align-content: center;
+
+	transition: all 0.3s ease;
+}
+a {
+	color: black;
+}
+.main-navigation--hidden {
+	opacity: 0;
+	transition: all 0.3s ease;
+}
+.main-navigation--transparent {
+	opacity: 1;
+	background-color: transparent;
+	color: white;
+
+	transition: all 0.3s ease;
+}
+
+.main-navigation h4 {
+	margin-block: 0;
+}
+
+.main-navigation_logo {
+	color: inherit;
+	padding: 0.5em 1em;
+	font-weight: 500;
+	flex-basis: 10%;
+	font-size: clamp(18px, 2vh, 25px);
+}
+.main-navigation_categories {
+	color: inherit;
+	flex-basis: 30%;
+	flex-grow: 2;
+	justify-content: flex-start;
+
+	display: flex;
+}
+.main-navigation_categorytab {
+	padding: 0.5em 1em;
+	color: inherit;
+}
+.main-navigation_othertabs {
+	color: inherit;
+	flex-basis: 40%;
+	flex-grow: 2;
+	align-items: center;
+	justify-content: flex-end;
+	display: flex;
+}
+.main-navigation_searchtab,
+.main-navigation_helptab,
+.main-navigation_usertab {
+	padding: 0.5em 1em;
+	color: inherit;
+	cursor: pointer;
+}
+.main-navigation_carttab {
+	padding: 0.5em 2em 0.5em 1em;
+	color: inherit;
+	cursor: pointer;
+}
+
+.main-navigation--transparent_logo--other,
+.main-navigation--transparent_categories--other,
+.main-navigation--transparent_othertabs--other {
+	color: rgb(26, 25, 25);
+}
+.main-navigation--transparent_logo--home,
+.main-navigation--transparent_categories--home {
+	color: inherit;
+}
+.main-navigation--transparent_othertabs--home {
+	color: rgb(26, 25, 25);
+}
+@media screen and (min-width: 700px) and (max-aspect-ratio: 1) {
+	.main-navigation--transparent_othertabs--home {
+		color: inherit;
+		font-size: clamp(14px, 1vh, 20px);
+	}
+}
+
+.main-navigation_tab-contents {
+	background-color: rgba(245, 245, 245, 0.875);
+	position: absolute;
+	z-index: -2;
+	top: 0;
+	right: 0;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	clip-path: inset(0 0 100% 0);
+
+	transition: clip-path 0.4s linear;
+}
+/* Search Tab*/
+.main-navigation_searchtab-content {
+	left: 0%;
+	width: 100%;
+	height: 20vh;
+	min-height: 200px;
+	transition: clip-path 0.4s linear;
+}
+
+.main-navigation_searchtab-content.searchtab--active {
+	clip-path: inset(0% 0% 0% 0%);
+}
+
+.main-navigation_searchtab-data {
+	background-color: transparent;
+	border: none;
+	width: 90%;
+	height: 40%;
+	align-self: self-end;
+	margin-bottom: 3vh;
+	font-size: 30px;
+}
+
+.main-navigation_searchtab-data:focus {
+	outline: none;
+}
+
+/* Help Tab*/
+.main-navigation_helptab-content {
+	left: 0%;
+	width: 100%;
+	height: 40vh;
+	min-height: 250px;
+	font-size: clamp(12px, 1.2vh, 15px);
+	transition: clip-path 0.4s linear;
+}
+.main-navigation_helptab-content.helptab--active {
+	clip-path: inset(0% 0% 0% 0%);
+	display: flex;
+	align-items: center;
+}
+.main-navigation_helptab-data {
+	flex-basis: calc(100% / 3.5);
+	height: 40%;
+	opacity: 0;
+
+	display: flex;
+	flex-direction: column;
+	transition: opacity 0.3s linear;
+}
+.main-navigation_helptab-data h4 {
+	margin-bottom: 2vh;
+	font-variant: all-petite-caps;
+}
+.main-navigation_helptab-data * {
+	padding-bottom: 1vh;
+	margin-bottom: 1vh;
+}
+
+.helptab--active .main-navigation_helptab-data {
+	opacity: 1;
+	transition: opacity 0.3s linear;
+}
+
+/* User Tab*/
+.main-navigation_usertab-content {
+	right: 0;
+	left: 50%;
+	width: 50%;
+	min-height: 250px;
+	max-height: 30vh;
+
+	padding: 3% 5% 2%;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: space-evenly;
+
+	transition: clip-path 0.4s linear;
+}
+.main-navigation_usertab-content.usertab--active {
+	clip-path: inset(0% 0% 0% 0%);
+}
+.main-navigation_usertab-content * {
+	flex-basis: 50%;
+
+	opacity: 0;
+	transition: opacity 0.3s linear;
+}
+.usertab--active * {
+	opacity: 1;
+	transition: opacity 0.3s linear;
+}
+.main-navigation_usertab-content p:first-of-type {
+	flex-basis: 100%;
+	line-height: 1.3em;
+}
+.main-navigation_usertab-content p:first-of-type::after {
+	content: "";
+	display: block;
+	position: relative;
+	background-color: rgb(122, 122, 122);
+	top: 25px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 90%;
+	height: 2px;
+}
+.main-navigation_tab-contents button {
+	background-color: black;
+	height: 50px;
+	color: white;
+}
+/* Cart Tab*/
+.main-navigation_carttab {
+}
+.main-navigation_carttab-content {
+	right: 0;
+	left: 50%;
+	width: 50%;
+	min-height: 250px;
+	max-height: 20vh;
+
+	padding: 3%;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-end;
+
+	transition: clip-path 0.4s linear;
+}
+.main-navigation_carttab-content.carttab--active {
+	clip-path: inset(0% 0% 0% 0%);
+}
+.cart_items-icon-wrapper {
+	position: relative;
+}
+.cart_items-icon {
+	background-color: rgb(255, 255, 255);
+	color: black;
+	border-radius: 50%;
+	padding: 4px 8px;
+	position: absolute;
+	top: 45%;
+	left: 80%;
+}
+.main-navigation_carttab-content * {
+	flex-basis: 70%;
+}
+.main-navigation_carttab-content p:first-of-type {
+	margin-bottom: 50px;
+}

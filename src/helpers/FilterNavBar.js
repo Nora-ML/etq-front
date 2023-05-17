@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import "../styles/filter_navBar.css";
-import "../styles/filter_window.css";
 import { FilterNavBarContext } from "../context/filterContext";
 import { OverlayContext } from "../context/overlayContext";
 import { useContext } from "react";
+import "../styles/filter_navBar.css";
 
 const FilterNavBar = () => {
 	const {
@@ -47,23 +46,17 @@ const FilterNavBar = () => {
 		<div
 			className={
 				filterNavBar /* && !headerState */
-					? "mini-nav flex-r"
-					: "mini-nav flex-r hide"
+					? `filter-navbar filter-navbar--${filterState ? "on" : ""}`
+					: "filter-navbar filter-navbar--hide"
 			}>
-			<h4
-				onClick={() => exitFilterandOverlay()}
-				className={
-					!filterState ? "nav-bar-item shopz current" : "nav-bar-item"
-				}>
+			<div onClick={() => exitFilterandOverlay()} className="filter-navbar_tag">
 				Shop
-			</h4>
-			<h4
+			</div>
+			<div
 				onClick={() => enterFilterandOverlay()}
-				className={
-					filterState ? "nav-bar-item filterz current" : "nav-bar-item"
-				}>
+				className="filter-navbar_tag">
 				Filter
-			</h4>
+			</div>
 		</div>
 	);
 };

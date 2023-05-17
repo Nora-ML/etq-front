@@ -9,7 +9,7 @@ import {
 	list,
 	getCart_localStorage,
 } from "../requests";
-import "../styles/header.css";
+import "../styles/main_navBar_smallScreen.css";
 
 import SemiCart from "../helpers/SemiCart.js";
 import { MainNavBarContext } from "../context/mainNavBarContext";
@@ -92,26 +92,11 @@ const MainNavBarSmallScreen = ({ page, user, setuserZ }) => {
 			setnavState("hide");
 		}
 	};
-	// Detects the nav state and returns appropriate classname. Called in the nav element
-	const navTrigger = () => {
-		console.log("mainNaveBar navTrigger() :", mainNavBar);
-		if (mainNavBar) {
-			return "main-navigation no-background";
-		} else if (navstate === "classic") {
-			return "main-navigation";
-		} else if (navstate === "hide") {
-			return "main-navigation hide";
-		} else if (navstate === "active") {
-			return "main-navigation active";
-		}
-	};
 
 	useEffect(() => {
 		var prevScroll = 0;
 
-		if (mainNavBar === true) {
-			setnavState("active");
-		} else {
+		if (mainNavBar !== true) {
 			window.addEventListener("scroll", () => {
 				var newScroll = window.scrollY;
 				const innerHeight = window.innerHeight;
@@ -382,7 +367,7 @@ const MainNavBarSmallScreen = ({ page, user, setuserZ }) => {
 		);
 	};
 	return (
-		<nav className={navTrigger()}>
+		<nav className={`main-navigation--${navstate}`}>
 			<ul
 				className={
 					page === "home" && navstate === "classic"

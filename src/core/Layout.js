@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import MainNavBar from "./MainNavBar";
-import MainNavBarSmallScreen from "./MainNavBar_SmallScreen";
+import MainNavBarSmallScreen from "./MainNavBar copy";
 import Footer from "./Footer";
 import Overlay from "./Overlay";
 import { loggedIn, getfav, saveFavs } from "../requests";
@@ -14,7 +14,7 @@ const Layout = ({
 	specificClass,
 	noFooter,
 }) => {
-	console.log("LAYOUT component");
+	console.log("LAYOUT component page", page);
 	const [user, setUser] = useState("");
 	const { screenType } = useContext(ScreenSizeContext);
 
@@ -41,7 +41,7 @@ const Layout = ({
 	return (
 		<div className={specificClass}>
 			<Overlay />
-			{screenType !== "desktop" ? (
+			{screenType === "mobile" ? (
 				<MainNavBarSmallScreen
 					page={page}
 					cartz={cart}

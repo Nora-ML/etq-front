@@ -8,13 +8,15 @@ import "../styles/overlay.css";
 const Overlay = ({ trigger }) => {
 	const { overlayState, setOverlayState } = useContext(OverlayContext);
 	const { filterState, exitFilterandOverlay } = useContext(FilterNavBarContext);
-	const { activeTab, setActiveTab } = useContext(MainNavBarContext);
+	const { activeTab, setActiveTab, setBurgerMenu } =
+		useContext(MainNavBarContext);
 
 	const exitOverlay = () => {
 		if (activeTab) {
 			setOverlayState(false);
 			setActiveTab(false);
 		}
+		setBurgerMenu(false);
 		exitFilterandOverlay(false);
 	};
 

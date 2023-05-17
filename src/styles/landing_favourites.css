@@ -1,12 +1,12 @@
 .landing-favourites {
-	border: rgb(41, 246, 14) dashed 1px;
+	/* border: rgb(41, 246, 14) dashed 1px; */
 	overflow: hidden;
 	position: relative;
 
 	display: flex;
 	flex-wrap: wrap;
 
-	width: calc(100% - 20px);
+	width: calc(100% - 30px);
 	height: fit-content;
 	margin: 10px;
 

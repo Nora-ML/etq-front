@@ -1,10 +1,11 @@
 .landing-info {
-	border: orangered dashed 1px;
+	/* border: orangered dashed 1px; */
 
 	display: flex;
 	flex-wrap: wrap;
 
-	width: calc(100% - 20px);
+	width: calc(100% - 30px);
+
 	margin: 10px;
 	height: clamp(350px, 100vh, 900px);
 

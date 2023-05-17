@@ -1,15 +1,15 @@
 import React, { useEffect, useState, memo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
 	itemsInCategory,
 	filter,
 	retrieveLocal,
 	removeLocal,
 } from "../requests";
-import "../styles/filter.css";
 import { FilterNavBarContext } from "../context/filterContext";
 import { OverlayContext } from "../context/overlayContext";
 import { useContext } from "react";
+import "../styles/filter_window.css";
 
 const FilterWindow = () => {
 	console.log("Filter.js ----- rendered");
@@ -91,7 +91,7 @@ const FilterWindow = () => {
 		console.log("Filter.js ----- searchArray()...");
 		const item = e.target.innerText;
 		const numerify = Math.floor(item);
-		//iterate through "selected" object
+		//iterate through "filter_window_options filter_window_options--selected" object
 		Object.entries(selected).forEach(([key, value]) => {
 			if (key === name) {
 				const index =
@@ -146,7 +146,7 @@ const FilterWindow = () => {
 					setTrail(newTrail);
 					setSelected(newSelection);
 				};
-				//if item has not already been added , add it and class "selected"
+				//if item has not already been added , add it and class "filter_window_options filter_window_options--selected"
 				if (index === -1) {
 					console.log("Filter.js -- searchArray() - NEW");
 					//first selection || repeat selection || new selection
@@ -161,7 +161,7 @@ const FilterWindow = () => {
 						console.log("Filter.js - searchArray - NEW -reverse Selec");
 						resetTrail();
 					}
-					//if item has already been added , remove it from array and remove class "selected"
+					//if item has already been added , remove it from array and remove class "filter_window_options filter_window_options--selected"
 				} else {
 					console.log("Filter.js - searchArray() - old ");
 					resetTrail("remove");
@@ -260,117 +260,105 @@ const FilterWindow = () => {
 	};
 
 	return (
-		<>
-			<div className={!filterWindow ? "filter_page hidden" : "filter_page"}>
-				<div className="proType">
-					<div className="header">
-						<h4>Category</h4>
-					</div>
-
-					<ul className="proType-img flex-r flex-r--wrap">
-						{product_type_list &&
-							product_type_list.map((s) => (
-								<li
-									key={s}
-									onClick={(e) => searchArray(e, "product_type")}
-									className={
-										product_type_diff && !product_type_diff.includes(s)
-											? "fadedOption"
-											: product_type && product_type.includes(s)
-											? "selected"
-											: ""
-									}>
-									{s}
-								</li>
-							))}
-					</ul>
-				</div>
-				<div className="brand">
-					<div className="header">
-						<h4>Brands</h4>
-					</div>
-
-					<ul className="brand-img flex-r flex-r--wrap">
-						{brand_list &&
-							brand_list.map((s) => (
-								<li
-									key={s}
-									onClick={(e) => searchArray(e, "brand")}
-									className={
-										brand_diff && !brand_diff.includes(s)
-											? "fadedOption"
-											: brand.includes(s)
-											? "selected"
-											: ""
-									}>
-									{s}
-								</li>
-							))}
-					</ul>
-				</div>
-				<div className="size">
-					<div className="header flex-r flex-r--wrap">
-						<h4>Size-EU</h4>
-					</div>
-
-					<ul className="size-list flex-r flex-r--wrap">
-						{sizes_list &&
-							sizes_list.map((s) => {
-								return (
-									<li
-										key={s}
-										onClick={(e) => searchArray(e, "sizes")}
-										className={
-											sizes_diff && !sizes_diff.includes(s)
-												? "fadedOption"
-												: sizes.includes(s)
-												? "selected"
-												: ""
-										}>
-										{s}
-									</li>
-								);
-							})}
-					</ul>
-				</div>
-				<div className="color">
-					<div className="header flex-r">
-						<h4>Color</h4>
-					</div>
-					<ul className="color-list flex-r flex-r--wrap">
-						{colors_list &&
-							colors_list.map((s) => (
-								<li
-									key={s}
-									onClick={(e) => searchArray(e, "colors")}
-									className={
-										colors_diff && !colors_diff.includes(s)
-											? "fadedOption"
-											: colors.includes(s)
-											? "selected"
-											: ""
-									}>
-									{s}
-								</li>
-							))}
-					</ul>
-				</div>
-				<div className="reset">
-					<div className="header">
-						<h4 onClick={() => clearOut()}>Reset</h4>
-					</div>
-				</div>
-				<div className="count">
-					<div className="header">
-						<h4>Items:</h4>
-						<p>{count}</p>
-					</div>
-				</div>
-				<div className="submit-button filter-button">
-					<input type="button" onClick={submitForm} value="Filter" />
-				</div>
+		<div
+			className={
+				!filterWindow
+					? "filter_window "
+					: "filter_window filter_window--display"
+			}>
+			<div className="filter_window-type filter_window-type_category">
+				<ul className="filter_window_options-wrapper">
+					<h4 className="filter_window_header">Category :</h4>
+					{product_type_list &&
+						product_type_list.map((s) => (
+							<li
+								key={s}
+								onClick={(e) => searchArray(e, "product_type")}
+								className={
+									product_type_diff && !product_type_diff.includes(s)
+										? "filter_window_options filter_window_options--faded"
+										: product_type && product_type.includes(s)
+										? "filter_window_options filter_window_options--selected"
+										: "filter_window_options"
+								}>
+								{s}
+							</li>
+						))}
+				</ul>
 			</div>
-		</>
+			<div className="filter_window-type filter_window-type_brand">
+				<ul className="filter_window_options-wrapper">
+					<h4 className="filter_window_header">Brands :</h4>
+					{brand_list &&
+						brand_list.map((s) => (
+							<li
+								key={s}
+								onClick={(e) => searchArray(e, "brand")}
+								className={
+									brand_diff && !brand_diff.includes(s)
+										? "filter_window_options filter_window_options--faded"
+										: brand.includes(s)
+										? "filter_window_options filter_window_options--selected"
+										: "filter_window_options"
+								}>
+								{s}
+							</li>
+						))}
+				</ul>
+			</div>
+			<div className="filter_window-type filter_window-type_size">
+				<ul className="filter_window_options-wrapper">
+					<h4 className="filter_window_header">Size-EU :</h4>
+					{sizes_list &&
+						sizes_list.map((s) => {
+							return (
+								<li
+									key={s}
+									onClick={(e) => searchArray(e, "sizes")}
+									className={
+										sizes_diff && !sizes_diff.includes(s)
+											? "filter_window_options filter_window_options--faded"
+											: sizes.includes(s)
+											? "filter_window_options filter_window_options--selected"
+											: "filter_window_options"
+									}>
+									{s}
+								</li>
+							);
+						})}
+				</ul>
+			</div>
+			<div className="filter_window-type filter_window-type_color">
+				<ul className="filter_window_options-wrapper">
+					<h4 className="filter_window_header">Color :</h4>
+					{colors_list &&
+						colors_list.map((s) => (
+							<li
+								key={s}
+								onClick={(e) => searchArray(e, "colors")}
+								className={
+									colors_diff && !colors_diff.includes(s)
+										? "filter_window_options filter_window_options--faded"
+										: colors.includes(s)
+										? "filter_window_options filter_window_options--selected"
+										: "filter_window_options"
+								}>
+								{s}
+							</li>
+						))}
+				</ul>
+			</div>
+			<div className="filter_window-controls">
+				<h4 onClick={() => clearOut()}>Reset</h4>
+				<h4>Items: {count}</h4>
+				<input
+					className="filter_window-controls-button"
+					type="button"
+					onClick={submitForm}
+					value="Filter"
+				/>
+			</div>
+		</div>
 	);
 };
 export default memo(FilterWindow);

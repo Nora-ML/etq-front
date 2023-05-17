@@ -1,0 +1,291 @@
+.small_main-navigation {
+	background-color: rgba(245, 245, 245, 0.953);
+	opacity: 1;
+	position: fixed;
+	z-index: 2;
+	top: 1vh;
+	right: 0;
+	width: 98%;
+	left: 50%;
+	min-height: 50px;
+	height: 6vh;
+	transform: translateX(-50%);
+
+	color: rgb(0, 0, 0);
+
+	display: flex;
+	align-items: center;
+	align-content: center;
+
+	transition: all 0.3s ease;
+}
+a {
+	color: black;
+}
+.small_main-navigation--hidden {
+	opacity: 0;
+	transition: all 0.3s ease;
+}
+.small_main-navigation--transparent {
+	opacity: 1;
+	background-color: transparent;
+	color: white;
+
+	transition: all 0.3s ease;
+}
+
+.small_main-navigation h4 {
+	margin-block: 0;
+}
+
+.small_main-navigation_carttab {
+	padding: 0.5em 2em 0.5em 1em;
+	flex-basis: calc(100% / 3);
+	color: inherit;
+	cursor: pointer;
+}
+
+.small_main-navigation_logo {
+	color: inherit;
+	padding: 0.5em 1em;
+	text-align: center;
+	font-size: 20px;
+	font-weight: 500;
+	flex-basis: calc(100% / 3);
+}
+
+.small_main-navigation_othertabs {
+	color: inherit;
+	flex-basis: calc(100% / 3);
+	padding: 0.5em 1em;
+	align-items: center;
+	justify-content: flex-end;
+	display: flex;
+}
+.small_main-navigation--transparent_logo--other,
+.small_main-navigation--transparent_carttab--other,
+.small_main-navigation--transparent_othertabs--other {
+	color: rgb(26, 25, 25);
+	font-size: 15px;
+}
+.small_main-navigation--transparent_logo--home,
+.small_main-navigation--transparent_carttab--home,
+.small_main-navigation--transparent_othertabs--home {
+	color: inherit;
+	font-size: 15px;
+}
+/* Cart Tab*/
+
+.small_main-navigation_carttab-content {
+	background-color: rgb(245, 245, 245);
+	position: absolute;
+	z-index: -2;
+	top: 0;
+	right: 0;
+	left: 0%;
+	width: 100%;
+	min-height: 220px;
+	max-height: 25vh;
+
+	padding: 2vh;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-end;
+	justify-content: center;
+	clip-path: inset(0% 0% 100% 0%);
+	transition: clip-path 0.4s linear;
+}
+.small_main-navigation_carttab-content.carttab--active {
+	clip-path: inset(0% 0% 0% 0%);
+	transition: clip-path 0.4s linear;
+}
+.cart_items-icon-wrapper {
+	position: relative;
+}
+.cart_items-icon {
+	background-color: rgba(255, 255, 255, 0.812);
+	color: black;
+	border-radius: 50%;
+	padding: 3px 7px;
+	position: absolute;
+	top: 40%;
+	left: 30%;
+}
+.small_main-navigation_carttab-content * {
+	flex-basis: 70%;
+}
+.small_main-navigation_carttab-content p:first-of-type {
+	margin-bottom: 50px;
+}
+.small_main-navigation_carttab-content button {
+	background-color: black;
+	height: 50px;
+	color: white;
+}
+
+/***  Burger Menu */
+.small_main-navigation_othertabs-content {
+	background-color: rgb(245, 245, 245);
+	position: absolute;
+	z-index: -2;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 70vh;
+	padding: 2vh 0;
+
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-end;
+
+	clip-path: inset(0 0 100% 0);
+
+	transition: clip-path 0.4s linear;
+}
+.small_main-navigation_othertabs-content.burger--active {
+	clip-path: inset(0 0 0% 0);
+
+	transition: clip-path 0.4s linear;
+}
+.small_main-navigation_othertabs-content > * {
+	flex-basis: 100%;
+	cursor: pointer;
+	margin: 7% 2%;
+}
+.small_main-navigation_othertabs-content > *:after {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 1px;
+	margin-top: 10px;
+	background-color: rgb(202, 202, 202);
+}
+
+.small_main-navigation_categorytab,
+.small_main-navigation_searchtab,
+.small_main-navigation_helptab,
+.small_main-navigation_usertab {
+	padding: 0.5em 1em;
+	color: inherit;
+}
+
+.small_main-navigation_tab-contents {
+	background-color: rgba(245, 245, 245, 0.968);
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	padding: 10%;
+
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-end;
+
+	clip-path: inset(0 0 0% 100%);
+
+	transition: clip-path 0.4s linear;
+}
+
+/*Back button*/
+.small_main-navigation-back {
+	height: 10%;
+	font-size: 25px;
+	place-self: end;
+	text-decoration: underline;
+	margin-block: 5px;
+	margin-top: 1em;
+}
+/* Search Tab*/
+
+.small_main-navigation_searchtab-content.searchtab--active {
+	clip-path: inset(0% 0% 0% 0%);
+	transition: clip-path 0.4s linear;
+}
+
+.small_main-navigation_searchtab-content * {
+	background-color: aliceblue;
+	flex-basis: 100%;
+}
+.small_main-navigation_searchtab-data {
+	background-color: transparent;
+	border: none;
+	width: 90%;
+	height: 40%;
+	align-self: self-end;
+	margin-bottom: 3vh;
+	font-size: 30px;
+}
+
+.small_main-navigation_searchtab-data:focus {
+	outline: none;
+}
+
+/* Help Tab*/
+.small_main-navigation_helptab-content {
+	align-content: flex-end;
+}
+.small_main-navigation_helptab-content.helptab--active {
+	clip-path: inset(0% 0% 0% 0%);
+	transition: clip-path 0.4s linear;
+}
+.small_main-navigation_helptab-data {
+	width: 100%;
+	opacity: 0;
+	transition: opacity 0.3s linear;
+}
+.small_main-navigation_helptab-data h4 {
+	width: 100%;
+	display: block;
+	font-size: 20px;
+	margin-bottom: 2vh;
+	font-variant: all-petite-caps;
+}
+.small_main-navigation_helptab-data * {
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.helptab--active .small_main-navigation_helptab-data {
+	opacity: 1;
+	transition: opacity 0.3s linear;
+}
+
+/* User Tab*/
+
+.small_main-navigation_usertab-content.usertab--active {
+	transition: clip-path 0.4s linear;
+	clip-path: inset(0% 0% 0% 0%);
+}
+.small_main-navigation_usertab-content * {
+	flex-basis: 50%;
+	opacity: 0;
+	transition: opacity 0.3s linear;
+	margin-bottom: 20%;
+}
+.usertab--active * {
+	opacity: 1;
+	transition: opacity 0.3s linear;
+}
+.small_main-navigation_usertab-content p:first-of-type {
+	flex-basis: 100%;
+	line-height: 1.8em;
+}
+.small_main-navigation_usertab-content p:first-of-type::after {
+	content: "";
+	display: block;
+	position: relative;
+	background-color: rgb(122, 122, 122);
+	top: 35px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 90%;
+	height: 2px;
+}
+.small_main-navigation_tab-contents button {
+	background-color: black;
+	height: 50px;
+	color: white;
+}

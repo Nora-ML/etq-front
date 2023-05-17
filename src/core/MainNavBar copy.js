@@ -6,14 +6,15 @@ import { MainNavBarContext } from "../context/mainNavBarContext";
 import { OverlayContext } from "../context/overlayContext";
 import { CartContext } from "../context/cartContext";
 import { useContext } from "react";
-import "../styles/main_navBar.css";
+import "../styles/main_navBar_smallScreen.css";
 
-const MainNavBar = ({ page, user, setuserZ }) => {
-	console.log("MAIN NAV BAR PAGE", page);
+const MainNavBarSmallScreen = ({ page, user, setuserZ }) => {
+	console.log("MAIN NAV SMALL BAR PAGE", page);
 	const navigate = useNavigate();
 	const location = useLocation();
 	// global states from context
-	const { setActiveTab, activeTab } = useContext(MainNavBarContext);
+	const { setActiveTab, activeTab, burgerMenu, setBurgerMenu } =
+		useContext(MainNavBarContext);
 	const { setOverlayState } = useContext(OverlayContext);
 	const { itemCount } = useContext(CartContext);
 	// local states
@@ -26,25 +27,41 @@ const MainNavBar = ({ page, user, setuserZ }) => {
 	const activate = (n, destin) => {
 		console.log("header.js=> activate() =>n: ", n);
 		if (n === "") {
+			if (burgerMenu) {
+				setBurgerMenu(false);
+			}
 			setOverlayState(false);
 			setActiveTab(false);
 			redirect(destin);
 		} else if (activeTab === n) {
 			console.log("header.js ---- activate() =>1");
 			setActiveTab(false);
-			setOverlayState(false);
-			redirect(destin);
+			/* redirect(destin); */
 		} else {
 			console.log("header.js ---- activate() =>2");
+			if (burgerMenu && n === "cart") {
+				setBurgerMenu(false);
+			}
 			setActiveTab(n);
 			setOverlayState("mainNav");
-			redirect(destin);
+		}
+	};
+
+	const activateBurgerMenu = () => {
+		console.log("activateBurgerMenu ");
+		if (burgerMenu) {
+			setBurgerMenu(false);
+			setOverlayState(false);
+		} else {
+			setBurgerMenu(true);
+			setActiveTab(false);
+			setOverlayState("mainNav");
 		}
 	};
 
 	const redirect = (destin) => {
 		console.log("Redirect", destin);
-		if (destin !== "" && location.pathname !== destin) {
+		if (destin !== "" && location.pathname !== "destin") {
 			console.log("... Redirecting", destin);
 			setTimeout(() => {
 				console.log("Header.js ---- useEffect -- setTimeout");
@@ -90,8 +107,10 @@ const MainNavBar = ({ page, user, setuserZ }) => {
 
 			let timer = setTimeout(() => {
 				console.log("SET TIME OUT");
-				if (window.scrollY === 0) {
+				if (window.scrollY === 0 && !activeTab && !burgerMenu) {
 					setnavState("transparent");
+				} else if (activeTab || burgerMenu) {
+					setnavState("");
 				} else {
 					setnavState("hidden");
 				}
@@ -141,37 +160,46 @@ const MainNavBar = ({ page, user, setuserZ }) => {
 		return categories.map((cat) => (
 			<div
 				onClick={() => activate("", `/shop/${cat.name}`)}
-				className="main-navigation_categorytab">
+				className="small_main-navigation_categorytab">
 				<h4>{capitalizeFirst(cat.name).split(" ")[0]}</h4>
 			</div>
 		));
 	};
 	const searchTab = () => {
 		return (
-			<div className="main-navigation_searchtab">
-				<h4 onClick={() => activate("search")}>Search</h4>
+			<div
+				className="small_main-navigation_searchtab"
+				onClick={() => activate("search")}>
+				<h4>Search</h4>
 				<div
-					className={`main-navigation_tab-contents main-navigation_searchtab-content ${
+					className={`small_main-navigation_tab-contents small_main-navigation_searchtab-content ${
 						activeTab === "search" ? "searchtab--active" : ""
 					}`}>
 					<input
-						className="main-navigation_searchtab-data"
+						className="small_main-navigation_searchtab-data"
 						type="text"
 						placeholder="Start typing what you\'re looking for"
 					/>
+					<h5
+						onClick={() => activate("search")}
+						className="small_main-navigation-back">
+						Back
+					</h5>
 				</div>
 			</div>
 		);
 	};
 	const helpTab = () => {
 		return (
-			<div className="main-navigation_helptab">
-				<h4 onClick={() => activate("help")}>Help</h4>
+			<div
+				className="small_main-navigation_helptab"
+				onClick={() => activate("help")}>
+				<h4>Help</h4>
 				<div
-					className={`main-navigation_tab-contents main-navigation_helptab-content ${
+					className={`small_main-navigation_tab-contents small_main-navigation_helptab-content ${
 						activeTab === "help" ? "helptab--active" : ""
 					}`}>
-					<div className="main-navigation_helptab-data">
+					<div className="small_main-navigation_helptab-data">
 						<h4 className=" noline">Contact</h4>
 						<Link to="" className=" noline">
 							Email-us
@@ -180,14 +208,14 @@ const MainNavBar = ({ page, user, setuserZ }) => {
 							+31(0)202256153
 						</Link>
 					</div>
-					<div className="main-navigation_helptab-data">
+					<div className="small_main-navigation_helptab-data">
 						<h4 className=" noline">Information</h4>
 						<Link to="/">Shipping Information</Link>
 						<Link to="">Returns & Exchanges</Link>
 						<Link to="">Size guide</Link>
 						<Link to="">Wholesale & Showroom</Link>
 					</div>
-					<div className="main-navigation_helptab-data">
+					<div className="small_main-navigation_helptab-data">
 						<h4 className=" noline">Frequently asked questions </h4>
 						<Link to="" className=" noline">
 							Do I need an account to place an order?
@@ -202,6 +230,11 @@ const MainNavBar = ({ page, user, setuserZ }) => {
 							How much does the delivery cost?
 						</Link>
 					</div>
+					<h5
+						onClick={() => activate("help")}
+						className="small_main-navigation-back">
+						Back
+					</h5>
 				</div>
 			</div>
 		);
@@ -209,13 +242,12 @@ const MainNavBar = ({ page, user, setuserZ }) => {
 	const userTab_loggedIn = () => {
 		return (
 			<div
-				className={`main-navigation_usertab${
+				className={`small_main-navigation_usertab${
 					activeTab === "myaccount" ? "--active" : ""
-				}`}>
-				<h4 onClick={() => activate("myaccount")}>
-					{capitalizeFirst(user.name)}
-				</h4>
-				<div className="main-navigation_usertab--content">
+				}`}
+				onClick={() => activate("myaccount")}>
+				<h4>{capitalizeFirst(user.name)}</h4>
+				<div className="small_main-navigation_usertab--content">
 					<p>Display your profile or signout.</p>
 					<div className="ele-3-subcont flex-r">
 						{user.role === 2 && (
@@ -251,11 +283,13 @@ const MainNavBar = ({ page, user, setuserZ }) => {
 	};
 	const userTab_notLoggedIn = () => {
 		return (
-			<div className="main-navigation_usertab">
-				<h4 onClick={() => activate("myaccount")}>My Account</h4>
+			<div
+				className="small_main-navigation_usertab"
+				onClick={() => activate("myaccount")}>
+				<h4>My Account</h4>
 
 				<div
-					className={`main-navigation_tab-contents main-navigation_usertab-content ${
+					className={`small_main-navigation_tab-contents small_main-navigation_usertab-content ${
 						activeTab === "myaccount" ? "usertab--active" : ""
 					}`}>
 					<p>
@@ -272,22 +306,29 @@ const MainNavBar = ({ page, user, setuserZ }) => {
 						type="submit">
 						Login
 					</button>
+					<h5
+						onClick={() => activate("myaccount")}
+						className="small_main-navigation-back">
+						Back
+					</h5>
 				</div>
 			</div>
 		);
 	};
 	const cartTab = () => {
 		return (
-			<div className="main-navigation_carttab">
-				<h4
-					onClick={() => activate("cart")}
-					className="cart_items-icon-wrapper">
+			<div
+				className={`small_main-navigation_carttab small_main-navigation${
+					"--" + navstate
+				}_carttab--${page !== "home" ? "other" : "home"}`}
+				onClick={() => activate("cart")}>
+				<h4 className="cart_items-icon-wrapper">
 					Cart
 					<span className="cart_items-icon">{itemCount ? itemCount : 0}</span>
 				</h4>
 
 				<div
-					className={`main-navigation_tab-contents main-navigation_carttab-content ${
+					className={`small_main-navigation_carttab-content ${
 						activeTab === "cart" ? "carttab--active" : ""
 					}`}>
 					{itemCount === 0 ? (
@@ -312,35 +353,35 @@ const MainNavBar = ({ page, user, setuserZ }) => {
 
 	return (
 		<nav
-			className={`main-navigation main-navigation${
+			className={`small_main-navigation small_main-navigation${
 				navstate ? "--" + navstate : ""
 			}`}>
+			{user.role !== 1 && cartTab()}
 			<h4
 				onClick={() => activate("", "/")}
-				className={`main-navigation_logo main-navigation${
+				className={`small_main-navigation_logo small_main-navigation${
 					"--" + navstate
 				}_logo--${page !== "home" ? "other" : "home"}`}>
 				ETQ.
 			</h4>
 
 			<div
-				className={`main-navigation_categories main-navigation${
-					"--" + navstate
-				}_categories--${page !== "home" ? "other" : "home"}`}>
-				{categoriesTab()}
-			</div>
-
-			<div
-				className={`main-navigation_othertabs main-navigation${
+				className={`small_main-navigation_othertabs small_main-navigation${
 					"--" + navstate
 				}_othertabs--${page !== "home" ? "other" : "home"}`}>
-				{searchTab()}
-				{helpTab()}
-				{user ? userTab_loggedIn() : userTab_notLoggedIn()}
-				{user.role !== 1 && cartTab()}
+				<h4 onClick={() => activateBurgerMenu()}>Burger</h4>
+				<div
+					className={`small_main-navigation_othertabs-content ${
+						burgerMenu ? "burger--active" : ""
+					}`}>
+					{categoriesTab()}
+					{searchTab()}
+					{helpTab()}
+					{user ? userTab_loggedIn() : userTab_notLoggedIn()}
+				</div>
 			</div>
 		</nav>
 	);
 };
 
-export default React.memo(MainNavBar);
+export default React.memo(MainNavBarSmallScreen);

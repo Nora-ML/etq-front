@@ -19,7 +19,7 @@ const Shop = () => {
 	console.log("Shop.js  ----- rendered");
 	const { categoryName } = useParams();
 	const { main } = useRef(null);
-	const { filterSelection } = useContext(FilterNavBarContext);
+	const { filterSelection, filterWindow } = useContext(FilterNavBarContext);
 
 	const limit = 18;
 	const [state, setState] = useState([]);
@@ -142,7 +142,19 @@ const Shop = () => {
 	}, [refetch]);
 
 	return (
-		<Layout>
+		<Layout
+			page="other"
+			style={
+				filterWindow
+					? {
+							height: "100vh",
+							overflow: "hidden",
+							position: "fixed",
+							top: `-${window.scrollY}px`,
+							backgroundColor: "red",
+					  }
+					: ""
+			}>
 			<div ref={main} className="shop_main-container">
 				<h4 className="shop_header">
 					All {categoryName} :{" "}

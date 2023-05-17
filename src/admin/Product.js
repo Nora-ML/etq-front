@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { addProduct, deleteAll, list } from "../requests";
 import AddProductForm from "../helpers/ProductForm";
-import "../styles/productCard.css";
 
 const ProductCommands = () => {
 	console.log("## FE => ProductCommands Component => rendered ");

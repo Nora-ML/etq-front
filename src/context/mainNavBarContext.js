@@ -3,12 +3,12 @@ import { useState, createContext } from "react";
 export const MainNavBarContext = createContext();
 
 const MainNavBarContextProvider = ({ children }) => {
-	const [mainNavBar, setMainNavBar] = useState(false);
+	const [burgerMenu, setBurgerMenu] = useState(false);
 	const [activeTab, setActiveTab] = useState(false);
 
 	const passOn = {
-		mainNavBar,
-		setMainNavBar,
+		burgerMenu,
+		setBurgerMenu,
 		activeTab,
 		setActiveTab,
 	};

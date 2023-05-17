@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API } from "../config";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { viewProductImages } from "../requests";
 
 const ShowImage = ({ product, classN }) => {
@@ -11,6 +11,7 @@ const ShowImage = ({ product, classN }) => {
 		classN
 	);
 	let { image, id, image_count } = product;
+	let location = useLocation();
 	const [allImages, setAllImages] = useState("");
 	const [state, setState] = useState(1);
 
@@ -61,22 +62,26 @@ const ShowImage = ({ product, classN }) => {
 				/>
 			</Link>
 
-			<div
-				className={
-					image_count > 1 ? `${classN}_arrows` : `${classN}_arrows-hide`
-				}>
+			{location.pathname === "/" ? (
+				""
+			) : (
 				<div
-					className="shop_arrow-wrap shop_arrow-wrap-left"
-					onClick={() => slide("minus", id)}>
-					<i className="arrow-wrap__icon arrow-wrap__icon-left fas fa-angle-left"></i>
-				</div>
+					className={
+						image_count > 1 ? `${classN}_arrows` : `${classN}_arrows-hide`
+					}>
+					<div
+						className="shop_arrow-wrap shop_arrow-wrap-left"
+						onClick={() => slide("minus", id)}>
+						<i className="arrow-wrap__icon arrow-wrap__icon-left fas fa-angle-left"></i>
+					</div>
 
-				<div
-					className="shop_arrow-wrap shop_arrow-wrap-right"
-					onClick={() => slide("plus", id)}>
-					<i className="arrow-wrap__icon arrow-wrap__icon-right fas fa-angle-right"></i>
+					<div
+						className="shop_arrow-wrap shop_arrow-wrap-right"
+						onClick={() => slide("plus", id)}>
+						<i className="arrow-wrap__icon arrow-wrap__icon-right fas fa-angle-right"></i>
+					</div>
 				</div>
-			</div>
+			)}
 		</>
 	);
 };

@@ -314,7 +314,7 @@ const ProductDetail = () => {
 		);
 	};
 
-	const floating_nav = () => {
+	/* const floating_nav = () => {
 		return (
 			<nav className={navState === "visible" ? "product-nav" : "notDisplayed"}>
 				<ul className="product-nav-both product-nav-1"></ul>
@@ -360,7 +360,7 @@ const ProductDetail = () => {
 				</ul>
 			</nav>
 		);
-	};
+	}; */
 
 	const mobile_format = () => {
 		return (

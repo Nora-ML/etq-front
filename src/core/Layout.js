@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import MainNavBar from "./MainNavBar";
-import MainNavBarSmallScreen from "./MainNavBar copy";
+import MainNavBarSmallScreen from "./MainNavBar_smallScreen";
 import Footer from "./Footer";
 import Overlay from "./Overlay";
 import { loggedIn, getfav, saveFavs } from "../requests";

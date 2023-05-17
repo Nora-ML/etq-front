@@ -1,5 +1,5 @@
 .main-navigation {
-	background-color: rgba(245, 245, 245, 0.998);
+	background-color: rgba(252, 252, 252, 0.998);
 	opacity: 1;
 	position: fixed;
 	z-index: 2;
@@ -100,7 +100,7 @@ a {
 }
 
 .main-navigation_tab-contents {
-	background-color: rgba(245, 245, 245, 0.875);
+	background-color: rgba(252, 252, 252, 0.998);
 	position: absolute;
 	z-index: -2;
 	top: 0;

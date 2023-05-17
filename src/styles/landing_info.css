@@ -117,3 +117,37 @@
 		width: 100%;
 	}
 }
+@media screen and (min-width: 780px) and (min-aspect-ratio: 1) {
+	.landing-info {
+		flex-wrap: nowrap;
+		height: 75vh;
+	}
+	.landing-info_card,
+	.landing-info_card.main-card {
+		overflow: hidden;
+
+		width: calc((100% - 20px) / 3) !important;
+		height: 100% !important;
+		margin: 10px;
+
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+	.landing-info_img,
+	.main-card .landing-info_img {
+		width: 55%;
+		height: 65% !important;
+
+		background-position: 50% 20%;
+		background-size: cover;
+	}
+	.landing-info_img--det {
+		padding: 3% 3% 0% 0%;
+		width: 45%;
+		height: max-content;
+	}
+	.landing-info_img--det > * {
+		margin: 10px;
+	}
+}

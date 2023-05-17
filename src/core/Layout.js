@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
+
+import { loggedIn, getfav, saveFavs } from "../requests";
+import { ScreenSizeContext } from "../context/screenSizeContext";
 import MainNavBar from "./MainNavBar";
 import MainNavBarSmallScreen from "./MainNavBar_smallScreen";
 import Footer from "./Footer";
 import Overlay from "./Overlay";
-import { loggedIn, getfav, saveFavs } from "../requests";
-import { ScreenSizeContext } from "../context/screenSizeContext";
 
 const Layout = ({
 	overlayTrigger,

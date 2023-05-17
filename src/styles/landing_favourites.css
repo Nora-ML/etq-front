@@ -113,7 +113,7 @@
 	/* background-color: rgb(255, 249, 127); */
 	position: relative;
 	width: fit-content;
-	height: clamp(50vh, 60vw, 110vh);
+	height: clamp(50vh, 60vw, 100%);
 
 	display: flex;
 	flex-direction: row;
@@ -133,7 +133,7 @@
 
 @media screen and (min-width: 1200px) {
 	.landing-favourites_products {
-		height: 65vh;
+		height: 80vh;
 	}
 }
 

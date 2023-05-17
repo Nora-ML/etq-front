@@ -45,7 +45,9 @@ a {
 	padding: 0.5em 1em;
 	font-weight: 500;
 	flex-basis: 10%;
-	font-size: clamp(18px, 2vh, 25px);
+	font-size: clamp(18px, 4vh, 25px);
+	font-weight: 600;
+	cursor: pointer;
 }
 .main-navigation_categories {
 	color: inherit;
@@ -58,6 +60,11 @@ a {
 .main-navigation_categorytab {
 	padding: 0.5em 1em;
 	color: inherit;
+	cursor: pointer;
+}
+.main-navigation_categorytab:hover {
+	background-color: rgba(128, 128, 128, 0.718);
+	border: rgba(62, 60, 60, 0.718) 1px solid;
 }
 .main-navigation_othertabs {
 	color: inherit;
@@ -73,6 +80,12 @@ a {
 	padding: 0.5em 1em;
 	color: inherit;
 	cursor: pointer;
+}
+.main-navigation_searchtab:hover,
+.main-navigation_helptab:hover,
+.main-navigation_usertab:hover {
+	background-color: rgba(229, 228, 228, 0.682);
+	border: rgba(214, 211, 211, 0.631) 1px solid;
 }
 .main-navigation_carttab {
 	padding: 0.5em 2em 0.5em 1em;
@@ -246,17 +259,12 @@ a {
 .main-navigation_carttab-content.carttab--active {
 	clip-path: inset(0% 0% 0% 0%);
 }
-.cart_items-icon-wrapper {
-	position: relative;
-}
-.cart_items-icon {
-	background-color: rgb(255, 255, 255);
+
+.main-navigation_cart_items-icon {
+	background-color: rgb(130, 128, 128);
 	color: black;
 	border-radius: 50%;
 	padding: 4px 8px;
-	position: absolute;
-	top: 45%;
-	left: 80%;
 }
 .main-navigation_carttab-content * {
 	flex-basis: 70%;

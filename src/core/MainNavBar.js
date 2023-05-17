@@ -281,9 +281,8 @@ const MainNavBar = ({ page, user, setuserZ }) => {
 			<div className="main-navigation_carttab">
 				<h4
 					onClick={() => activate("cart")}
-					className="cart_items-icon-wrapper">
-					Cart
-					<span className="cart_items-icon">{itemCount ? itemCount : 0}</span>
+					className="main-navigation_cart_items-icon">
+					{itemCount ? itemCount : 0}
 				</h4>
 
 				<div

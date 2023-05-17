@@ -27,7 +27,7 @@
 @keyframes coverImg {
 	from {
 		opacity: 0;
-		transform: translateX(-50%);
+		transform: translateX(-5%);
 	}
 	to {
 		transform: translateX(0%);
@@ -98,7 +98,7 @@
 		width: 30%;
 		right: 0;
 		left: 0;
-		padding: 2%;
+		padding: 2vh 5vw;
 		height: max-content;
 		top: 50%;
 		transform: translateY(-50%);
@@ -110,14 +110,13 @@
 		line-height: 1.6rem;
 
 		font-size: clamp(13px, 4vh, 25px);
-		line-height: clamp(1.2rem, 3vh, 2.4rem);
-		font-weight: 900;
+		line-height: clamp(1.2rem, 5vh, 2.4rem);
 	}
 
 	.landing-hero_intro-details {
 		display: block;
-		font-size: clamp(10px, 2.8vh, 20px);
-		line-height: clamp(0.8rem, 3.5vh, 2rem);
+		font-size: clamp(10px, 2.3vh, 18px);
+		line-height: clamp(0.8rem, 3vh, 2rem);
 	}
 }
 
